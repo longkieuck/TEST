@@ -83,7 +83,7 @@
               class="input-type4"
               v-model="employee.departmentName"
             >
-              <opti on v-for="d in departments" :key="d.departmentId">{{
+              <option v-for="d in departments" :key="d.departmentId">{{
                 d.departmentName
               }}</option>
             </select>

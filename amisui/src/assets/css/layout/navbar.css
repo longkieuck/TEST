@@ -50,10 +50,6 @@
     background-color: #F4F5F6;
 }
 
-::-webkit-scrollbar:hover {
-    background: #B8BCC3;
-}
-
 .menu-item {
     align-items: center;
     height: 42px;

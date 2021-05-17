@@ -1,0 +1,113 @@
+table {
+    border-collapse: separate;
+    position: relative;
+}
+
+table thead tr {
+    align-items: center;
+    line-height: 32px;
+    height: 32px;
+    background-color: #ECEEF1;
+}
+
+table thead th {
+    font-size: 12px;
+    text-align: left;
+    text-transform: uppercase;
+    justify-content: center;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #ECEEF1;
+    z-index: 10;
+}
+
+th:first-child,
+td:first-child {
+    padding-left: 12px;
+}
+
+table tbody td {
+    font-size: 13px;
+    align-items: center;
+    text-align: left;
+}
+
+table tr {
+    border-bottom: 1px solid #c7c7c7;
+    height: 48px;
+}
+
+table tr th {
+    padding-left: 7px;
+    border-right: 1px solid #c7c7c7 !important;
+    border-bottom: 1px solid #c7c7c7 !important;
+}
+
+th:last-child {
+    position: sticky;
+}
+
+table tr td {
+    padding-left: 7px;
+    border-right: 1px dotted #c7c7c7;
+}
+
+tbody tr:hover {
+    cursor: pointer;
+    background-color: #f7f7f7;
+}
+
+.border-checkbox-th {
+    width: 10px;
+    height: 32px;
+    /* background-color: red; */
+}
+
+.border-checkbox-td {
+    width: 10px;
+    height: 48px;
+    /* background-color: red; */
+}
+
+.action {
+    border-left: 1px dashed #c7c7c7;
+    right: 1px;
+    padding-top: 15px;
+    height: 51px;
+    background-color: white;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* .edit-text {
+    color: #349DFF;
+} */
+
+.action-title {
+    font-weight: 600;
+    font-size: 13px;
+    text-align: left;
+    text-transform: uppercase;
+    border-left: 1px dashed #c7c7c7;
+    right: 1px;
+    padding-top: 1px;
+    height: 34px;
+    background-color: #ECEEF1;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.table-body {
+    /* height: 100px; */
+    /* background-color: red; */
+}
+
+
+/* width */
