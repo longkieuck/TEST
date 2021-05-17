@@ -39,7 +39,6 @@
               </tr>
             </thead>
             <tbody class="table-body">
-              
               <tr>
                 <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
                 <td style="min-width:150px">11111111</td>
@@ -55,23 +54,89 @@
                 <div class="td-last">
                   <div class="edit-option">Sửa</div>
                   <a-dropdown :trigger="['click']">
-    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-     <a-icon type="down" />
-    </a>
-    <a-menu slot="overlay" class="cover-option">
-      <a-menu-item key="0">
-        <a href="" class="option">Nhân bản</a>
-      </a-menu-item>
-      <a-menu-item key="0">
-        <a href="" class="option">Xóa</a>
-      </a-menu-item>
-      <a-menu-item key="0">
-        <a href="" class="option">Ngưng sử dụng</a>
-      </a-menu-item>
-    </a-menu>
-  </a-dropdown>
+                    <a class="ant-dropdown-link">
+                    <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
+                    </a>
+                    <a-menu slot="overlay" class="cover-option">
+                      <a-menu-item key="0">
+                        <a href="" class="option">Nhân bản</a>
+                      </a-menu-item>
+                      <a-menu-item key="1">
+                        <a href="" class="option">Xóa</a>
+                      </a-menu-item>
+                      <a-menu-item key="2">
+                        <a href="" class="option">Ngưng sử dụng</a>
+                      </a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
                 </div>
               </tr>
+              <tr>
+                <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
+                <td style="min-width:150px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:120px">11111111</td>
+                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
+                <td style="min-width:200px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:150px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:200px;border-right:none">11111111</td>
+                <div class="td-last">
+                  <div class="edit-option">Sửa</div>
+                  <a-dropdown :trigger="['click']">
+                    <a class="ant-dropdown-link">
+                    <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
+                    </a>
+                    <a-menu slot="overlay" class="cover-option">
+                      <a-menu-item key="0">
+                        <a href="" class="option">Nhân bản</a>
+                      </a-menu-item>
+                      <a-menu-item key="1">
+                        <a href="" class="option">Xóa</a>
+                      </a-menu-item>
+                      <a-menu-item key="2">
+                        <a href="" class="option">Ngưng sử dụng</a>
+                      </a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
+                </div>
+              </tr>
+              <tr>
+                <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
+                <td style="min-width:150px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:120px">11111111</td>
+                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
+                <td style="min-width:200px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:150px">11111111</td>
+                <td style="min-width:250px">11111111</td>
+                <td style="min-width:200px;border-right:none">11111111</td>
+                <div class="td-last">
+                  <div class="edit-option">Sửa</div>
+                  <a-dropdown :trigger="['click']">
+                    <a class="ant-dropdown-link">
+                    <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
+                    </a>
+                    <a-menu slot="overlay" class="cover-option">
+                      <a-menu-item key="0">
+                        <a href="" class="option">Nhân bản</a>
+                      </a-menu-item>
+                      <a-menu-item key="1">
+                        <a href="" class="option">Xóa</a>
+                      </a-menu-item>
+                      <a-menu-item key="2">
+                        <a href="" class="option">Ngưng sử dụng</a>
+                      </a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
+                </div>
+              </tr>
+              
+              
             </tbody>
           </table>
         </div>
@@ -79,23 +144,32 @@
           <div class="total-record">Tổng số: <b>100</b> bản ghi</div>
           <div class="right-pagging">
             <div class="select-record-number">
-              <!-- <a-select default-value="10" style="width: 200px;" @change="handleChangePageSize">
-                <a-select-option value="10">
-                  10 bản ghi trên 1 trang
+              <a-select
+                style="width:200px"
+                show-search
+                placeholder="Số bản ghi trên 1 trang"
+                option-filter-prop="children"
+                :filter-option="filterOption"
+                @focus="handleFocus"
+                @blur="handleBlur"
+                @change="handleChange"
+            >
+                <a-select-option class="option-page-size" value="10">
+                10 bản ghi trên 1 trang
                 </a-select-option>
-                <a-select-option value="20">
-                  20 bản ghi trên 1 trang
+                <a-select-option class="option-page-size" value="20">
+                20 bản ghi trên 1 trang
                 </a-select-option>
-                <a-select-option value="30" >
-                  30 bản ghi trên 1 trang
+                <a-select-option class="option-page-size" value="30">
+                30 bản ghi trên 1 trang
                 </a-select-option>
-                <a-select-option value="50">
-                  50 bản ghi trên 1 trang
+                <a-select-option class="option-page-size" value="50">
+                50 bản ghi trên 1 trang
                 </a-select-option>
-                <a-select-option value="100">
-                  100 bản ghi trên 1 trang
+                <a-select-option class="option-page-size" value="100">
+                100 bản ghi trên 1 trang
                 </a-select-option>
-              </a-select> -->
+            </a-select>
             </div>
             <div class="select-page">
               <!-- <a-pagination
@@ -110,24 +184,30 @@
         </div>
       </div>
     </div>
-    <!-- <InfoDialog v-if="isShow" />
-    <NotifyDialog v-if="isShowNotifyDialog"/> -->
+    <InfoDialog v-if="true" />
+    <!-- <NotifyDialog v-if="isShowNotifyDialog"/> -->
   </div>
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
 import moment from "moment";
 // import _ from 'lodash'
 // import { mapActions, mapState } from "vuex";
 // import NotifyDialog from '../../components/dialogs/NotifyDialog.vue'
-// import InfoDialog from "../../components/dialogs/InfoDialog.vue";
+import InfoDialog from "../../components/dialogs/InfoDialog.vue";
 //Thời gian trễ
 // let TIME_OF_DEBOUNCE_LOAD = 1000
 // let TIME_OF_DEBOUNCE_TYPE = 500
 export default {
   components: {
-    // InfoDialog,
+    InfoDialog,
     // NotifyDialog
+  },
+  data(){
+    return{
+      numberOptionActive:0
+    }
   },
   created() {
     // this.loadData();
@@ -148,6 +228,31 @@ export default {
     // }),
   },
   methods: {
+    activeOption(event){
+      event.currentTarget.classList.add('active');
+    },
+    removeActiveOption(event){
+      
+      // var activeIcon = document.querySelectorAll('.active');
+      if(event.target.classList.contains("drop-down-icon") ||event.target.classList.contains("cover-drop-down-icon") ){
+        let activeIcon = document.querySelectorAll('.active');
+        activeIcon.forEach((activeElement) => {
+                    activeElement.classList.remove('active');
+                });
+        event.target.classList.add('active')
+      }else{
+        let activeIcon = document.querySelectorAll('.active');
+        activeIcon.forEach((activeElement) => {
+                    activeElement.classList.remove('active');
+                });
+      }
+      
+    },
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      );
+    }
     // ...mapActions([
     //   "loadEmployee",
     //   "loadDepartment",
@@ -231,6 +336,9 @@ export default {
       return moment(value).format("DD/MM/YYYY");
     },
   },
+  directives: {
+    ClickOutside
+  }
 };
 </script>
 

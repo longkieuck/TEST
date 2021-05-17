@@ -365,4 +365,5 @@ export default {
 
 <style>
 @import "../../assets/css/dialogs/infodialog.css";
+@import "../../assets/css/components/radio.css";
 </style>
