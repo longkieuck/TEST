@@ -1,6 +1,7 @@
 table {
     border-collapse: separate;
     position: relative;
+    border-spacing: 0;
 }
 
 table thead tr {
@@ -26,12 +27,16 @@ table thead th {
 th:first-child,
 td:first-child {
     padding-left: 12px;
+    border: none;
 }
-
+th{
+    box-shadow: inset 0px 0px #c7c7c7, 0 1px #c7c7c7;
+}
 table tbody td {
     font-size: 13px;
     align-items: center;
     text-align: left;
+    white-space: nowrap;
 }
 
 table tr {
@@ -41,12 +46,8 @@ table tr {
 
 table tr th {
     padding-left: 7px;
-    border-right: 1px solid #c7c7c7 !important;
-    border-bottom: 1px solid #c7c7c7 !important;
-}
-
-th:last-child {
-    position: sticky;
+    border-right: 1px solid #c7c7c7;
+    border-bottom: 1px solid #c7c7c7;
 }
 
 table tr td {
@@ -59,18 +60,9 @@ tbody tr:hover {
     background-color: #f7f7f7;
 }
 
-.border-checkbox-th {
-    width: 10px;
-    height: 32px;
-    /* background-color: red; */
+th:last-child, tr:last-child{
+    border-right: none;
 }
-
-.border-checkbox-td {
-    width: 10px;
-    height: 48px;
-    /* background-color: red; */
-}
-
 .action {
     border-left: 1px dashed #c7c7c7;
     right: 1px;
@@ -82,7 +74,64 @@ tbody tr:hover {
     justify-content: center;
 }
 
+.th-last{
+    top: 0px;
+    right: 0;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    min-width:122px;
+    position:sticky;
+    background-color: #ECEEF1;;
+    z-index: 14;
+    height: 36px;
+    border-top: 1px solid #ECEEF1;
+    border-left: 1px solid #c7c7c7;
+    box-shadow: inset 0px 0px #c7c7c7, 0 1px #c7c7c7;
+}
+.th-first{
+    top: 0;
+    left: 0;
+    min-width:40px;
+    text-align:center;
+    position:sticky;
+    background-color: #ECEEF1;;
+    z-index: 14;
+    height: 36px;
+    border-right: 1px solid #c7c7c7;
+    box-shadow: inset 0px 0px #c7c7c7 , 0px 1px #c7c7c7;
+} 
+.td-last{
+    display: flex;
+    font-size: 13px;
+    line-height: 48px;
+    justify-content: center;
+    align-items: center;
+    min-width:122px;
+    text-align:center;
+    padding-left:0px;
+    position:sticky;
+    right: 0px;
+    background-color: white;
+    height: 48px;
+    border-left: 1px dotted #c7c7c7;
+}
 
+
+.td-first{
+    font-size: 13px;
+    line-height: 48px;
+    justify-content: center;
+    align-items: center;
+    min-width:40px;
+    text-align:center;
+    padding-left:0px;
+    position:sticky;
+    left: 0px;
+    background-color: white;
+    height: 48px;
+    border-right: 1px dotted #c7c7c7;
+}
 /* .edit-text {
     color: #349DFF;
 } */
@@ -104,10 +153,17 @@ tbody tr:hover {
     text-transform: uppercase;
 }
 
-.table-body {
-    /* height: 100px; */
-    /* background-color: red; */
+.cover-option{
+    border-radius: 0% !important;
+    border: 1px solid #c7c7c7 !important;
 }
-
-
-/* width */
+.option:hover{
+    color: #2CA01C !important;
+    background-color: #F4F5F6;
+}
+.edit-option{
+    color: #0075C0;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 15px;
+}

@@ -24,7 +24,7 @@
           <table>
             <thead>
               <tr>
-                <th style="min-width:40px"><a-checkbox></a-checkbox></th>
+                <div class="th-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
                 <th style="min-width:150px">Mã nhân viên</th>
                 <th style="min-width:250px">Tên nhân viên</th>
                 <th style="min-width:120px">Giới tính</th>
@@ -34,13 +34,14 @@
                 <th style="min-width:250px">Tên đơn vị</th>
                 <th style="min-width:150px">Số tài khoản</th>
                 <th style="min-width:250px">Tên ngân hàng</th>
-                <th style="min-width:200px">Chi nhánh TK ngân hàng</th>
-                <th style="min-width:120px">Chức năng</th>
+                <th style="min-width:200px;border-right:none">Chi nhánh TK ngân hàng</th>
+                <div class="th-last">Chức năng</div>
               </tr>
             </thead>
             <tbody class="table-body">
-                <tr>
-                <td style="min-width:40px"><a-checkbox></a-checkbox></td>
+              
+              <tr>
+                <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
                 <td style="min-width:150px">11111111</td>
                 <td style="min-width:250px">11111111</td>
                 <td style="min-width:120px">11111111</td>
@@ -50,386 +51,26 @@
                 <td style="min-width:250px">11111111</td>
                 <td style="min-width:150px">11111111</td>
                 <td style="min-width:250px">11111111</td>
-                <td style="min-width:200px">11111111</td>
-                <td style="min-width:120px">11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-              </tr>
-              <tr>
-                <td><a-checkbox></a-checkbox></td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
-                <td>11111111</td>
+                <td style="min-width:200px;border-right:none">11111111</td>
+                <div class="td-last">
+                  <div class="edit-option">Sửa</div>
+                  <a-dropdown :trigger="['click']">
+    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+     <a-icon type="down" />
+    </a>
+    <a-menu slot="overlay" class="cover-option">
+      <a-menu-item key="0">
+        <a href="" class="option">Nhân bản</a>
+      </a-menu-item>
+      <a-menu-item key="0">
+        <a href="" class="option">Xóa</a>
+      </a-menu-item>
+      <a-menu-item key="0">
+        <a href="" class="option">Ngưng sử dụng</a>
+      </a-menu-item>
+    </a-menu>
+  </a-dropdown>
+                </div>
               </tr>
             </tbody>
           </table>
