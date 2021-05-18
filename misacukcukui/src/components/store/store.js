@@ -23,22 +23,22 @@ const initEmployee = {
 }
 export const store = new Vuex.Store({
     state: {
-        employees: [],//Lưu mảng nhân viên đang hiển thị trên UI
-        departments: [],//Lấy tất cả các phòng ban trên API
-        employee: {...initEmployee },//Nhân viên được chon để sửa hoặc nhân viên dùng để thêm
-        newEmployeeCode: "",//Mã nhân viên mới
-        isAdd: false,//Có phải dialog để add hay không
-        isEdit: false,//có phải dialog để edit hay ko
-        isShow: false,//có show dialog infoDialog không
-        isShowNotifyDialog: false,//show notifyDialog
-        isDelete: false,//có phải dialog xóa không
-        messageContent: "",//thông báo hiển thị ở nitifydialog
-        totalRecords: 0,//tổng số bản ghi thỏa mãn điều kiện lọc
-        totalPages: 0,//Tổng số trang
-        pageIndex: 1,//pageIndex dùng để lấy data
-        pageSize: 10,//số bản ghi trên 1 trang
-        search: "",//dùng để tìm kiếm
-        isLoading: false,//có show loading hay không
+        employees: [], //Lưu mảng nhân viên đang hiển thị trên UI
+        departments: [], //Lấy tất cả các phòng ban trên API
+        employee: {...initEmployee }, //Nhân viên được chon để sửa hoặc nhân viên dùng để thêm
+        newEmployeeCode: "", //Mã nhân viên mới
+        isAdd: false, //Có phải dialog để add hay không
+        isEdit: false, //có phải dialog để edit hay ko
+        isShow: false, //có show dialog infoDialog không
+        isShowNotifyDialog: false, //show notifyDialog
+        isDelete: false, //có phải dialog xóa không
+        messageContent: "", //thông báo hiển thị ở nitifydialog
+        totalRecords: 0, //tổng số bản ghi thỏa mãn điều kiện lọc
+        totalPages: 0, //Tổng số trang
+        pageIndex: 1, //pageIndex dùng để lấy data
+        pageSize: 10, //số bản ghi trên 1 trang
+        search: "", //dùng để tìm kiếm
+        isLoading: false, //có show loading hay không
     },
     actions: {
         //Lấy data về mảng employees từ API

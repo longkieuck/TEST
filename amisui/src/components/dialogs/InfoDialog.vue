@@ -22,6 +22,8 @@
           <div class="item-input">
             <div class="title-input">Mã <span style="color:red">*</span></div>
             <input
+              ref="employeeCode"
+              v-model="employee.employeeCode"
               type="text"
               class="input-type1"
             />
@@ -29,7 +31,7 @@
           <div class="item-input space-type1">
             <div class="title-input">Tên <span style="color:red">*</span></div>
             <input
-              id="name-input"
+              v-model="employee.fullName"
               type="text"
               class="input-type2"
             />
@@ -39,11 +41,15 @@
           </div>
           <div class="item-input space-type2">
             <div class="title-input">Ngày sinh</div>
-            <a-date-picker :placeholder="dateFormat" class="input-type3" :format="dateFormat" />
+            <a-date-picker 
+              :placeholder="dateFormat" 
+              class="input-type3" 
+              v-model="dateOfBirthFormat"
+              :format="dateFormat" />
           </div>
           <div class="item-input gender">
             <div class="title-input margin-gender-option">Giới tính</div>
-            <a-radio-group>
+            <a-radio-group v-model="employee.gender">
               <a-radio :value="0">
                 Nam
               </a-radio>
@@ -62,25 +68,18 @@
               Đơn vị <span style="color:red">*</span>
             </div>
             <a-select
+                v-model="employee.departmentName"
                 class="input-type4a"
                 show-search
                 option-filter-prop="children"
                 :filter-option="filterOption"
-                @focus="handleFocus"
-                @blur="handleBlur"
-                @change="handleChange"
             >
-                <a-select-option class="option-department" value="jack">
-                Jack
-                </a-select-option>
-                <a-select-option class="option-department" value="lucy">
-                Lucy
-                </a-select-option>
-                <a-select-option class="option-department" value="tom">
-                Tom
-                </a-select-option>
-                <a-select-option class="option-department" value="luci">
-                Luci
+                <a-select-option 
+                  v-for="d in departments" 
+                  :key="d.departmentId" 
+                  class="option-department" 
+                  :value="d.departmentName">
+                {{d.departmentName}}
                 </a-select-option>
             </a-select>
           </div>
@@ -90,19 +89,25 @@
           <div class="item-input space-type2">
             <div class="title-input">Số CMND</div>
             <input
+              v-model="employee.identifyNumber"
               type="text"
               class="input-type5"
             />
           </div>
           <div class="item-input space-type1">
             <div class="title-input">Ngày cấp</div>
-            <a-date-picker :placeholder="dateFormat" class="input-type3" :format="dateFormat" />
+            <a-date-picker 
+              :placeholder="dateFormat" 
+              class="input-type3" 
+              v-model="identifyDateFormat"
+              :format="dateFormat" />
           </div>
         </div>
         <div class="line-input">
           <div class="item-input">
             <div class="title-input">Chức danh</div>
             <input
+              v-model="employee.positionName"
               type="text"
               class="input-type4"
             />
@@ -110,6 +115,7 @@
           <div class="item-input space-type2">
             <div class="title-input">Nơi cấp</div>
             <input
+              v-model="employee.identifyPlace"
               type="text"
               class="input-type4"
             />
@@ -118,13 +124,17 @@
         <div class="line-input">
           <div class="item-input">
             <div class="title-input">Địa chỉ</div>
-            <input type="text" class="input-type6" />
+            <input 
+              v-model="employee.address"
+              type="text" 
+              class="input-type6" />
           </div>
         </div>
         <div class="line-input">
           <div class="item-input">
             <div class="title-input">Điện thoại di động</div>
             <input
+              v-model="employee.phoneNumber"
               type="text"
               class="input-type7"
             />
@@ -132,6 +142,7 @@
           <div class="item-input space-type1">
             <div class="title-input">Điện thoại cố định</div>
             <input
+              v-model="employee.constantPhoneNumber"
               type="text"
               class="input-type7"
             />
@@ -139,6 +150,7 @@
           <div class="item-input space-type1">
             <div class="title-input">Email</div>
             <input
+              v-model="employee.email"
               type="text"
               class="input-type7"
               placeholder="example@gmail.com"
@@ -149,6 +161,7 @@
           <div class="item-input">
             <div class="title-input">Tài khoản ngân hàng</div>
             <input
+              v-model="employee.bankAccount"
               type="text"
               class="input-type7"
             />
@@ -156,6 +169,7 @@
           <div class="item-input space-type1">
             <div class="title-input">Tên ngân hàng</div>
             <input
+              v-model="employee.bankName"
               type="text"
               class="input-type7"
             />
@@ -163,6 +177,7 @@
           <div class="item-input space-type1">
             <div class="title-input">Chi nhánh</div>
             <input
+              v-model="employee.bankBranch"
               type="text"
               class="input-type7"
             />
@@ -184,6 +199,7 @@
 
 <script>
 import moment from "moment";
+import {mapState} from 'vuex'
 export default {
   data() {
     return {
@@ -192,51 +208,48 @@ export default {
     };
   },
   mounted:function(){
-    // this.$refs.inputName.focus()
+    this.$refs.employeeCode.focus()
   },
   computed: {
-    // ...mapState({
-    //   isEdit: (state) => state.isEdit,
-    //   isAdd: (state) => state.isAdd,
-    //   isShow: (state) => state.isShow,
-    //   employee: (state) => state.employee,
-    //   departments: (state) => state.departments,
-    //   newEmployeeCode: (state) => state.newEmployeeCode,
-    // }),
-    // employeeCode: {
-      
-    //   get() {
-    //     //Nếu là thêm mới nhân viên thì sẽ lấy giá trị là newEmployeeCode
-    //     if (this.isAdd) {
-    //       return this.newEmployeeCode;
-    //     }
-    //     //Ngược lại sẽ lấy employeeCode của nhân viên đã được select
-    //     else return this.employee.employeeCode;
-    //   },
-    //   set() {},
-    // },
-    // dateOfBirthFormat: {
-    //   // Format date để display lên UI
-    //   get() {
-    //     if (this.employee.dateOfBirth == null) return "";
-    //     return moment(this.employee.dateOfBirth).format("YYYY-MM-DD");
-    //   },
-    //   //Lấy giá trị của inputdate gán cho dateOfBirth
-    //   set(val) {
-    //     this.employee.dateOfBirth = val;
-    //   },
-    // },
-    // identifyDateFormat: {
-    //   // Format date để display lên UI
-    //   get() {
-    //     if (this.employee.identifyDate == null) return "";
-    //     return moment(this.employee.identifyDate).format("YYYY-MM-DD");
-    //   },
-    //   //Lấy giá trị của inputdate gán cho identifyDate
-    //   set(val) {
-    //     this.employee.identifyDate = val;
-    //   },
-    // },
+    ...mapState({
+      departments: (state) => state.departments,
+      typeOfInfoDialog: (state) => state.typeOfInfoDialog,
+      // isAdd: (state) => state.isAdd,
+      // isShow: (state) => state.isShow,
+      employee: (state) => state.employee,
+      // departments: (state) => state.departments,
+      // newEmployeeCode: (state) => state.newEmployeeCode,
+    }),
+    /**
+     * set-get cho employee.dateOfBirth
+     * CreatedBy KDLong 18/05/2021
+     */
+    dateOfBirthFormat: {
+      // Format date để display lên UI
+      get() {
+        if (this.employee.dateOfBirth == null) return "";
+        return moment(this.employee.dateOfBirth).format("YYYY-MM-DD");
+      },
+      //Lấy giá trị của inputdate gán cho dateOfBirth
+      set(val) {
+        this.employee.dateOfBirth = val;
+      },
+    },
+    /**
+     * set-get cho employee.identifyDate
+     * CreatedBy KDLong 18/05/2021
+     */
+    identifyDateFormat: {
+      // Format date để display lên UI
+      get() {
+        if (this.employee.identifyDate == null) return "";
+        return moment(this.employee.identifyDate).format("YYYY-MM-DD");
+      },
+      //Lấy giá trị của inputdate gán cho identifyDate
+      set(val) {
+        this.employee.identifyDate = val;
+      },
+    },
     // //Kiểm tra xem fullName và departmentName có trống hay không
     // checkError: function() {
     //   if (this.employee.fullName == "" || this.employee.departmentName == "")

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import {BASE_URL} from '../configs/Constants'
-import {DialogConstant} from '../configs/Constants'
+import { BASE_URL } from '../configs/Constants'
+import { AlertDialogConstant, InfoDialogConstant } from '../configs/Constants'
 Vue.use(Vuex)
 const initEmployee = {
     "employeeCode": "",
@@ -25,19 +25,21 @@ const initEmployee = {
 }
 
 export const store = new Vuex.Store({
-    state:{
-        employees:[],//Danh sách nhân viên được hiển thị trên UI
-        employee:{...initEmployee},//Nhân viên được chọn để thêm sửa
-        totalRecords: 0,//tổng số bản ghi thỏa mãn điều kiện lọc
-        totalPages: 0,//Tổng số trang
-        pageIndex: 1,//pageIndex dùng để lấy data
-        pageSize: 10,//số bản ghi trên 1 trang
-        search: "",//dùng để tìm kiếm
-        isLoading:false,//show svg loading
-        typeOfDialog:0,//Loại alertdialog show ra
-        messageOfDialog:""//Thông báo mà dialog show ra
+    state: {
+        employees: [], //Danh sách nhân viên được hiển thị trên UI
+        departments: [], //Danh sách đơn vị
+        employee: {...initEmployee }, //Nhân viên được chọn để thêm sửa
+        totalRecords: 0, //tổng số bản ghi thỏa mãn điều kiện lọc
+        totalPages: 0, //Tổng số trang
+        pageIndex: 1, //pageIndex dùng để lấy data
+        pageSize: 10, //số bản ghi trên 1 trang
+        search: "", //dùng để tìm kiếm
+        isLoading: false, //show svg loading
+        typeOfAlertDialog: AlertDialogConstant.IS_CLOSE_DIALOG, //Loại alert dialog show ra mặc định là đóng
+        typeOfInfoDialog: InfoDialogConstant.IS_CLOSE_DIALOG, //Loại info dialog show ra mặc định là đóng
+        messageOfDialog: "" //Thông báo mà dialog show ra
     },
-    actions:{
+    actions: {
         /**
          * Hàm thực hiện lấy danh sách nhân viên theo
          * pageIndex : vị trí trang
@@ -45,37 +47,54 @@ export const store = new Vuex.Store({
          * search : dữ liệu dùng để tìm kiếm
          * CreatedBy KDLong 18/05/2021
          */
-        loadEmployee: (context,callback) => {
+        loadEmployee: (context, callback) => {
             axios
                 .get(BASE_URL + 'Employees/Filter?Page=' + context.state.pageIndex + '&PageSize=' + context.state.pageSize + '&Search=' + context.state.search)
                 .then(res => {
                     context.commit('loadEmployee', res.data)
                     callback()
                 })
-                .catch(()=>callback())
+                .catch(() => callback())
 
         },
-        refreshData:(context,callback)=>{
+        /**
+         * Hàm thực hiện lấy tất cả đơn vị từ API
+         * CreatedBy KDLong 18/05/2021
+         */
+        loadDepartment: (context) => {
+            axios
+                .get(BASE_URL + 'Departments')
+                .then(res => {
+                    context.commit('loadDepartment', res.data)
+                })
+                .catch(e => console.log(e.response, "err loading department"))
+
+        },
+        /**
+         * Hàm thực hiện refresh data xét lại toàn bộ giá trị ban đầu cho state
+         * CreatedBy KDLong 18/05/2021
+         */
+        refreshData: (context, callback) => {
             axios
                 .get(BASE_URL + 'Employees/Filter?Page=1&PageSize=10&Search=')
                 .then(res => {
                     context.commit('refreshData', res.data)
                     callback()
                 })
-                .catch(()=>callback())
+                .catch(() => callback())
         },
         /**
          * Hàm thực hiện để show loading
          * CreatedBy KDLong 18/05/2021
          */
-        showLoading:(context)=>{
+        showLoading: (context) => {
             context.commit('showLoading')
         },
         /**
          * Hàm thực hiện để hide loading
          * CreatedBy KDLong 18/05/2021
          */
-        hideLoading:(context)=>{
+        hideLoading: (context) => {
             context.commit('hideLoading')
         },
         /**
@@ -103,30 +122,71 @@ export const store = new Vuex.Store({
          * Hàm thực hiện export dữ liệu ra file excel
          * CreatedBy KDLong 18/05/2021
          */
-        exportData:()=>{
+        exportData: () => {
             // Lấy toàn bộ dữ liệu
-            window.open(BASE_URL+'Employees/ExportAll')
-            //Lấy dữ liệu của trang hiện thời trên UI
-            // window.open(BASE_URL+'Employees/Export?Page=' + context.state.pageIndex + '&PageSize=' + context.state.pageSize + '&Search=' + context.state.search)
+            window.open(BASE_URL + 'Employees/ExportAll')
+                //Lấy dữ liệu của trang hiện thời trên UI
+                // window.open(BASE_URL+'Employees/Export?Page=' + context.state.pageIndex + '&PageSize=' + context.state.pageSize + '&Search=' + context.state.search)
         },
         /**
          * Hàm thực hiện việc show dialog để xác nhận xóa nhân viên
          * CreatedBy KDLong 18/05/2021
          */
-        showDialogConfirmDelete:(context,employee)=>{
-            context.commit('showDialogConfirmDelete',employee)
+        showDialogConfirmDelete: (context, employee) => {
+            context.commit('showDialogConfirmDelete', employee)
         },
         /**
          * Hàm thực close dialog alert
          * CreatedBy KDLong 18/05/2021
          */
-        closeAlertDialog:(context)=>{
+        closeAlertDialog: (context) => {
             context.commit('closeAlertDialog')
         },
-
-
+        /**
+         * Hàm thực hiện xoá nhân viên theo Id
+         * CreatedBy KDLong 18/05/2021
+         */
+        deleteEmployee: (context, callback) => {
+            //Nếu trang hiển thị có 1 nhân viên thì giảm trang xuống 1 đơn vị sau đó thực hiện xoá
+            if (context.state.employees.length == 1) {
+                context.commit('changePageIndex', context.state.pageIndex - 1)
+            }
+            axios
+                .delete(BASE_URL + 'Employees/' + context.state.employee.employeeId)
+                .then(() => {
+                    // Đóng dialog
+                    context.commit('closeAlertDialog');
+                    // load lại data
+                    callback()
+                })
+        },
+        /**
+         * Hàm thực hiện lấy mã nhân viên mới nhất từ API
+         * CreatedBy KDLong 18/05/2021
+         */
+        getNewEmployeeCode: (context) => {
+            axios
+                .get(BASE_URL + 'Employees/NewEmployeeCode')
+                .then(res => {
+                    context.commit('getNewEmployeeCode', res.data)
+                })
+        },
+        /**
+         * Hàm thực hiện show dialog add
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogAdd: (context) => {
+            context.commit('showDialogAdd')
+        },
+        /**
+         * Hàm thực hiện chọn và show ra thông tin nhân viên cần sửa
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogEdit: (context, employee) => {
+            context.commit('showDialogEdit', employee)
+        },
     },
-    mutations:{
+    mutations: {
         /**
          * Sử lý gán dữ liệu cho employees,totalPages,totalRecords
          * @param {} state 
@@ -138,27 +198,38 @@ export const store = new Vuex.Store({
             state.totalPages = response.totalPages
             state.totalRecords = response.totalRecords
         },
-        refreshData(state,response){
+        /**
+         * Thực hiện gán data cho departments
+         * CreatedBy KDLong 18/05/2021
+         */
+        loadDepartment(state, departments) {
+            state.departments = departments
+        },
+        /**
+         * Thực hiện refresh lại data
+         * CreatedBy KDLong 18/05/2021
+         */
+        refreshData(state, response) {
             state.employees = response.data
             state.totalPages = response.totalPages
             state.totalRecords = response.totalRecords
-            state.employee={...initEmployee}
-            state.pageIndex=1
-            state.pageSize=10
-            state.search=""
+            state.employee = {...initEmployee }
+            state.pageIndex = 1
+            state.pageSize = 10
+            state.search = ""
         },
         /**
          * Hiển thị loading
          * CreatedBy KDLong 18/05/2021
          */
-        showLoading(state){
+        showLoading(state) {
             state.isLoading = true
         },
         /**
          * Ẩn thị loading
          * CreatedBy KDLong 18/05/2021
          */
-        hideLoading(state){
+        hideLoading(state) {
             state.isLoading = false
         },
         /**
@@ -182,12 +253,45 @@ export const store = new Vuex.Store({
         changePageIndex(state, value) {
             state.pageIndex = value
         },
-        showDialogConfirmDelete(state,employee){
-            state.messageOfDialog="Bạn có thực sự muốn xóa nhân viên <"+ employee.employeeCode +"> không?"
-            state.typeOfDialog = DialogConstant.IS_CONFIRM_DELETE
+        /**
+         * Thay đổi mess trong dialog và set type cho dialog
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogConfirmDelete(state, employee) {
+            state.employee = employee
+            state.messageOfDialog = "Bạn có thực sự muốn xóa nhân viên <" + employee.employeeCode + "> không?"
+            state.typeOfAlertDialog = AlertDialogConstant.IS_CONFIRM_DELETE
         },
-        closeAlertDialog(state){
-            state.typeOfDialog = 0
-        }
+        /**
+         * Đóng dialog và reset lại mess
+         * CreatedBy KDLong 18/05/2021
+         */
+        closeAlertDialog(state) {
+            state.typeOfAlertDialog = AlertDialogConstant.IS_CLOSE_DIALOG
+            state.messageOfDialog = ""
+        },
+        /**
+         * Gán mã nhân viên mới nhất cho employee
+         * CreatedBy KDLong 18/05/2021
+         */
+        getNewEmployeeCode(state, newEmployeeCode) {
+            state.employee = {...initEmployee }
+            state.employee.employeeCode = newEmployeeCode
+        },
+        /**
+         * Thay đổi giá trị của typeOfInfoDialog để show dialog add ra
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogAdd(state) {
+            state.typeOfInfoDialog = InfoDialogConstant.IS_ADD
+        },
+        /**
+         * Thay đổi giá trị của typeOfInfoDialog để show dialog edit ra
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogEdit(state, employee) {
+            state.employee = employee
+            state.typeOfInfoDialog = InfoDialogConstant.IS_EDIT
+        },
     }
 })

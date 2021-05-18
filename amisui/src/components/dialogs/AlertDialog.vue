@@ -3,26 +3,26 @@
     <div class="dialog-box-notify"></div>
     <div class="dialog-notify-content">
       <div class="content-box">
-        <div class="notify-icon" :class="typeOfDialog ==IS_REQUIRED ? 'icon-required':typeOfDialog==IS_CODE_EXIST?'icon-danger':typeOfDialog==IS_CONFIRM_DELETE?'icon-danger':typeOfDialog ==IS_DATA_CHANGE?'icon-question':null"></div>
+        <div class="notify-icon" :class="typeOfAlertDialog ==IS_REQUIRED ? 'icon-required':typeOfAlertDialog==IS_CODE_EXIST?'icon-danger':typeOfAlertDialog==IS_CONFIRM_DELETE?'icon-danger':typeOfAlertDialog ==IS_DATA_CHANGE?'icon-question':null"></div>
         <div class="content-text">
           {{messageOfDialog}}
         </div>
       </div>
       <div class="line"></div>
 
-      <div v-if="typeOfDialog == IS_REQUIRED">
+      <div v-if="typeOfAlertDialog == IS_REQUIRED">
           <div class="btn-close-alert btn-green">Đóng</div>
       </div>
 
-      <div v-if="typeOfDialog == IS_CODE_EXIST">
+      <div v-if="typeOfAlertDialog == IS_CODE_EXIST">
           <div class="btn-accept btn-green">Đồng ý</div>
       </div>
 
-      <div v-if="typeOfDialog == IS_CONFIRM_DELETE">
+      <div v-if="typeOfAlertDialog == IS_CONFIRM_DELETE">
         <div class="btn-no btn-white" @click="closeAlertDialog">Không</div>
-        <div class="btn-yes btn-green" @click="deleteEmployee">Có</div>
+        <div class="btn-yes btn-green" @click="btnDelete">Có</div>
       </div>
-      <div v-if="typeOfDialog == IS_DATA_CHANGE">
+      <div v-if="typeOfAlertDialog == IS_DATA_CHANGE">
         <div class="btn-cancel btn-white">Hủy</div>
         <div class="btn-yes btn-green">Có</div>
         <div class="btn-no-2 btn-white">Không</div>
@@ -33,28 +33,49 @@
 
 <script>
 import {mapActions, mapState } from "vuex";
-import { DialogConstant } from '../../configs/Constants'
+import { AlertDialogConstant } from '../../configs/Constants'
+import _ from 'lodash'
+import {TIME_OF_DEBOUNCE} from '../../configs/Constants'
 
 export default {
   data(){
       return{
-        IS_CODE_EXIST : DialogConstant.IS_CODE_EXIST,
-        IS_REQUIRED : DialogConstant.IS_REQUIRED,
-        IS_CONFIRM_DELETE : DialogConstant.IS_CONFIRM_DELETE,
-        IS_DATA_CHANGE : DialogConstant.IS_DATA_CHANGE,
+        IS_CODE_EXIST : AlertDialogConstant.IS_CODE_EXIST,
+        IS_REQUIRED : AlertDialogConstant.IS_REQUIRED,
+        IS_CONFIRM_DELETE : AlertDialogConstant.IS_CONFIRM_DELETE,
+        IS_DATA_CHANGE : AlertDialogConstant.IS_DATA_CHANGE,
       }
   },
   computed:{
     ...mapState({
-      typeOfDialog:(state)=>state.typeOfDialog,
+      typeOfAlertDialog:(state)=>state.typeOfAlertDialog,
       messageOfDialog:(state)=>state.messageOfDialog,
     })
   },
   methods:{
     ...mapActions([
       'deleteEmployee',
-      'closeAlertDialog'
+      'closeAlertDialog',
+      'showLoading',
+      'hideLoading',
+      'loadEmployee'
     ]),
+    /**
+     * Hàm sử lý độ trễ load sau thời gian TIME_OF_DEBOUNCE sẽ gọi các hàm ở trong nó
+     * CreatedBy KDLong 18/05/2021
+     */
+    debounceLoad:_.debounce(function(functionLoad){
+      functionLoad()
+      },TIME_OF_DEBOUNCE),
+    /**
+     * Hàm thực hiện sau khi click vào btn có của dialog delete
+     * CreatedBy KDLong 18/05/2021
+     */
+    btnDelete(){
+      this.showLoading()
+      this.deleteEmployee(()=>this.showNotification())
+      this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
+    },
     // //Sự kiện khi click btnAccept
     // btnAccept(){
     //     if(this.isDelete){
@@ -76,15 +97,13 @@ export default {
     //       this.closeDialogNotify()
     //     }
     // },
-    // //Show ra notification
-    // openNotificationWithIcon() {
-    //   this.$notification['success']({
-    //     message: 'Thành công!',
-    //     description:
-    //       'Xoá thành công!',
-    //     duration:2
-    //   });
-    // },
+    //Show ra notification
+    showNotification() {
+      this.$notification['success']({
+        message: 'Xoá thành công!',
+        duration:2
+      });
+    },
   }
 };
 </script>

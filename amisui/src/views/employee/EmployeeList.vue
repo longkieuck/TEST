@@ -4,7 +4,7 @@
     <div class="container">
       <div class="header">
         <div class="header-name">Nhân viên</div>
-        <div class="btn-add">Thêm mới nhân viên</div>
+        <div class="btn-add" @click="btnAdd">Thêm mới nhân viên</div>
       </div>
       <div class="content">
         <div class="top-content">
@@ -42,6 +42,7 @@
             </thead>
             <tbody class="table-body">
               <tr
+                @dblclick="showDialogEdit(e)"
                v-for="e in employees"
                :key="e.employeeId"
               >
@@ -57,7 +58,7 @@
                 <td style="min-width:200px">{{ e.bankName }}</td>
                 <td style="min-width:200px;border-right:none">{{ e.bankBranch }}</td>
                 <div class="td-last">
-                  <div class="edit-option">Sửa</div>
+                  <div class="edit-option" @click="showDialogEdit(e)">Sửa</div>
                   <a-dropdown :trigger="['click']">
                     <a class="ant-dropdown-link">
                     <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
@@ -111,6 +112,7 @@
             </div>
             <div class="select-page">
               <a-pagination
+                v-model="pageIndex"
                 size="small"
                 class="pagging-item"
                 showLessItems="true" 
@@ -124,8 +126,8 @@
         </div>
       </div>
     </div>
-    <InfoDialog v-if="false" />
-    <AlertDialog v-if="typeOfDialog != 0"/>
+    <InfoDialog v-if="typeOfInfoDialog != IS_CLOSE_DIALOG" />
+    <AlertDialog v-if="typeOfAlertDialog != IS_CLOSE_DIALOG"/>
   </div>
 </template>
 
@@ -134,7 +136,7 @@ import ClickOutside from 'vue-click-outside'
 import moment from "moment";
 
 import _ from 'lodash'
-import {TIME_OF_DEBOUNCE} from '../../configs/Constants'
+import {TIME_OF_DEBOUNCE,AlertDialogConstant } from '../../configs/Constants'
 
 import { mapState, mapActions } from "vuex";
 
@@ -142,9 +144,6 @@ import { mapState, mapActions } from "vuex";
 import InfoDialog from '../../components/dialogs/InfoDialog.vue'
 import AlertDialog from "../../components/dialogs/AlertDialog.vue";
 
-//Thời gian trễ
-// let TIME_OF_DEBOUNCE_LOAD = 1000
-// let TIME_OF_DEBOUNCE_TYPE = 500
 export default {
   components: {
     InfoDialog,
@@ -152,6 +151,7 @@ export default {
   },
   data(){
     return{
+      IS_CLOSE_DIALOG : AlertDialogConstant.IS_CLOSE_DIALOG
     }
   },
   created() {
@@ -160,10 +160,9 @@ export default {
   computed: {
     ...mapState({
       employees: (state) => state.employees,
-      // isAdd: (state) => state.isAdd,
-      // isShow: (state) => state.isShow,
+      typeOfInfoDialog: (state) => state.typeOfInfoDialog,
       // isShowNotifyDialog:(state)=>state.isShowNotifyDialog,
-      typeOfDialog: (state) => state.typeOfDialog,
+      typeOfAlertDialog: (state) => state.typeOfAlertDialog,
       totalRecords: (state) => state.totalRecords,
       totalPages: (state) => state.totalPages,
       pageIndex: (state) => state.pageIndex,
@@ -175,6 +174,7 @@ export default {
   methods: {
     ...mapActions([
       "loadEmployee",
+      "loadDepartment",
       "refreshData",
       "showLoading",
       "hideLoading",
@@ -182,7 +182,10 @@ export default {
       "changeSearchText",
       "changePageIndex",
       "exportData",
-      "showDialogConfirmDelete"
+      "showDialogConfirmDelete",
+      "getNewEmployeeCode",
+      "showDialogAdd",
+      "showDialogEdit"
     ]),
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
@@ -236,6 +239,7 @@ export default {
      */
     loadData:function(){
       this.showLoading()
+      this.loadDepartment()
       this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
     },
     /**
@@ -276,36 +280,27 @@ export default {
       this.changeSearchText(e.target.value)
       this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
     },TIME_OF_DEBOUNCE),
-    // //Sự kiện click vào thêm nhân viên
-    // btnAdd() {
-    //   //Lấy mã nhân viên mới về
-    //   this.getNewEmployeeCode();
-    //   //Show dialog để add
-    //   this.showDialogForAdd();
-    // },
+    /**
+     * Hàm thực hiện show dialog Add và lấy mã nhân viên mới sau khi click
+     * CreatedBy KDLong 18/05/2021
+     */
+    btnAdd() {
+      
+      //Lấy mã nhân viên mới về
+      this.getNewEmployeeCode();
+      
+      //Show dialog để add
+      this.showDialogAdd();
+    },
     // // Sự kiện khi double click vào tr=> hiện chi tiết nhân viên
     // showDetailEmployee(e){
     //   this.showDialogForEdit(e)
     // },
-    // // Sử lý sự kiện thay đổi pagesize
-    // handleChangePageSize(value){
-    //   //Show loading lên
-    //   this.showLoading()
-    //   //set lại pageIndex = 1
-    //   this.changePage(1)
-    //   //set pageSize = value
-    //   this.changePageSize(value)
-    //   //Load lại data
-    //   this.debounceLoadData()
-    // },
-    // // Sử lý sự kiện lọc
-    // handleChageSearch:_.debounce(function(e){
-    //   //sau khi gõ TIME_OF_DEBOUNCE_TYPE ms sẽ thực hiện search
-    //   this.showLoading()
-    //   this.changeSearchText(e.target.value)
-    //   this.debounceLoadData();
-    // },TIME_OF_DEBOUNCE_TYPE),
-    // //Sử lý icon pagging
+
+    /**
+     * Sử lý pre và next cho pagging
+     * CreatedBy KDLong 18/05/2021
+     */
     itemRender(current, type, originalElement) {
       if (type === 'prev') {
         return <a class="btn-prev">Trước</a>;
@@ -314,15 +309,6 @@ export default {
       }
       return originalElement;
     },
-    // //Thay đổi pageIndex
-    // onChangePage(page){
-    //   //show loading
-    //   this.showLoading()
-    //   //Thay PageIndex = page
-    //   this.changePage(page)
-    //   //Load data
-    //   this.debounceLoadData()
-    // },
   },
   mounted: function() {},
   filters: {
