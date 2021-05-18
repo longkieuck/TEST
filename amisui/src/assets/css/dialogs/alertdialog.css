@@ -1,0 +1,173 @@
+.dialog-box-notify {
+    position: fixed;
+    background-color: #000;
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+}
+
+.dialog-notify-content {
+    z-index: 100;
+    border-radius: 4px;
+    text-align: left;
+    padding: 50px 30px 30px 30px;
+    position: fixed;
+    background-color: white;
+    height: 200px;
+    width: 444px;
+    top: calc(50% - 100px);
+    left: calc(50% - 222px);
+}
+
+.content-box {
+    display: flex;
+}
+
+.notify-icon {
+    height: 48px;
+    width: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    background-image: url('../../img/Sprites.64af8f61.svg');
+    margin-right: 20px;
+    margin: -8px 20px 28px 0px;
+    background-repeat: no-repeat;
+    /* background-position: -666px -456px; */
+}
+.icon-danger{
+    background-position: -592px -456px;
+}
+.icon-question{
+    background-position: -826px -456px;
+}
+.icon-required{
+    background-position: -666px -456px;
+}
+
+
+.content-text {
+    color: #111;
+    font-size: 15px;
+}
+
+.line {
+    margin-top: 15px;
+    width: 100%;
+    border-top: 2px solid #c4c4c4;
+}
+
+.dialog-notify-content .btn-accept {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    align-items: center;
+    height: 36px;
+    color: white;
+    background-color: #2CA01C;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 68%;
+}
+
+
+.dialog-notify-content .btn-close-alert {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    align-items: center;
+    height: 36px;
+    color: white;
+    background-color: #2CA01C;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 34%;
+}
+
+.dialog-notify-content .btn-yes {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 60px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    align-items: center;
+    height: 36px;
+    color: white;
+    background-color: #2CA01C;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 73%;
+}
+.dialog-notify-content .btn-no {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    align-items: center;
+    height: 36px;
+    color: #111;
+    background-color: transparent;
+    border: 1px solid #8d9096;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 0%;
+}
+
+.dialog-notify-content .btn-cancel {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    align-items: center;
+    height: 36px;
+    color: #111;
+    background-color: transparent;
+    border: 1px solid #8d9096;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 0%;
+}
+
+.dialog-notify-content .btn-no-2 {
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 80px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 36px;
+    align-items: center;
+    height: 36px;
+    color: #111;
+    background-color: transparent;
+    border: 1px solid #8d9096;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 53%;
+}
+
+.btn-white:hover{
+    background-color: #d2d3d6;
+}
+
+.btn-green:hover{
+    background-color: #35bf22;
+}

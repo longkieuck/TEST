@@ -85,6 +85,25 @@ namespace MISA.CukCuk.Api.Controllers
             //return File(stream, "application/octet-stream", excelName);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
+        /// <summary>
+        /// Export file Excel
+        /// </summary>
+        /// <param name="employeeFilter">
+        /// Page - Trang cần lấy
+        /// PageSize - Số bản ghi trong trang
+        /// Search - Mã,Tên nhân viên
+        /// </param>
+        /// <returns>Trang Excel Đang Hiện Trên Màn Hình</returns>
+        /// CreatedBy KDLong 12/05/2021
+        [HttpGet("ExportAll")]
+        public IActionResult ExportAll()
+        {
+            var stream = _employeeService.ExportExcel();
+            string excelName = $"Danh-sach-nhan-vien.xlsx";
+
+            //return File(stream, "application/octet-stream", excelName);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
         #endregion
     }
 }

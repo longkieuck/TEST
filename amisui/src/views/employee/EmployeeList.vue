@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="icon-loader" v-show="false"></div>
+    <div class="icon-loader" v-show="isLoading"></div>
     <div class="container">
       <div class="header">
         <div class="header-name">Nhân viên</div>
@@ -10,47 +10,52 @@
         <div class="top-content">
           <div class="input-search">
             <input
-              
+              v-model="search"
+              @keyup="handleChageSearchText"
               placeholder="Tìm theo mã, tên nhân viên"
               type="text"
               class="input"
             />
             <div class="icon-search"></div>
           </div>
-          <div class="export"></div>
-          <div class="refresh"></div>
+          <div class="refresh" @click="btnRefresh"></div>
+          <div class="export" @click="exportData"></div>
+          
         </div>
         <div class="grid-data">
           <table>
             <thead>
               <tr>
                 <div class="th-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
-                <th style="min-width:150px">Mã nhân viên</th>
-                <th style="min-width:250px">Tên nhân viên</th>
+                <th style="min-width:120px">Mã nhân viên</th>
+                <th style="min-width:200px">Tên nhân viên</th>
                 <th style="min-width:120px">Giới tính</th>
                 <th style="min-width:150px;text-align:center;padding-left:0px">Ngày sinh</th>
                 <th style="min-width:200px">Số CMND</th>
-                <th style="min-width:250px">Chức danh</th>
+                <th style="min-width:200px">Chức danh</th>
                 <th style="min-width:250px">Tên đơn vị</th>
                 <th style="min-width:150px">Số tài khoản</th>
-                <th style="min-width:250px">Tên ngân hàng</th>
+                <th style="min-width:200px">Tên ngân hàng</th>
                 <th style="min-width:200px;border-right:none">Chi nhánh TK ngân hàng</th>
                 <div class="th-last">Chức năng</div>
               </tr>
             </thead>
             <tbody class="table-body">
-              <tr>
+              <tr
+               v-for="e in employees"
+               :key="e.employeeId"
+              >
                 <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
-                <td style="min-width:150px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:120px">11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td style="min-width:200px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:150px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:200px;border-right:none">11111111</td>
+                <td style="min-width:120px">{{ e.employeeCode }}</td>
+                <td style="min-width:200px">{{ e.fullName }}</td>
+                <td style="min-width:120px">{{ e.genderName }}</td>
+                <td style="min-width:150px;text-align:center;padding-left:0px">{{ e.dateOfBirth | formatDate }}</td>
+                <td style="min-width:200px">{{ e.identifyNumber }}</td>
+                <td style="min-width:200px">{{ e.positionName }}</td>
+                <td style="min-width:250px">{{ e.departmentName }}</td>
+                <td style="min-width:150px">{{ e.bankAccount }}</td>
+                <td style="min-width:200px">{{ e.bankName }}</td>
+                <td style="min-width:200px;border-right:none">{{ e.bankBranch }}</td>
                 <div class="td-last">
                   <div class="edit-option">Sửa</div>
                   <a-dropdown :trigger="['click']">
@@ -59,89 +64,24 @@
                     </a>
                     <a-menu slot="overlay" class="cover-option">
                       <a-menu-item key="0">
-                        <a href="" class="option">Nhân bản</a>
+                        <a href="#" class="option">Nhân bản</a>
                       </a-menu-item>
-                      <a-menu-item key="1">
-                        <a href="" class="option">Xóa</a>
+                      <a-menu-item key="1" @click="showDialogConfirmDelete(e)">
+                        <a href="#" class="option">Xóa</a>
                       </a-menu-item>
                       <a-menu-item key="2">
-                        <a href="" class="option">Ngưng sử dụng</a>
+                        <a href="#" class="option">Ngưng sử dụng</a>
                       </a-menu-item>
                     </a-menu>
                   </a-dropdown>
                 </div>
               </tr>
-              <tr>
-                <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
-                <td style="min-width:150px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:120px">11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td style="min-width:200px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:150px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:200px;border-right:none">11111111</td>
-                <div class="td-last">
-                  <div class="edit-option">Sửa</div>
-                  <a-dropdown :trigger="['click']">
-                    <a class="ant-dropdown-link">
-                    <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
-                    </a>
-                    <a-menu slot="overlay" class="cover-option">
-                      <a-menu-item key="0">
-                        <a href="" class="option">Nhân bản</a>
-                      </a-menu-item>
-                      <a-menu-item key="1">
-                        <a href="" class="option">Xóa</a>
-                      </a-menu-item>
-                      <a-menu-item key="2">
-                        <a href="" class="option">Ngưng sử dụng</a>
-                      </a-menu-item>
-                    </a-menu>
-                  </a-dropdown>
-                </div>
-              </tr>
-              <tr>
-                <div class="td-first" style="min-width:40px"><a-checkbox></a-checkbox></div>
-                <td style="min-width:150px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:120px">11111111</td>
-                <td style="min-width:150px;text-align:center;padding-left:0px">11111111</td>
-                <td style="min-width:200px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:150px">11111111</td>
-                <td style="min-width:250px">11111111</td>
-                <td style="min-width:200px;border-right:none">11111111</td>
-                <div class="td-last">
-                  <div class="edit-option">Sửa</div>
-                  <a-dropdown :trigger="['click']">
-                    <a class="ant-dropdown-link">
-                    <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
-                    </a>
-                    <a-menu slot="overlay" class="cover-option">
-                      <a-menu-item key="0">
-                        <a href="" class="option">Nhân bản</a>
-                      </a-menu-item>
-                      <a-menu-item key="1">
-                        <a href="" class="option">Xóa</a>
-                      </a-menu-item>
-                      <a-menu-item key="2">
-                        <a href="" class="option">Ngưng sử dụng</a>
-                      </a-menu-item>
-                    </a-menu>
-                  </a-dropdown>
-                </div>
-              </tr>
-              
-              
+           
             </tbody>
           </table>
         </div>
         <div class="pagging">
-          <div class="total-record">Tổng số: <b>100</b> bản ghi</div>
+          <div class="total-record">Tổng số: <b>{{totalRecords}}</b> bản ghi</div>
           <div class="right-pagging">
             <div class="select-record-number">
               <a-select
@@ -150,9 +90,7 @@
                 placeholder="Số bản ghi trên 1 trang"
                 option-filter-prop="children"
                 :filter-option="filterOption"
-                @focus="handleFocus"
-                @blur="handleBlur"
-                @change="handleChange"
+                @change="handleChangePageSize"
             >
                 <a-select-option class="option-page-size" value="10">
                 10 bản ghi trên 1 trang
@@ -172,75 +110,103 @@
             </a-select>
             </div>
             <div class="select-page">
-              <!-- <a-pagination
+              <a-pagination
+                size="small"
+                class="pagging-item"
                 showLessItems="true" 
-                @change="onChangePage" 
                 :total="totalRecords" 
                 :pageSize="pageSize" 
                 :item-render="itemRender"
-              /> -->
+                @change="handleChangePageIndex"
+              />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <InfoDialog v-if="true" />
-    <!-- <NotifyDialog v-if="isShowNotifyDialog"/> -->
+    <InfoDialog v-if="false" />
+    <AlertDialog v-if="typeOfDialog != 0"/>
   </div>
 </template>
 
 <script>
 import ClickOutside from 'vue-click-outside'
 import moment from "moment";
-// import _ from 'lodash'
-// import { mapActions, mapState } from "vuex";
-// import NotifyDialog from '../../components/dialogs/NotifyDialog.vue'
-import InfoDialog from "../../components/dialogs/InfoDialog.vue";
+
+import _ from 'lodash'
+import {TIME_OF_DEBOUNCE} from '../../configs/Constants'
+
+import { mapState, mapActions } from "vuex";
+
+
+import InfoDialog from '../../components/dialogs/InfoDialog.vue'
+import AlertDialog from "../../components/dialogs/AlertDialog.vue";
+
 //Thời gian trễ
 // let TIME_OF_DEBOUNCE_LOAD = 1000
 // let TIME_OF_DEBOUNCE_TYPE = 500
 export default {
   components: {
     InfoDialog,
-    // NotifyDialog
+    AlertDialog
   },
   data(){
     return{
-      numberOptionActive:0
     }
   },
   created() {
-    // this.loadData();
+    this.loadData()
   },
   computed: {
-    // ...mapState({
-    //   isEdit: (state) => state.isEdit,
-    //   isAdd: (state) => state.isAdd,
-    //   isShow: (state) => state.isShow,
-    //   isShowNotifyDialog:(state)=>state.isShowNotifyDialog,
-    //   employees: (state) => state.employees,
-    //   totalRecords: (state) => state.totalRecords,
-    //   totalPages: (state) => state.totalPages,
-    //   pageIndex: (state) => state.pageIndex,
-    //   pageSize: (state) => state.pageSize,
-    //   search: (state) => state.search,
-    //   isLoading:(state)=>state.isLoading
-    // }),
+    ...mapState({
+      employees: (state) => state.employees,
+      // isAdd: (state) => state.isAdd,
+      // isShow: (state) => state.isShow,
+      // isShowNotifyDialog:(state)=>state.isShowNotifyDialog,
+      typeOfDialog: (state) => state.typeOfDialog,
+      totalRecords: (state) => state.totalRecords,
+      totalPages: (state) => state.totalPages,
+      pageIndex: (state) => state.pageIndex,
+      pageSize: (state) => state.pageSize,
+      search: (state) => state.search,
+      isLoading:(state)=>state.isLoading
+    }),
   },
   methods: {
+    ...mapActions([
+      "loadEmployee",
+      "refreshData",
+      "showLoading",
+      "hideLoading",
+      "changePageSize",
+      "changeSearchText",
+      "changePageIndex",
+      "exportData",
+      "showDialogConfirmDelete"
+    ]),
+    /**
+     * Hàm thực hiện thêm class vào mũi tên được click
+     * CreatedBy KDLong 18/05/2021
+     */
     activeOption(event){
       event.currentTarget.classList.add('active');
     },
+    /**
+     * Hàm thực hiện loại bỏ border cho mũi tên khi click ra ngoài
+     * CreatedBy KDLong 18/05/2021
+     */
     removeActiveOption(event){
-      
-      // var activeIcon = document.querySelectorAll('.active');
+      //Kiểm tra vị trí click xem có phải mũi tên hay không
       if(event.target.classList.contains("drop-down-icon") ||event.target.classList.contains("cover-drop-down-icon") ){
+        //Nếu có phải thì loại bỏ hết các border của các mũi tên khác
         let activeIcon = document.querySelectorAll('.active');
         activeIcon.forEach((activeElement) => {
                     activeElement.classList.remove('active');
                 });
+        //Sau đó border cho mũi tên vừa click
         event.target.classList.add('active')
       }else{
+        //Nếu chỗ click ko phải mũi tên thì loại bỏ border cho mũi tên
         let activeIcon = document.querySelectorAll('.active');
         activeIcon.forEach((activeElement) => {
                     activeElement.classList.remove('active');
@@ -248,38 +214,68 @@ export default {
       }
       
     },
+    /**
+     * Hàm thực lọc data cho combobox
+     * CreatedBy KDLong 18/05/2021
+     */
     filterOption(input, option) {
       return (
         option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
       );
-    }
-    // ...mapActions([
-    //   "loadEmployee",
-    //   "loadDepartment",
-    //   "showDialogForAdd",
-    //   "showDialogForEdit",
-    //   "getNewEmployeeCode",
-    //   "deleteEmployee",
-    //   "showDialogConfirmDelete",
-    //   "changePageSize",
-    //   "changeSearchText",
-    //   "changePage",
-    //   "isLoading",
-    //   "showLoading",
-    //   "closeLoading",
-    //   "exportData",
-    // ]),
-    // //Hàm thực hiện load data
-    // loadData:function(){
-    //   this.showLoading()
-    //   this.debounceLoadData()
-    // } ,
-    // // Sử lý độ trễ
-    // debounceLoadData:_.debounce(function(){
-    //   this.loadEmployee();
-    //   this.loadDepartment();
-    //   this.closeLoading()
-    //   },TIME_OF_DEBOUNCE_LOAD),
+    },
+    /**
+     * Hàm sử lý độ trễ load sau thời gian TIME_OF_DEBOUNCE sẽ gọi các hàm ở trong nó
+     * CreatedBy KDLong 18/05/2021
+     */
+    debounceLoad:_.debounce(function(functionLoad){
+      functionLoad()
+      },TIME_OF_DEBOUNCE),
+    /**
+     * Hàm thực hiện load data
+     * CreatedBy KDLong 18/05/2021
+     */
+    loadData:function(){
+      this.showLoading()
+      this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
+    },
+    /**
+     * Hàm thực hiện refresh data
+     * CreatedBy KDLong 18/05/2021
+     */
+    btnRefresh:function(){
+      this.showLoading();
+      this.debounceLoad(()=>this.refreshData(()=>this.hideLoading()))
+    },
+    /**
+     * Hàm thực hiện load data sau khi thay đổi page size
+     * CreatedBy KDLong 18/05/2021
+     */
+    handleChangePageSize(value){
+      this.showLoading();
+      this.changePageIndex(1);
+      this.changePageSize(value);
+      this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
+    },
+    /**
+     * Hàm thực hiện load data sau khi thay đổi page index
+     * CreatedBy KDLong 18/05/2021
+     */
+    handleChangePageIndex(value){
+      this.showLoading();
+      this.changePageIndex(value)
+      this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
+    },
+    /**
+     * Hàm thực hiện load data sau khi thay đổi text trong input text
+     * CreatedBy KDLong 18/05/2021
+     */
+    handleChageSearchText:_.debounce(function(e){
+      //sau khi gõ TIME_OF_DEBOUNCE_TYPE ms sẽ thực hiện search
+      this.showLoading()
+      this.changePageIndex(1);
+      this.changeSearchText(e.target.value)
+      this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
+    },TIME_OF_DEBOUNCE),
     // //Sự kiện click vào thêm nhân viên
     // btnAdd() {
     //   //Lấy mã nhân viên mới về
@@ -310,14 +306,14 @@ export default {
     //   this.debounceLoadData();
     // },TIME_OF_DEBOUNCE_TYPE),
     // //Sử lý icon pagging
-    // itemRender(current, type, originalElement) {
-    //   if (type === 'prev') {
-    //     return <a>Trước</a>;
-    //   } else if (type === 'next') {
-    //     return <a>Sau</a>;
-    //   }
-    //   return originalElement;
-    // },
+    itemRender(current, type, originalElement) {
+      if (type === 'prev') {
+        return <a class="btn-prev">Trước</a>;
+      } else if (type === 'next') {
+        return <a class="btn-next">Sau</a>;
+      }
+      return originalElement;
+    },
     // //Thay đổi pageIndex
     // onChangePage(page){
     //   //show loading

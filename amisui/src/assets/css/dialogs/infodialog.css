@@ -329,3 +329,7 @@
     color: #2CA01C !important;
     background-color: #ECEEF1 !important;
 }
+.ant-input:focus{
+    box-shadow: none !important;
+    border: 1px solid #2CA01C !important;
+}

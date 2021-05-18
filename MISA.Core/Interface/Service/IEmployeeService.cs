@@ -45,5 +45,12 @@ namespace MISA.Core.Interface.Service
         /// <returns>Trang Excel Đang Hiện Trên Màn Hình</returns>
         /// CreatedBy KDLong 12/05/2021
         public Stream ExportExcel(EmployeeFilter employeeFilter);
+        /// <summary>
+        /// Export file Excel
+        /// </summary>
+        /// <returns>Tệp Excel chứa tất cả dữ liệu</returns>
+        /// CreatedBy KDLong 12/05/2021
+        public Stream ExportExcel();
+
     }
 }
