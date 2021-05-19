@@ -245,10 +245,9 @@ export default {
       departments: (state) => state.departments,
       typeOfInfoDialog: (state) => state.typeOfInfoDialog,
       messageOfDialog: (state) => state.messageOfDialog,
-      employee: (state) => state.employee,
-      cloneEmployee:(state)=> state.cloneEmployee,
+      cloneEmployee: (state) => state.employee,
+      employee:(state)=> state.cloneEmployee,
       typeOfAlertDialog: (state) => state.typeOfAlertDialog,
-      // newEmployeeCode: (state) => state.newEmployeeCode,
     }),
     /**
      * set-get cho employee.dateOfBirth
@@ -280,12 +279,6 @@ export default {
         this.employee.identifyDate = val;
       },
     },
-    // //Kiểm tra xem fullName và departmentName có trống hay không
-    // checkError: function() {
-    //   if (this.employee.fullName == "" || this.employee.departmentName == "")
-    //     return true;
-    //   return false;
-    // },
   },
   methods: {
     ...mapActions([
@@ -441,7 +434,7 @@ export default {
         this.showDialogRequired()
       }else{
         //Nếu là dialog add thì thực hiện thêm nhân viên
-        if(this.typeOfInfoDialog == InfoDialogConstant.IS_ADD){
+        if(this.typeOfInfoDialog == InfoDialogConstant.IS_ADD || this.typeOfInfoDialog == InfoDialogConstant.IS_CLONE){
           this.addEmployee({
             //nếu thêm thành công thì sẽ vào đây
             callbackSuccess:()=>{
@@ -548,5 +541,6 @@ export default {
 </script>
 
 <style>
+@import "../../assets/css/components/radiobutton.css";
 @import "../../assets/css/dialogs/infodialog.css";
 </style>

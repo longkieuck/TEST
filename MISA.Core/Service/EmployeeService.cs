@@ -53,19 +53,20 @@ namespace MISA.Core.Service
             var maxEmployeeCode = _employeeRepository.GetMaxEmployeeCode();
             if (maxEmployeeCode == null)
             {
+                //Nếu chưa có nv nào thì khở tạo luôn
                 return "NV-0001";
             }
-            var res = maxEmployeeCode.Substring(0, 3);
+            var res = maxEmployeeCode.Substring(0, 3);//res = NV-
 
-            var numStr = maxEmployeeCode.Substring(3);
+            var numStr = maxEmployeeCode.Substring(3);//numStr chỉ còn lại toàn số
 
-            var numInt = Int32.Parse(numStr) + 1;
+            var numInt = Int32.Parse(numStr) + 1;//Ép kiểu r thêm 1 đơn vị
             var numNew = Convert.ToString(numInt);
             var lengthNumNew = numNew.Length;
             for (int i = 0; i < 4 - lengthNumNew; i++)
             {
                 numNew = "0" + numNew;
-            }
+            }//Thêm các số 0 còn thiếu sao cho có dạng NV-xxxx
             res = res + numNew;
 
             return res;
@@ -75,10 +76,24 @@ namespace MISA.Core.Service
         /// </summary>
         /// <param name="entity"></param>
         /// CreatedBy KDLong 12/05/2021
-        protected override void CustomValidate(Employee entity)
+        protected override void CustomValidate(Employee entity, bool isInsert)
         {
-            var isEmployeeCodeExist = _employeeRepository.CheckEmployeeCodeExist(entity.EmployeeCode);
-            if (isEmployeeCodeExist) throw new BaseException("EmployeeCode" + MISAConstant.Dev_Msg_Exist);
+            if (isInsert)
+            {
+                //Kiểm tra xem mã đã trùng chưa
+                var isEmployeeCodeExist = _employeeRepository.CheckEmployeeCodeExist(entity.EmployeeCode);
+                if (isEmployeeCodeExist) throw new BaseException("EmployeeCode" + MISAConstant.Dev_Msg_Exist);
+            }
+            else
+            {
+                //Kiểm tra xem mã định sửa đã có trong hệ thống hay chưa
+                var guidDefault = new Guid();
+                var employeeId = _employeeRepository.GetEmployeeIdByEmployeeCode(entity.EmployeeCode);
+                // !guidDefault là có mã trong hệ thống=> kiểm tra xem có phải chính mình không
+                //Nếu k phải chính mình => đã có trong hệ thống
+                if(employeeId != guidDefault && employeeId != entity.EmployeeId)
+                throw new BaseException("EmployeeCode" + MISAConstant.Dev_Msg_Exist);
+            }
         }
         /// <summary>
         /// Export file Excel

@@ -15,23 +15,6 @@
     color: #111;
 }
 
-.btn-add {
-    border-radius: 4px;
-    width: 150px;
-    font-size: 13px;
-    text-align: center;
-    line-height: 30px;
-    align-items: center;
-    height: 32px;
-    color: white;
-    background-color: #2CA01C;
-    cursor: pointer;
-}
-
-.btn-add:hover {
-    background-color: #43c432;
-}
-
 .content {
     position: absolute;
     left: 10px;
@@ -89,12 +72,12 @@
     margin-left: 10px;
     margin-right: 10px;
 }
-.refresh:hover{
+
+.refresh:hover {
     background-position: -1097px -88px;
 }
 
 .export {
-    
     background-image: url('../../img/Sprites.64af8f61.svg');
     background-position: -704px -200px;
     width: 24px;
@@ -103,7 +86,8 @@
     min-height: 24px;
     cursor: pointer;
 }
-.export:hover{
+
+.export:hover {
     background-position: -704px -256px;
 }
 
@@ -117,16 +101,15 @@
     height: calc(100vh - 230px);
 }
 
-.btn-prev{
+.btn-prev {
     font-size: 13px !important;
     margin-right: 5px !important;
 }
 
-.btn-next{
+.btn-next {
     font-size: 13px !important;
     margin-left: 5px !important;
 }
-
 
 .total-record {
     font-size: 13px;
@@ -161,15 +144,17 @@
     height: 40px;
     /* width: 360px; */
 }
-.pagging-item{
+
+.pagging-item {
     /* position: absolute; */
     /* top :20px;
     right: 0; */
 }
+
 .icon-loader {
     z-index: 10000;
     top: 50%;
-    left: 50%;
+    left: 54%;
     position: fixed;
     justify-content: center;
     align-items: center;
@@ -206,37 +191,9 @@
     background-color: #ECEEF1 !important;
 }
 
-.ant-select-dropdown-menu-item-selected {
-    font-weight: 500 !important;
-    color: white !important;
-    background-color: #2CA01C !important;
-}
-
-.ant-select-dropdown-menu-item-selected:hover:not(.ant-select-dropdown-menu-item-disabled) {
-    background-color: #2CA01C !important;
-    font-weight: 500 !important;
-    color: white !important;
-}
-
-.ant-select-dropdown-menu-item-active {
-    font-weight: 500 !important;
-    color: #2CA01C !important;
-    background-color: #ECEEF1 !important;
-}
-
-.ant-pagination-item-active {
-    font-weight: 600 !important;
-    border-color: #BBBBBB !important;
-}
-
-.ant-pagination-item-active a {
-    color: #111 !important;
-}
-.ant-pagination-item{
-    font-size: 13px;
-    border-radius: 0 !important;
-}
-
-.ant-pagination-item a:hover{
-    color: #111 !important;
+.no-data {
+    position: absolute;
+    z-index: 10;
+    top: 40%;
+    left: 45%;
 }

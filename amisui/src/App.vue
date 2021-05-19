@@ -22,6 +22,8 @@ export default {
 </script>
 
 <style>
+@import "./assets/css/components/button.css";
+@import "./assets/css/components/autocomplete.css";
 #app {
   font-family: notosans-regular;
   -webkit-font-smoothing: antialiased;

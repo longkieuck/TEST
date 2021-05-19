@@ -83,5 +83,20 @@ namespace MISA.Infrastructure.Repository
                 return paging;
             }
         }
+        /// <summary>
+        /// Lấy id của nhân viên theo mã nhân viên(dùng để kiểm tra mã nhân viên đã tồn tại chưa)
+        /// </summary>
+        /// <param name="employeeCode">Mã nhân viên dùng để lấy id</param>
+        /// <returns>Id theo mã</returns>
+        public Guid GetEmployeeIdByEmployeeCode(string employeeCode)
+        {
+            using (dbConnection = new MySqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@EmployeeCode", employeeCode);
+                var res = dbConnection.QueryFirstOrDefault<Guid>($"Proc_GetEmployeeIdByEmployeeCode", param: parameters, commandType: CommandType.StoredProcedure);
+                return res;
+            }
+        }
     }
 }

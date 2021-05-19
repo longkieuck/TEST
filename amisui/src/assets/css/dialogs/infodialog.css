@@ -224,44 +224,6 @@
     width: 850px;
 }
 
-.white-button {
-    width: 67px;
-    font-size: 14px;
-    text-align: center;
-    line-height: 36px;
-    align-items: center;
-    height: 36px;
-    color: #111;
-    background-color: white;
-    cursor: pointer;
-    font-weight: 600;
-    border: 0.5px solid #8a8484;
-    border-radius: 4px;
-}
-
-.white-button:hover {
-    background-color: #e5e5e5;
-}
-
-.green-button {
-    width: 120px;
-    font-size: 14px;
-    text-align: center;
-    line-height: 36px;
-    align-items: center;
-    height: 36px;
-    color: white;
-    background-color: #2CA01C;
-    cursor: pointer;
-    font-weight: 600;
-    border-radius: 4px;
-    margin-left: 20px;
-}
-
-.green-button:hover {
-    background-color: #43c432;
-}
-
 .right-bottom-button {
     display: flex;
 }
@@ -278,6 +240,7 @@
     height: 22px;
     background-color: #292a2d;
 }
+
 .name-error {
     padding: 3px;
     align-items: center;
@@ -307,49 +270,22 @@
 
 /* custom antd */
 
-.ant-radio-inner::after {
-    background-color: #2CA01C !important;
-}
-
-.ant-radio-checked .ant-radio-inner {
-    border-color: #2CA01C !important;
-}
-
-.ant-radio:hover .ant-radio-inner {
-    border-color: #2CA01C !important;
-}
-
 .option-page-size:hover {
     color: #2CA01C;
     background-color: #ECEEF1 !important;
 }
 
-.ant-select-dropdown-menu-item-selected {
-    font-weight: 500 !important;
-    color: white !important;
-    background-color: #2CA01C !important;
-}
-
-.ant-select-dropdown-menu-item-selected:hover:not(.ant-select-dropdown-menu-item-disabled) {
-    background-color: #2CA01C !important;
-    font-weight: 500 !important;
-    color: white !important;
-}
-
-.ant-select-dropdown-menu-item-active {
-    font-weight: 500 !important;
-    color: #2CA01C !important;
-    background-color: #ECEEF1 !important;
-}
-.ant-input:focus{
+.ant-input:focus {
     box-shadow: none !important;
     border: 1px solid #2CA01C !important;
 }
-.not-validation{
+
+.not-validation {
     border: 1px solid red !important;
 }
-input[title]:hover::after{
+
+input[title]:hover::after {
     content: attr(title);
     background-color: #111;
-    color:white;
+    color: white;
 }

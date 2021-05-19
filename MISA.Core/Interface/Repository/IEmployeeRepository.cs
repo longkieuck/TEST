@@ -37,5 +37,11 @@ namespace MISA.Core.Interface.Repository
         /// <returns>Danh sách nv</returns>
         /// CreatedBy KDLong 07/05/2021
         public Pagging<Employee> GetEmployees(EmployeeFilter employeeFilter);
+        /// <summary>
+        /// Lấy id của nhân viên theo mã nhân viên(dùng để kiểm tra mã nhân viên đã tồn tại chưa)
+        /// </summary>
+        /// <param name="employeeCode">Mã nhân viên dùng để lấy id</param>
+        /// <returns>Id theo mã</returns>
+        public Guid GetEmployeeIdByEmployeeCode(string employeeCode);
     }
 }

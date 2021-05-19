@@ -95,28 +95,10 @@ export default {
       this.closeAlertDialog();
       this.$emit("btnSave");
     },
-    // //Sự kiện khi click btnAccept
-    // btnAccept(){
-    //     if(this.isDelete){
-    //       let employeeId = this.employeeId
-    //       //Nếu là delete thì gửi action deleteEmployee đi với employeeId
-    //       this.deleteEmployee({employeeId,callback:()=>{
-    //           //Delete thành công sẽ gọi 2 hàm callback
-    //           //Load lại employee
-    //           this.loadEmployee();
-    //           //show notification
-    //           this.openNotificationWithIcon()
-    //       }})
-    //       //Đóng dialog
-    //       this.closeDialogNotify()
-    //     }else{
-    //       //Nếu là mã trùng thì sẽ thực hiện lấy mã mới
-    //       this.getNewEmployeeCode()
-    //       //và đóng dialog đi
-    //       this.closeDialogNotify()
-    //     }
-    // },
-    //Show ra notification
+    /**
+     * Show ra thông báo xoá thành công
+     * CreatedBy KDLong 18/05/2021
+     */
     showNotification() {
       this.$notification["success"]({
         message: "Xoá thành công!",

@@ -1,0 +1,17 @@
+.ant-select-dropdown-menu-item-selected {
+    font-weight: 500 !important;
+    color: white !important;
+    background-color: #2CA01C !important;
+}
+
+.ant-select-dropdown-menu-item-selected:hover:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #2CA01C !important;
+    font-weight: 500 !important;
+    color: white !important;
+}
+
+.ant-select-dropdown-menu-item-active {
+    font-weight: 500 !important;
+    color: #2CA01C !important;
+    background-color: #ECEEF1 !important;
+}

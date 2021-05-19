@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="no-data" v-if="totalRecords==0">
+      <img src="https://actappg1.misacdn.net/img/bg_report_nodata.76e50bd8.svg">
+      <div>Không có dữ liệu</div>
+    </div>
     <div class="icon-loader" v-show="isLoading"></div>
     <div class="container">
       <div class="header">
@@ -65,7 +69,7 @@
                     </a>
                     <a-menu slot="overlay" class="cover-option">
                       <a-menu-item key="0">
-                        <a href="#" class="option" @click="showDialogClone(e)">Nhân bản</a>
+                        <a href="#" class="option" @click="btnClone(e)">Nhân bản</a>
                       </a-menu-item>
                       <a-menu-item key="1" @click="showDialogConfirmDelete(e)">
                         <a href="#" class="option">Xóa</a>
@@ -186,7 +190,8 @@ export default {
       "showDialogConfirmDelete",
       "getNewEmployeeCode",
       "showDialogAdd",
-      "showDialogEdit"
+      "showDialogEdit",
+      "showDialogClone"
     ]),
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
@@ -286,19 +291,15 @@ export default {
      * CreatedBy KDLong 18/05/2021
      */
     btnAdd() {
-      
       //Lấy mã nhân viên mới về
       this.getNewEmployeeCode()
-      this.showDialogAdd()
-      
       //Show dialog để add
-      
+      this.showDialogAdd()
     },
-    // // Sự kiện khi double click vào tr=> hiện chi tiết nhân viên
-    // showDetailEmployee(e){
-    //   this.showDialogForEdit(e)
-    // },
-
+    btnClone(employee){
+      this.getNewEmployeeCode()
+      this.showDialogClone(employee)
+    },
     /**
      * Xử lý pre và next cho pagging
      * CreatedBy KDLong 18/05/2021
@@ -328,5 +329,6 @@ export default {
 
 <style>
 @import "../../assets/css/components/table.css";
+@import "../../assets/css/components/pagination.css";
 @import "../../assets/css/views/employee.css";
 </style>
