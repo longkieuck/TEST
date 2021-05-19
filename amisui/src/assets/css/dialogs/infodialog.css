@@ -266,16 +266,28 @@
     display: flex;
 }
 
+.code-error {
+    padding: 3px;
+    align-items: center;
+    text-align: center;
+    margin-top: -5px;
+    margin-left: 5px;
+    color: snow;
+    position: absolute;
+    font-size: 11px;
+    height: 22px;
+    background-color: #292a2d;
+}
 .name-error {
     padding: 3px;
     align-items: center;
     text-align: center;
-    margin-top: -10px;
-    margin-left: 40px;
+    margin-top: -5px;
+    margin-left: 50px;
     color: snow;
     position: absolute;
-    font-size: 14px;
-    height: 25px;
+    font-size: 11px;
+    height: 22px;
     background-color: #292a2d;
 }
 
@@ -283,12 +295,12 @@
     padding: 3px;
     align-items: center;
     text-align: center;
-    margin-top: 40px;
-    margin-left: 90px;
+    margin-top: 50px;
+    margin-left: 110px;
     color: snow;
     position: absolute;
-    font-size: 14px;
-    height: 25px;
+    font-size: 11px;
+    height: 22px;
     background-color: #292a2d;
 }
 
@@ -332,4 +344,12 @@
 .ant-input:focus{
     box-shadow: none !important;
     border: 1px solid #2CA01C !important;
+}
+.not-validation{
+    border: 1px solid red !important;
+}
+input[title]:hover::after{
+    content: attr(title);
+    background-color: #111;
+    color:white;
 }

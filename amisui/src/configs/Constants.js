@@ -9,7 +9,8 @@ export const AlertDialogConstant = {
 export const InfoDialogConstant = {
     IS_CLOSE_DIALOG: 0,
     IS_ADD: 1,
-    IS_EDIT: 2
+    IS_EDIT: 2,
+    IS_CLONE:3
 }
 
 export const BASE_URL = 'https://localhost:44378/api/v1/'

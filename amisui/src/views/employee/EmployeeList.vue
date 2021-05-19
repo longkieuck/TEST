@@ -65,7 +65,7 @@
                     </a>
                     <a-menu slot="overlay" class="cover-option">
                       <a-menu-item key="0">
-                        <a href="#" class="option">Nhân bản</a>
+                        <a href="#" class="option" @click="showDialogClone(e)">Nhân bản</a>
                       </a-menu-item>
                       <a-menu-item key="1" @click="showDialogConfirmDelete(e)">
                         <a href="#" class="option">Xóa</a>
@@ -126,8 +126,8 @@
         </div>
       </div>
     </div>
-    <InfoDialog v-if="typeOfInfoDialog != IS_CLOSE_DIALOG" />
-    <AlertDialog v-if="typeOfAlertDialog != IS_CLOSE_DIALOG"/>
+    <InfoDialog v-if="typeOfInfoDialog != IS_CLOSE_DIALOG" @btnAdd="btnAdd"/>
+    <AlertDialog v-if="typeOfAlertDialog != IS_CLOSE_DIALOG && typeOfAlertDialog != IS_DATA_CHANGE"/>
   </div>
 </template>
 
@@ -136,7 +136,7 @@ import ClickOutside from 'vue-click-outside'
 import moment from "moment";
 
 import _ from 'lodash'
-import {TIME_OF_DEBOUNCE,AlertDialogConstant } from '../../configs/Constants'
+import {TIME_OF_DEBOUNCE,AlertDialogConstant } from '../../configs/constants'
 
 import { mapState, mapActions } from "vuex";
 
@@ -151,7 +151,8 @@ export default {
   },
   data(){
     return{
-      IS_CLOSE_DIALOG : AlertDialogConstant.IS_CLOSE_DIALOG
+      IS_CLOSE_DIALOG : AlertDialogConstant.IS_CLOSE_DIALOG,
+      IS_DATA_CHANGE : AlertDialogConstant.IS_DATA_CHANGE
     }
   },
   created() {
@@ -227,7 +228,7 @@ export default {
       );
     },
     /**
-     * Hàm sử lý độ trễ load sau thời gian TIME_OF_DEBOUNCE sẽ gọi các hàm ở trong nó
+     * Hàm xử lý độ trễ load sau thời gian TIME_OF_DEBOUNCE sẽ gọi các hàm ở trong nó
      * CreatedBy KDLong 18/05/2021
      */
     debounceLoad:_.debounce(function(functionLoad){
@@ -287,10 +288,11 @@ export default {
     btnAdd() {
       
       //Lấy mã nhân viên mới về
-      this.getNewEmployeeCode();
+      this.getNewEmployeeCode()
+      this.showDialogAdd()
       
       //Show dialog để add
-      this.showDialogAdd();
+      
     },
     // // Sự kiện khi double click vào tr=> hiện chi tiết nhân viên
     // showDetailEmployee(e){
@@ -298,7 +300,7 @@ export default {
     // },
 
     /**
-     * Sử lý pre và next cho pagging
+     * Xử lý pre và next cho pagging
      * CreatedBy KDLong 18/05/2021
      */
     itemRender(current, type, originalElement) {

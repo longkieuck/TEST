@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { BASE_URL } from '../configs/Constants'
-import { AlertDialogConstant, InfoDialogConstant } from '../configs/Constants'
+import { BASE_URL } from '../configs/constants'
+import { AlertDialogConstant, InfoDialogConstant } from '../configs/constants'
 Vue.use(Vuex)
 const initEmployee = {
     "employeeCode": "",
@@ -29,6 +29,7 @@ export const store = new Vuex.Store({
         employees: [], //Danh sách nhân viên được hiển thị trên UI
         departments: [], //Danh sách đơn vị
         employee: {...initEmployee }, //Nhân viên được chọn để thêm sửa
+        cloneEmployee:{...initEmployee },//Nhân viên nhân bản
         totalRecords: 0, //tổng số bản ghi thỏa mãn điều kiện lọc
         totalPages: 0, //Tổng số trang
         pageIndex: 1, //pageIndex dùng để lấy data
@@ -136,6 +137,28 @@ export const store = new Vuex.Store({
             context.commit('showDialogConfirmDelete', employee)
         },
         /**
+         * Hàm thực hiện việc show ra dialog thông báo không được để trống
+         * CreatedBy KDLong 19/05/2021
+         */
+        showDialogRequired:(context)=>{
+            context.commit('showDialogRequired')
+        },
+        /**
+         * Show dialog thông báo mã nhân viên trùng
+         * CreatedBy KDLong 19/05/2021
+         */
+        showDialogCodeExist:(context,message)=>{
+            context.commit('showDialogCodeExist',message)
+        },
+        /**
+         * Show dialog thông báo dữ liệu đã có sự thay đổi 
+         * CreatedBy KDLong 19/05/2021
+         */
+        showDialogDataChange:(context)=>{
+            context.commit('showDialogDataChange')   
+        },
+
+        /**
          * Hàm thực close dialog alert
          * CreatedBy KDLong 18/05/2021
          */
@@ -159,6 +182,25 @@ export const store = new Vuex.Store({
                     // load lại data
                     callback()
                 })
+        },
+        /**
+         * Hàm thực hiện sửa nhân viên
+         * CreatedBy KDLong 18/05/2021
+         */
+        editEmployee:(context,payload)=>{
+            axios
+                .put(BASE_URL+'Employees', context.state.employee)
+                .then(() => payload.callbackSuccess())
+                .catch(() => payload.callbackFail())
+        },
+        /**
+         * Hàm thực hiện thêm mới nhân viên
+         * CreatedBy KDLong 18/05/2021
+         */
+        addEmployee:(context,payload)=>{
+            axios.post(BASE_URL+'Employees', context.state.employee)
+                .then(() => payload.callbackSuccess())
+                .catch(() => payload.callbackFail())
         },
         /**
          * Hàm thực hiện lấy mã nhân viên mới nhất từ API
@@ -185,6 +227,20 @@ export const store = new Vuex.Store({
         showDialogEdit: (context, employee) => {
             context.commit('showDialogEdit', employee)
         },
+        /**
+         * Hàm thực hiện thay đổi message trong dialog
+         * CreatedBy KDLong 19/05/2021
+         */
+        changeMessageOfDialog:(context,message)=>{
+            context.commit('changeMessageOfDialog', message)
+        },
+        /**
+         * Đóng dialog thêm/sửa nhân viên
+         * CreatedBy KDLong 19/05/2021
+         */
+        closeInfoDialog:(context)=>{
+            context.commit('closeInfoDialog')
+        }
     },
     mutations: {
         /**
@@ -263,6 +319,29 @@ export const store = new Vuex.Store({
             state.typeOfAlertDialog = AlertDialogConstant.IS_CONFIRM_DELETE
         },
         /**
+         * Thay đổi type của dialog để show thông tin không được để trống
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogRequired(state){
+            state.typeOfAlertDialog = AlertDialogConstant.IS_REQUIRED
+        },
+        /**
+         * Thay đổi type của dialog và gán mess mới cho dialog
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogCodeExist(state,message){
+            state.typeOfAlertDialog = AlertDialogConstant.IS_CODE_EXIST
+            state.messageOfDialog = message
+        },
+        /**
+         * Show dialog thông báo dữ liệu đã có sự thay đổi 
+         * CreatedBy KDLong 19/05/2021
+         */
+        showDialogDataChange(state){
+            state.typeOfAlertDialog = AlertDialogConstant.IS_DATA_CHANGE
+            state.messageOfDialog = "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?"
+        },
+        /**
          * Đóng dialog và reset lại mess
          * CreatedBy KDLong 18/05/2021
          */
@@ -275,14 +354,16 @@ export const store = new Vuex.Store({
          * CreatedBy KDLong 18/05/2021
          */
         getNewEmployeeCode(state, newEmployeeCode) {
-            state.employee = {...initEmployee }
+            
             state.employee.employeeCode = newEmployeeCode
+            state.cloneEmployee = {...state.employee}
         },
         /**
          * Thay đổi giá trị của typeOfInfoDialog để show dialog add ra
          * CreatedBy KDLong 18/05/2021
          */
         showDialogAdd(state) {
+            state.employee = {...initEmployee }
             state.typeOfInfoDialog = InfoDialogConstant.IS_ADD
         },
         /**
@@ -290,8 +371,33 @@ export const store = new Vuex.Store({
          * CreatedBy KDLong 18/05/2021
          */
         showDialogEdit(state, employee) {
+            state.cloneEmployee = {...employee}
             state.employee = employee
             state.typeOfInfoDialog = InfoDialogConstant.IS_EDIT
         },
+        /**
+         * Thay đổi giá trị của typeOfInfoDialog để show dialog edit ra
+         * CreatedBy KDLong 18/05/2021
+         */
+        showDialogClone(state, employee) {
+            state.cloneEmployee = {...employee}
+            state.employee = employee
+            state.typeOfInfoDialog = InfoDialogConstant.IS_CLONE
+        },
+        /**
+         * Thay đổi message trong dialog
+         * CreatedBy KDLong 19/05/2021
+         */
+        changeMessageOfDialog(state,message){
+            state.messageOfDialog = message
+        },
+        /**
+         * Đóng dialog thêm/sửa nhân viên và reset lại state.employee
+         * CreatedBy KDLong 19/05/2021
+         */
+        closeInfoDialog(state){
+            state.employee = {...initEmployee}
+            state.typeOfInfoDialog = InfoDialogConstant.IS_CLOSE_DIALOG
+        }
     }
 })
