@@ -45,7 +45,7 @@
 import { mapActions, mapState } from "vuex";
 import { AlertDialogConstant } from "../../configs/constants";
 import _ from "lodash";
-import { TIME_OF_DEBOUNCE } from "../../configs/constants";
+import { TIME_OF_DEBOUNCE , TIME_OF_NOTIFICATION } from "../../configs/constants";
 
 export default {
   data() {
@@ -102,7 +102,7 @@ export default {
     showNotification() {
       this.$notification["success"]({
         message: "Xoá thành công!",
-        duration: 2,
+        duration: TIME_OF_NOTIFICATION,
       });
     },
   },

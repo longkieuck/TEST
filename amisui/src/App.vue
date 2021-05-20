@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <TheNavbar/>
-    <TheHeader/>
-    <TheContent/>
+    <TheNavbar />
+    <TheHeader />
+    <TheContent />
   </div>
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader'
-import TheNavbar from './components/layout/TheNavbar'
-import TheContent from './components/layout/TheContent'
+import TheHeader from "./components/layout/TheHeader";
+import TheNavbar from "./components/layout/TheNavbar";
+import TheContent from "./components/layout/TheContent";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     TheHeader,
     TheNavbar,
-    TheContent
-  }
-}
+    TheContent,
+  },
+};
 </script>
 
 <style>
@@ -33,48 +33,45 @@ export default {
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 7px;
+  width: 5px;
+  height: 7px;
 }
-
 
 /* Track */
 
- ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
-
 
 /* Handle */
 
- ::-webkit-scrollbar-thumb {
-    background: #B8BCC3;
+::-webkit-scrollbar-thumb {
+  background: #b8bcc3;
 }
-
 
 /* Handle on hover */
 
- ::-webkit-scrollbar-thumb:hover {
-    background: #6b7077;
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7077;
 }
-input:focus{
-  border: 1px solid #2CA01C;
+input:focus {
+  border: 1px solid #2ca01c;
 }
-select:focus{
-  border: 1px solid #2CA01C;
+select:focus {
+  border: 1px solid #2ca01c;
 }
 input::placeholder {
-    font-style: italic;
-    color: #c4c4c4;
+  font-style: italic;
+  color: #c4c4c4;
 }
-input[type='checkbox']{
+input[type="checkbox"] {
   height: 18px;
   width: 18px;
   outline: none;
   border: 1px solid #afafaf;
 }
 @font-face {
-    font-family: 'notosans-regular';
-    src: url('./assets/fonts/notosans-regular.2cb88a13.woff2') format('opentype');
+  font-family: "notosans-regular";
+  src: url("./assets/fonts/notosans-regular.2cb88a13.woff2") format("opentype");
 }
 </style>

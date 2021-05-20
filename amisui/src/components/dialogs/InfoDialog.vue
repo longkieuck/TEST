@@ -54,11 +54,12 @@
           </div>
           <div class="item-input space-type2">
             <div class="title-input">Ngày sinh</div>
-            <a-date-picker 
-              :placeholder="dateFormat" 
-              class="input-type3" 
+            <a-date-picker
+              :placeholder="dateFormat"
+              class="input-type3"
               v-model="dateOfBirthFormat"
-              :format="dateFormat" />
+              :format="dateFormat"
+            />
           </div>
           <div class="item-input gender">
             <div class="title-input margin-gender-option">Giới tính</div>
@@ -76,28 +77,33 @@
           </div>
         </div>
         <div class="line-input">
-          <div class="item-input" @mouseover="showDepartmentRequired" @mouseleave="hideDepartmentRequired">
+          <div
+            class="item-input"
+            @mouseover="showDepartmentRequired"
+            @mouseleave="hideDepartmentRequired"
+          >
             <div class="title-input">
               Đơn vị <span style="color:red">*</span>
             </div>
             <a-select
-                @mouseleave="hideDepartmentRequired"
-                @focus="hoverValidate"
-                @blur="handleValidate"
-                v-model="employee.departmentName"
-                ref="departmentName"
-                class="input-type4a"
-                show-search
-                option-filter-prop="children"
-                :filter-option="filterOption"
+              @mouseleave="hideDepartmentRequired"
+              @focus="hoverValidate"
+              @blur="handleValidate"
+              v-model="employee.departmentName"
+              ref="departmentName"
+              class="input-type4a"
+              show-search
+              option-filter-prop="children"
+              :filter-option="filterOption"
             >
-                <a-select-option 
-                  v-for="d in departments" 
-                  :key="d.departmentId" 
-                  class="option-department" 
-                  :value="d.departmentName">
-                {{d.departmentName}}
-                </a-select-option>
+              <a-select-option
+                v-for="d in departments"
+                :key="d.departmentId"
+                class="option-department"
+                :value="d.departmentName"
+              >
+                {{ d.departmentName }}
+              </a-select-option>
             </a-select>
           </div>
           <div class="department-error" v-show="showDepartmentTooltip">
@@ -113,11 +119,12 @@
           </div>
           <div class="item-input space-type1">
             <div class="title-input">Ngày cấp</div>
-            <a-date-picker 
-              :placeholder="dateFormat" 
-              class="input-type3" 
+            <a-date-picker
+              :placeholder="dateFormat"
+              class="input-type3"
               v-model="identifyDateFormat"
-              :format="dateFormat" />
+              :format="dateFormat"
+            />
           </div>
         </div>
         <div class="line-input">
@@ -141,10 +148,7 @@
         <div class="line-input">
           <div class="item-input">
             <div class="title-input">Địa chỉ</div>
-            <input 
-              v-model="employee.address"
-              type="text" 
-              class="input-type6" />
+            <input v-model="employee.address" type="text" class="input-type6" />
           </div>
         </div>
         <div class="line-input">
@@ -211,34 +215,39 @@
         </div>
       </div>
     </div>
-    <AlertDialog 
-      v-if="typeOfAlertDialog== IS_DATA_CHANGE"
+    <AlertDialog
+      v-if="typeOfAlertDialog == IS_DATA_CHANGE"
       @btnSave="btnSave"
-      />
+    />
   </div>
 </template>
 
 <script>
-import _ from 'lodash'
-import {TIME_OF_DEBOUNCE, InfoDialogConstant,AlertDialogConstant } from '../../configs/constants'
+import _ from "lodash";
+import {
+  TIME_OF_DEBOUNCE,
+  TIME_OF_NOTIFICATION,
+  InfoDialogConstant,
+  AlertDialogConstant,
+} from "../../configs/constants";
 import moment from "moment";
-import {mapState , mapActions} from 'vuex'
+import { mapState, mapActions } from "vuex";
 import AlertDialog from "./AlertDialog.vue";
 export default {
-  components:{
-    AlertDialog
+  components: {
+    AlertDialog,
   },
   data() {
     return {
-    dateFormat: 'DD/MM/YYYY',
-    showDepartmentTooltip:false,
-    showCodeTooltip:false,
-    showNameTooltip:false,
-    IS_DATA_CHANGE : AlertDialogConstant.IS_DATA_CHANGE
+      dateFormat: "DD/MM/YYYY",
+      showDepartmentTooltip: false,
+      showCodeTooltip: false,
+      showNameTooltip: false,
+      IS_DATA_CHANGE: AlertDialogConstant.IS_DATA_CHANGE,
     };
   },
-  mounted:function(){
-    this.$refs.employeeCode.focus()
+  mounted: function() {
+    this.$refs.employeeCode.focus();
   },
   computed: {
     ...mapState({
@@ -246,7 +255,7 @@ export default {
       typeOfInfoDialog: (state) => state.typeOfInfoDialog,
       messageOfDialog: (state) => state.messageOfDialog,
       cloneEmployee: (state) => state.employee,
-      employee:(state)=> state.cloneEmployee,
+      employee: (state) => state.cloneEmployee,
       typeOfAlertDialog: (state) => state.typeOfAlertDialog,
     }),
     /**
@@ -292,7 +301,7 @@ export default {
       "closeInfoDialog",
       "showDialogCodeExist",
       "cloneEmployee",
-      "showDialogDataChange"
+      "showDialogDataChange",
     ]),
     moment,
     /**
@@ -301,28 +310,33 @@ export default {
      */
     filterOption(input, option) {
       return (
-        option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
       );
     },
     /**
      * Hàm thực hiện check validate sau khi blur khỏi ô cần validate
      * CreatedBy KDLong 18/05/2021
      */
-    handleValidate(e){
-      if(typeof(e) == "string"){
-        if(e == ""){
-          let element = document.getElementsByClassName("ant-select-selection")[1]
-          element.classList.add("not-validation")
-        }else{
-          let element = document.getElementsByClassName("ant-select-selection")[1]
-          element.classList.remove("not-validation")
+    handleValidate(e) {
+      if (typeof e == "string") {
+        if (e == "") {
+          let element = document.getElementsByClassName(
+            "ant-select-selection"
+          )[1];
+          element.classList.add("not-validation");
+        } else {
+          let element = document.getElementsByClassName(
+            "ant-select-selection"
+          )[1];
+          element.classList.remove("not-validation");
         }
-      }else{
-        if (e.target.value == "" ){
-        e.target.classList.add("not-validation")
-        } 
-        else{
-          e.target.classList.remove("not-validation")
+      } else {
+        if (e.target.value == "") {
+          e.target.classList.add("not-validation");
+        } else {
+          e.target.classList.remove("not-validation");
         }
       }
     },
@@ -330,56 +344,56 @@ export default {
      * Hàm thực hiện thay đổi border cho trường validate từ đỏ => xanh sau khi focus
      * CreatedBy KDLong 18/05/2021
      */
-    focusValidate(e){
-      e.target.classList.remove("not-validation")
+    focusValidate(e) {
+      e.target.classList.remove("not-validation");
     },
     /**
      * Hàm thực hiện show ra tooltip khi hover vào department
      * CreatedBy KDLong 18/05/2021
      */
-    showDepartmentRequired(){
+    showDepartmentRequired() {
       //Nếu đơn vị đang có border đỏ và hover lên nó thì sẽ show tooltips
-      let element = document.getElementsByClassName("ant-select-selection")[1]
-      if(element.classList.contains("not-validation")){
-        this.showDepartmentTooltip = true
+      let element = document.getElementsByClassName("ant-select-selection")[1];
+      if (element.classList.contains("not-validation")) {
+        this.showDepartmentTooltip = true;
       }
     },
     /**
      * Hàm thực hiện ẩn tooltips khi mouseleave ra khỏi đơn vị
      * CreatedBy KDLong 18/05/2021
      */
-    hideDepartmentRequired(){
-      this.showDepartmentTooltip = false
+    hideDepartmentRequired() {
+      this.showDepartmentTooltip = false;
     },
     /**
      * Hàm thực hiện show tooltip khi hover vào mã nhân viên
      * CreatedBy KDLong 18/05/2021
      */
-    showCodeRequired(e){
-      if(e.target.classList.contains("not-validation"))
-      this.showCodeTooltip = true
+    showCodeRequired(e) {
+      if (e.target.classList.contains("not-validation"))
+        this.showCodeTooltip = true;
     },
     /**
      * Hàm thực hiện ẩn tooltip khi mouseleave ra khỏi mã nhân viên
      * CreatedBy KDLong 18/05/2021
      */
-    hideCodeRequired(){
-      this.showCodeTooltip = false
+    hideCodeRequired() {
+      this.showCodeTooltip = false;
     },
     /**
      * Hàm thực hiện show tooltip khi hover vào tên nhân viên
      * CreatedBy KDLong 18/05/2021
      */
-    showNameRequired(e){
-      if(e.target.classList.contains("not-validation"))
-      this.showNameTooltip = true 
+    showNameRequired(e) {
+      if (e.target.classList.contains("not-validation"))
+        this.showNameTooltip = true;
     },
     /**
      * Hàm thực hiện ẩn tooltip khi mouseleave ra khỏi tên nhân viên
      * CreatedBy KDLong 18/05/2021
      */
-    hideNameRequired(){
-      this.showNameTooltip = false 
+    hideNameRequired() {
+      this.showNameTooltip = false;
     },
     /**
      * Kiểm tra và changeMessageOfDialog trước khi cất
@@ -387,143 +401,158 @@ export default {
      * Ngược lại trả về false
      * CreatedBy KDLong 18/05/2021
      */
-    checkIsEmptyRequired(){
-      let flag = false
-      if(this.employee.employeeCode.trim() == "" ){
-        this.changeMessageOfDialog("Mã không được để trống.")
-        this.$refs.employeeCode.classList.add("not-validation")
-        flag = true
+    checkIsEmptyRequired() {
+      let flag = false;
+      if (this.employee.employeeCode.trim() == "") {
+        this.changeMessageOfDialog("Mã không được để trống.");
+        this.$refs.employeeCode.classList.add("not-validation");
+        flag = true;
       }
-      if(this.employee.fullName.trim() == "" ){
-        if(this.messageOfDialog == "")
-        this.changeMessageOfDialog("Tên không được để trống.")
-        this.$refs.fullName.classList.add("not-validation")
-        flag = true
+      if (this.employee.fullName.trim() == "") {
+        if (this.messageOfDialog == "")
+          this.changeMessageOfDialog("Tên không được để trống.");
+        this.$refs.fullName.classList.add("not-validation");
+        flag = true;
       }
-      if(this.employee.departmentName == "" ){
-        if(this.messageOfDialog == "")
-        this.changeMessageOfDialog("Đơn vị không được để trống.")
-        let element = document.getElementsByClassName("ant-select-selection")[1]
-        element.classList.add("not-validation")
-        flag = true
+      if (this.employee.departmentName == "") {
+        if (this.messageOfDialog == "")
+          this.changeMessageOfDialog("Đơn vị không được để trống.");
+        let element = document.getElementsByClassName(
+          "ant-select-selection"
+        )[1];
+        element.classList.add("not-validation");
+        flag = true;
       }
-      return flag
+      return flag;
     },
     /**
      * Hàm xử lý độ trễ load sau thời gian TIME_OF_DEBOUNCE sẽ gọi các hàm ở trong nó
      * CreatedBy KDLong 18/05/2021
      */
-    debounceLoad:_.debounce(function(functionLoad){
-      functionLoad()
-      },TIME_OF_DEBOUNCE),
+    debounceLoad: _.debounce(function(functionLoad) {
+      functionLoad();
+    }, TIME_OF_DEBOUNCE),
     /**
      * Hàm thực hiện load data
      * CreatedBy KDLong 18/05/2021
      */
-    loadData:function(){
-      this.showLoading()
-      this.debounceLoad(()=>this.loadEmployee(()=>this.hideLoading()))
+    loadData: function() {
+      this.showLoading();
+      this.debounceLoad(() => this.loadEmployee(() => this.hideLoading()));
     },
     /**
      * Sự kiện sau khi click vào btnSave(Cất)
      * CreatedBy KDLong 18/05/2021
      */
-    btnSave(){
+    btnSave() {
       // Check xem có trường nào bỏ trống không và show ra dialog tương ứng
-      if(this.checkIsEmptyRequired()){
-        this.showDialogRequired()
-      }else{
+      if (this.checkIsEmptyRequired()) {
+        this.showDialogRequired();
+      } else {
         //Nếu là dialog add thì thực hiện thêm nhân viên
-        if(this.typeOfInfoDialog == InfoDialogConstant.IS_ADD || this.typeOfInfoDialog == InfoDialogConstant.IS_CLONE){
+        if (
+          this.typeOfInfoDialog == InfoDialogConstant.IS_ADD ||
+          this.typeOfInfoDialog == InfoDialogConstant.IS_CLONE
+        ) {
           this.addEmployee({
             //nếu thêm thành công thì sẽ vào đây
-            callbackSuccess:()=>{
-              this.closeInfoDialog()
-              this.showNotification("Thêm thành công!")
-              this.loadData()
-              
+            callbackSuccess: () => {
+              this.closeInfoDialog();
+              this.showNotification("Thêm thành công!");
+              this.loadData();
             },
             //Nếu thêm thất bại thì sẽ vào đây
-            callbackFail:()=>{
-              this.showDialogCodeExist("Mã nhân viên <"+this.employee.employeeCode+"> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.")
-            }
-          })
-          
-        }else{
+            callbackFail: () => {
+              this.showDialogCodeExist(
+                "Mã nhân viên <" +
+                  this.employee.employeeCode +
+                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+              );
+            },
+          });
+        } else {
           //Nếu là edit thì thực hiện sửa nhân viên
           this.editEmployee({
             //thành công
-            callbackSuccess:()=>{
-              this.closeInfoDialog()
-              this.showNotification("Sửa thành công!")
-              this.loadData()
+            callbackSuccess: () => {
+              this.closeInfoDialog();
+              this.showNotification("Sửa thành công!");
+              this.loadData();
             },
             //Thất bại
-            callbackFail:()=>{
-              this.showDialogCodeExist("Mã nhân viên <"+this.employee.employeeCode+"> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.")
-            }
-          })
+            callbackFail: () => {
+              this.showDialogCodeExist(
+                "Mã nhân viên <" +
+                  this.employee.employeeCode +
+                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+              );
+            },
+          });
         }
       }
-      
     },
     /**
      * Sự kiện sau khi click vào btnSaveAndAdd(Cất và thêm)
      * CreatedBy KDLong 18/05/2021
      */
-    btnSaveAndAdd(){
-      if(this.checkIsEmptyRequired()){
-        this.showDialogRequired()
-      }else{
+    btnSaveAndAdd() {
+      if (this.checkIsEmptyRequired()) {
+        this.showDialogRequired();
+      } else {
         //Nếu là dialog add thì thực hiện thêm nhân viên
-        if(this.typeOfInfoDialog == InfoDialogConstant.IS_ADD){
+        if (this.typeOfInfoDialog == InfoDialogConstant.IS_ADD) {
           this.addEmployee({
             //nếu thêm thành công thì sẽ vào đây
-            callbackSuccess:()=>{
-              this.closeInfoDialog()
-              this.showNotification("Thêm thành công!")
-              this.loadData()
-              this.$emit("btnAdd")
+            callbackSuccess: () => {
+              this.closeInfoDialog();
+              this.showNotification("Thêm thành công!");
+              this.loadData();
+              this.$emit("btnAdd");
             },
             //Nếu thêm thất bại thì sẽ vào đây
-            callbackFail:()=>{
-              this.showDialogCodeExist("Mã nhân viên <"+this.employee.employeeCode+"> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.")
-            }
-          })
-          
-        }else{
+            callbackFail: () => {
+              this.showDialogCodeExist(
+                "Mã nhân viên <" +
+                  this.employee.employeeCode +
+                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+              );
+            },
+          });
+        } else {
           //Nếu là edit thì thực hiện sửa nhân viên
           this.editEmployee({
             //thành công
-            callbackSuccess:()=>{
-              this.closeInfoDialog()
-              this.showNotification("Sửa thành công!")
-              this.loadData()
-              this.$emit("btnAdd")
+            callbackSuccess: () => {
+              this.closeInfoDialog();
+              this.showNotification("Sửa thành công!");
+              this.loadData();
+              this.$emit("btnAdd");
             },
             //Thất bại
-            callbackFail:()=>{
-              this.showDialogCodeExist("Mã nhân viên <"+this.employee.employeeCode+"> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.")
-            }
-          })
+            callbackFail: () => {
+              this.showDialogCodeExist(
+                "Mã nhân viên <" +
+                  this.employee.employeeCode +
+                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+              );
+            },
+          });
         }
       }
-
-      
     },
     /**
      * Sử lý sự kiện sau khi click vào btnClose
      * CreatedBy KDLong 18/05/2021
      */
-    btnClose(){
+    btnClose() {
       // Convert 2 object thành string để so sánh
-      let employeeStr = JSON.stringify(this.employee)
-      let cloneEmployeeStr = JSON.stringify(this.cloneEmployee)
+      let employeeStr = JSON.stringify(this.employee);
+      let cloneEmployeeStr = JSON.stringify(this.cloneEmployee);
       //Nếu dữ liệu trên dialog chưa có gì thay đổi thì cho phép đóng
-      if(employeeStr == cloneEmployeeStr) this.closeInfoDialog()
-      else{
+      if (employeeStr == cloneEmployeeStr) this.closeInfoDialog();
+      else {
         //Ngược lại
-        this.showDialogDataChange()
+        this.showDialogDataChange();
       }
     },
     /**
@@ -531,9 +560,9 @@ export default {
      * CreatedBy KDLong 18/05/2021
      */
     showNotification(message) {
-      this.$notification['success']({
+      this.$notification["success"]({
         message,
-        duration:2
+        duration: TIME_OF_NOTIFICATION,
       });
     },
   },

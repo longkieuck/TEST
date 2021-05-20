@@ -1,7 +1,6 @@
 .container {
     height: calc(100vh - 78px);
     margin: 20px 10px 10px 10px;
-    /* background-color: forestgreen; */
 }
 
 .header {
@@ -25,7 +24,6 @@
 }
 
 .top-content {
-    /* background-color: red; */
     position: absolute;
     right: 20px;
     top: 10px;
@@ -93,7 +91,6 @@
 
 .grid-data {
     position: absolute;
-    /* background-color: green; */
     left: 10px;
     right: 25px;
     overflow: auto;
@@ -124,7 +121,6 @@
     height: 40px;
     left: 10px;
     right: 25px;
-    /* background-color: red; */
 }
 
 .right-pagging {
@@ -133,28 +129,19 @@
 }
 
 .select-record-number {
-    /* margin-top: 15px; */
     margin-right: 10px;
 }
 
 .select-page {
-    /* background-color: red; */
     right: 0;
     margin-top: 3px;
     height: 40px;
-    /* width: 360px; */
-}
-
-.pagging-item {
-    /* position: absolute; */
-    /* top :20px;
-    right: 0; */
 }
 
 .icon-loader {
     z-index: 10000;
-    top: 50%;
-    left: 54%;
+    top: 46%;
+    left: 52.5%;
     position: fixed;
     justify-content: center;
     align-items: center;
