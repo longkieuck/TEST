@@ -190,7 +190,8 @@ export const actions = {
    * CreatedBy KDLong 18/05/2021
    */
   showDialogEdit: (context, employee) => {
-    context.commit("showDialogEdit", employee);
+    axios.get(BASE_URL + "Employees/"+employee.employeeId)
+    .then((res)=>context.commit("showDialogEdit", res.data))
   },
   /**
    * Hàm thực hiện chọn và show ra thông tin nhân viên cần clone và hiện mã mới

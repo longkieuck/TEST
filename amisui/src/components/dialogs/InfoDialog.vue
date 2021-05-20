@@ -449,7 +449,13 @@ export default {
       if (this.checkIsEmptyRequired()) {
         this.showDialogRequired();
       } else {
-        //Nếu là dialog add thì thực hiện thêm nhân viên
+        let employeeStr = JSON.stringify(this.employee);
+        let cloneEmployeeStr = JSON.stringify(this.cloneEmployee);
+        if(employeeStr == cloneEmployeeStr){
+          this.closeInfoDialog();
+        }
+        else{
+          //Nếu là dialog add thì thực hiện thêm nhân viên
         if (
           this.typeOfInfoDialog == InfoDialogConstant.IS_ADD ||
           this.typeOfInfoDialog == InfoDialogConstant.IS_CLONE
@@ -488,6 +494,7 @@ export default {
               );
             },
           });
+        }
         }
       }
     },

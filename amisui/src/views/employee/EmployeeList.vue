@@ -117,20 +117,12 @@
                 :filter-option="filterOption"
                 @change="handleChangePageSize"
               >
-                <a-select-option class="option-page-size" value="10">
-                  10 bản ghi trên 1 trang
-                </a-select-option>
-                <a-select-option class="option-page-size" value="20">
-                  20 bản ghi trên 1 trang
-                </a-select-option>
-                <a-select-option class="option-page-size" value="30">
-                  30 bản ghi trên 1 trang
-                </a-select-option>
-                <a-select-option class="option-page-size" value="50">
-                  50 bản ghi trên 1 trang
-                </a-select-option>
-                <a-select-option class="option-page-size" value="100">
-                  100 bản ghi trên 1 trang
+                <a-select-option 
+                  v-for="p in PageSizes" 
+                  :key="p.value" 
+                  class="option-page-size" 
+                  :value="p.value">
+                  {{p.text}}
                 </a-select-option>
               </a-select>
             </div>
@@ -165,7 +157,7 @@ import ClickOutside from "vue-click-outside";
 import moment from "moment";
 
 import _ from "lodash";
-import { TIME_OF_DEBOUNCE, AlertDialogConstant } from "../../configs/constants";
+import { TIME_OF_DEBOUNCE, AlertDialogConstant, PageSizes } from "../../configs/constants";
 
 import { mapState, mapActions } from "vuex";
 
@@ -181,6 +173,7 @@ export default {
     return {
       IS_CLOSE_DIALOG: AlertDialogConstant.IS_CLOSE_DIALOG,
       IS_DATA_CHANGE: AlertDialogConstant.IS_DATA_CHANGE,
+      PageSizes
     };
   },
   created() {

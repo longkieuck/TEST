@@ -1,7 +1,7 @@
 import {
   AlertDialogConstant,
   InfoDialogConstant,
-  initEmployee,
+  InitEmployee,
 } from "../configs/constants";
 
 export const mutations = {
@@ -36,7 +36,7 @@ export const mutations = {
     state.employees = response.data;
     state.totalPages = response.totalPages;
     state.totalRecords = response.totalRecords;
-    state.employee = { ...initEmployee };
+    state.employee = { ...InitEmployee };
     state.pageIndex = 1;
     state.pageSize = 10;
     state.search = "";
@@ -174,7 +174,7 @@ export const mutations = {
    * CreatedBy KDLong 19/05/2021
    */
   closeInfoDialog(state) {
-    state.employee = { ...initEmployee };
+    state.employee = { ...InitEmployee };
     state.typeOfInfoDialog = InfoDialogConstant.IS_CLOSE_DIALOG;
   },
 };

@@ -1,13 +1,13 @@
 import {
   AlertDialogConstant,
   InfoDialogConstant,
-  initEmployee,
+  InitEmployee,
 } from "../configs/constants";
 export const state = {
   employees: [], //Danh sách nhân viên được hiển thị trên UI
   departments: [], //Danh sách đơn vị
-  employee: { ...initEmployee }, //Nhân viên được chọn để thêm sửa
-  cloneEmployee: { ...initEmployee }, //Nhân viên nhân bản
+  employee: { ...InitEmployee }, //Nhân viên được chọn để thêm sửa
+  cloneEmployee: { ...InitEmployee }, //Nhân viên nhân bản
   totalRecords: 0, //tổng số bản ghi thỏa mãn điều kiện lọc
   newEmployeeCode: "", //Mã nhân viên mới lấy về từ API
   totalPages: 0, //Tổng số trang

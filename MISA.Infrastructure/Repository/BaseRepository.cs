@@ -14,6 +14,7 @@ namespace MISA.Infrastructure.Repository
     /// CreatedBy: KDLong 27/04/2021
     public class BaseRepository<MISAEntity> : IBaseRepository<MISAEntity> where MISAEntity : class
     {
+        #region prop
         string tableName = typeof(MISAEntity).Name;
         protected string connectionString = "" +
            "Host = 47.241.69.179;" +
@@ -22,7 +23,9 @@ namespace MISA.Infrastructure.Repository
            "User Id= dev;" +
            "Password = 12345678;";
         protected IDbConnection dbConnection;
+        #endregion
 
+        #region Method
         /// <summary>
         /// Xóa một thực thể theo Id
         /// </summary>
@@ -96,5 +99,6 @@ namespace MISA.Infrastructure.Repository
                 return rowsAffect;
             }
         }
+        #endregion
     }
 }

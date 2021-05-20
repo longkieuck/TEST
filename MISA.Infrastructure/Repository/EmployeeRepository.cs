@@ -17,6 +17,7 @@ namespace MISA.Infrastructure.Repository
     /// CreatedBy KDLong 07/05/2021
     public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
+        #region Method
         /// <summary>
         /// Check trùng mã
         /// </summary>
@@ -98,5 +99,6 @@ namespace MISA.Infrastructure.Repository
                 return res;
             }
         }
+        #endregion
     }
 }
