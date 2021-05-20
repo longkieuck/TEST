@@ -117,12 +117,13 @@
                 :filter-option="filterOption"
                 @change="handleChangePageSize"
               >
-                <a-select-option 
-                  v-for="p in PageSizes" 
-                  :key="p.value" 
-                  class="option-page-size" 
-                  :value="p.value">
-                  {{p.text}}
+                <a-select-option
+                  v-for="p in PageSizes"
+                  :key="p.value"
+                  class="option-page-size"
+                  :value="p.value"
+                >
+                  {{ p.text }}
                 </a-select-option>
               </a-select>
             </div>
@@ -142,12 +143,17 @@
         </div>
       </div>
     </div>
-    <InfoDialog v-if="typeOfInfoDialog != IS_CLOSE_DIALOG" @btnAdd="btnAdd" />
+    <InfoDialog
+      v-if="typeOfInfoDialog != IS_CLOSE_DIALOG"
+      @btnAdd="btnAdd"
+      @showNotification="showNotification"
+    />
     <AlertDialog
       v-if="
         typeOfAlertDialog != IS_CLOSE_DIALOG &&
           typeOfAlertDialog != IS_DATA_CHANGE
       "
+      @showNotification="showNotification"
     />
   </div>
 </template>
@@ -157,7 +163,12 @@ import ClickOutside from "vue-click-outside";
 import moment from "moment";
 
 import _ from "lodash";
-import { TIME_OF_DEBOUNCE, AlertDialogConstant, PageSizes } from "../../configs/constants";
+import {
+  TIME_OF_DEBOUNCE,
+  AlertDialogConstant,
+  PageSizes,
+  TIME_OF_NOTIFICATION,
+} from "../../configs/constants";
 
 import { mapState, mapActions } from "vuex";
 
@@ -173,7 +184,7 @@ export default {
     return {
       IS_CLOSE_DIALOG: AlertDialogConstant.IS_CLOSE_DIALOG,
       IS_DATA_CHANGE: AlertDialogConstant.IS_DATA_CHANGE,
-      PageSizes
+      PageSizes,
     };
   },
   created() {
@@ -331,7 +342,19 @@ export default {
       }
       return originalElement;
     },
+    /**
+     * Show ra thông báo message
+     *
+     * CreatedBy KDLong 18/05/2021
+     */
+    showNotification(message) {
+      this.$notification["success"]({
+        message,
+        duration: TIME_OF_NOTIFICATION,
+      });
+    },
   },
+
   mounted: function() {},
   filters: {
     //Thực hiện lọc ngày tháng năm để show lên UI

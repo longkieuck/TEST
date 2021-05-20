@@ -226,7 +226,6 @@
 import _ from "lodash";
 import {
   TIME_OF_DEBOUNCE,
-  TIME_OF_NOTIFICATION,
   InfoDialogConstant,
   AlertDialogConstant,
 } from "../../configs/constants";
@@ -464,7 +463,7 @@ export default {
             //nếu thêm thành công thì sẽ vào đây
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.showNotification("Thêm thành công!");
+              this.$emit("showNotification","Thêm thành công!");
               this.loadData();
             },
             //Nếu thêm thất bại thì sẽ vào đây
@@ -482,7 +481,7 @@ export default {
             //thành công
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.showNotification("Sửa thành công!");
+              this.$emit("showNotification","Sửa thành công!");
               this.loadData();
             },
             //Thất bại
@@ -512,7 +511,7 @@ export default {
             //nếu thêm thành công thì sẽ vào đây
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.showNotification("Thêm thành công!");
+              this.$emit("showNotification","Thêm thành công!");
               this.loadData();
               this.$emit("btnAdd");
             },
@@ -531,7 +530,7 @@ export default {
             //thành công
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.showNotification("Sửa thành công!");
+              this.$emit("showNotification","Sửa thành công!");
               this.loadData();
               this.$emit("btnAdd");
             },
@@ -561,16 +560,6 @@ export default {
         //Ngược lại
         this.showDialogDataChange();
       }
-    },
-    /**
-     * Hàm thực hiện show thông báo thành công
-     * CreatedBy KDLong 18/05/2021
-     */
-    showNotification(message) {
-      this.$notification["success"]({
-        message,
-        duration: TIME_OF_NOTIFICATION,
-      });
     },
   },
 };

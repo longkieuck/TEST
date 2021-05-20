@@ -45,7 +45,7 @@
 import { mapActions, mapState } from "vuex";
 import { AlertDialogConstant } from "../../configs/constants";
 import _ from "lodash";
-import { TIME_OF_DEBOUNCE , TIME_OF_NOTIFICATION } from "../../configs/constants";
+import { TIME_OF_DEBOUNCE } from "../../configs/constants";
 
 export default {
   data() {
@@ -84,7 +84,9 @@ export default {
      */
     btnDelete() {
       this.showLoading();
-      this.deleteEmployee(() => this.showNotification());
+      this.deleteEmployee(() =>
+        this.$emit("showNotification", "Xóa thành công!")
+      );
       this.debounceLoad(() => this.loadEmployee(() => this.hideLoading()));
     },
     btnCloseInfoDialog() {
@@ -94,16 +96,6 @@ export default {
     btnSave() {
       this.closeAlertDialog();
       this.$emit("btnSave");
-    },
-    /**
-     * Show ra thông báo xoá thành công
-     * CreatedBy KDLong 18/05/2021
-     */
-    showNotification() {
-      this.$notification["success"]({
-        message: "Xoá thành công!",
-        duration: TIME_OF_NOTIFICATION,
-      });
     },
   },
 };
