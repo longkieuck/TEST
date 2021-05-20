@@ -87,7 +87,6 @@
             </div>
             <a-select
               @mouseleave="hideDepartmentRequired"
-              @focus="hoverValidate"
               @blur="handleValidate"
               v-model="employee.departmentName"
               ref="departmentName"
@@ -246,7 +245,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$refs.employeeCode.focus();
+    if(this.typeOfInfoDialog != InfoDialogConstant.IS_CLOSE_DIALOG) this.$refs.employeeCode.focus();
   },
   computed: {
     ...mapState({
@@ -299,7 +298,6 @@ export default {
       "loadEmployee",
       "closeInfoDialog",
       "showDialogCodeExist",
-      "cloneEmployee",
       "showDialogDataChange",
     ]),
     moment,
