@@ -86,13 +86,13 @@ namespace MISA.Core.Service
             }
             else
             {
-                //Kiểm tra xem mã định sửa đã có trong hệ thống hay chưa
+                //Kiểm tra xem mã định sửa đã có trong hệ thống hay chưa mà không phải của chính bản thân đối tượng đó
                 var guidDefault = new Guid();
                 var employeeId = _employeeRepository.GetEmployeeIdByEmployeeCode(entity.EmployeeCode);
                 // !guidDefault là có mã trong hệ thống=> kiểm tra xem có phải chính mình không
                 //Nếu k phải chính mình => đã có trong hệ thống
-                if(employeeId != guidDefault && employeeId != entity.EmployeeId)
-                throw new BaseException("EmployeeCode" + MISAConstant.Dev_Msg_Exist);
+                if (employeeId != guidDefault && employeeId != entity.EmployeeId)
+                    throw new BaseException("EmployeeCode" + MISAConstant.Dev_Msg_Exist);
             }
         }
         /// <summary>

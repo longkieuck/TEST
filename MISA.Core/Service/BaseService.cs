@@ -62,7 +62,7 @@ namespace MISA.Core.Service
         /// <returns>Số bản ghi thay đổi trong database</returns>
         public int Insert(MISAEntity entity)
         {
-            Validate(entity,true);
+            Validate(entity, true);
             return _baseRepository.Insert(entity);
         }
         /// <summary>
@@ -76,7 +76,7 @@ namespace MISA.Core.Service
             return _baseRepository.Update(entity);
         }
 
-        private void Validate(MISAEntity entity,bool isInsert)
+        private void Validate(MISAEntity entity, bool isInsert)
         {
             var properties = typeof(MISAEntity).GetProperties();
             foreach (var property in properties)
@@ -96,6 +96,7 @@ namespace MISA.Core.Service
                     }
 
                 }
+                #region Comment
                 ////Check max length
                 //var maxLengthProperties = property.GetCustomAttributes(typeof(MISAMaxLength), true);
                 //if (maxLengthProperties.Length > 0)
@@ -129,6 +130,7 @@ namespace MISA.Core.Service
                 //    }
                 //}
 
+                #endregion
             }
             CustomValidate(entity, isInsert);
         }
@@ -136,7 +138,7 @@ namespace MISA.Core.Service
         /// Đối với từng đối tượng khác nhau sẽ có những trường cần validate riêng
         /// </summary>
         /// <param name="entity">Đối tượng</param>
-        protected virtual void CustomValidate(MISAEntity entity,bool isInsert)
+        protected virtual void CustomValidate(MISAEntity entity, bool isInsert)
         {
 
         }
