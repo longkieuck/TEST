@@ -389,12 +389,12 @@ export default {
      */
     checkIsEmptyRequired(){
       let flag = false
-      if(this.employee.employeeCode == "" ){
+      if(this.employee.employeeCode.trim() == "" ){
         this.changeMessageOfDialog("Mã không được để trống.")
         this.$refs.employeeCode.classList.add("not-validation")
         flag = true
       }
-      if(this.employee.fullName == "" ){
+      if(this.employee.fullName.trim() == "" ){
         if(this.messageOfDialog == "")
         this.changeMessageOfDialog("Tên không được để trống.")
         this.$refs.fullName.classList.add("not-validation")

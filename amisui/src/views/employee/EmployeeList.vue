@@ -292,9 +292,9 @@ export default {
      */
     btnAdd() {
       //Lấy mã nhân viên mới về
-      this.getNewEmployeeCode()
+      this.getNewEmployeeCode().then(()=>this.showDialogAdd())
       //Show dialog để add
-      this.showDialogAdd()
+      
     },
     btnClone(employee){
       this.getNewEmployeeCode()
