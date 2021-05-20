@@ -110,6 +110,7 @@
           <div class="right-pagging">
             <div class="select-record-number">
               <a-select
+                v-model="pageSize"
                 style="width:200px"
                 show-search
                 placeholder="Số bản ghi trên 1 trang"
