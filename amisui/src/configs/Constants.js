@@ -21,6 +21,12 @@ export const InfoDialogConstant = {
     CODE_CANNOT_BLANK: "Mã không được để trống!", //Tooltip khi để trống code
     DEPARTMENT_CANNOT_BLANK: "Đơn vị không được để trống!", //Tooltip khi để trống code
 };
+//Hằng số trong mutations
+export const MutationsConstant = {
+    DATA_CHANGE_QUESTION: "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?",
+    DELETE_QUESTION_FRONT: "Bạn có thực sự muốn xóa nhân viên <",
+    DELETE_QUESTION_BACK: "> không?",
+};
 //Server
 export const BASE_URL = 'https://localhost:44378/api/v1/';
 //Time of debouncing

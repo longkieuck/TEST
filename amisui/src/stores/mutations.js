@@ -2,6 +2,7 @@ import {
     AlertDialogConstant,
     InfoDialogConstant,
     InitEmployee,
+    MutationsConstant
 } from "../configs/constants";
 
 export const mutations = {
@@ -83,9 +84,9 @@ export const mutations = {
     showDialogConfirmDelete(state, payload) {
         state.employeeIdSelectDelete = payload.employeeId;
         state.messageOfDialog =
-            "Bạn có thực sự muốn xóa nhân viên <" +
+            MutationsConstant.DELETE_QUESTION_FRONT +
             payload.employeeCode +
-            "> không?";
+            MutationsConstant.DELETE_QUESTION_BACK; //Bạn có chắc chắn muốn xoá nhân viên <NV-> không?
         state.typeOfAlertDialog = AlertDialogConstant.IS_CONFIRM_DELETE;
     },
     /**
@@ -109,7 +110,7 @@ export const mutations = {
      */
     showDialogDataChange(state) {
         state.typeOfAlertDialog = AlertDialogConstant.IS_DATA_CHANGE;
-        state.messageOfDialog = "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?";
+        state.messageOfDialog = MutationsConstant.DATA_CHANGE_QUESTION;
     },
     /**
      * Đóng dialog và reset lại mess

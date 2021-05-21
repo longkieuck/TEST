@@ -22,6 +22,7 @@
           <div class="item-input">
             <div class="title-input">Mã <span style="color:red">*</span></div>
             <input
+              id="focusCode"
               maxlength="20"
               @mouseover="showCodeRequired"
               @mouseleave="hideCodeRequired"
@@ -89,7 +90,6 @@
               @mouseleave="hideDepartmentRequired"
               @blur="handleValidate"
               v-model="employee.departmentName"
-              ref="departmentName"
               class="input-type4a"
               show-search
               option-filter-prop="children"
@@ -217,6 +217,7 @@
     <AlertDialog
       v-if="typeOfAlertDialog != IS_CLOSE_DIALOG && typeOfAlertDialog != IS_CONFIRM_DELETE"
       @btnSave="btnSave"
+      @focusInputRequired="focusInputRequired"
     />
   </div>
 </template>
@@ -247,6 +248,7 @@ export default {
   },
   mounted: function() {
     if(this.typeOfInfoDialog != InfoDialogConstant.IS_CLOSE_DIALOG) this.$refs.employeeCode.focus();
+    // document.getElementById("focusCode").focus()
   },
   computed: {
     ...mapState({
@@ -551,6 +553,9 @@ export default {
         this.showDialogDataChange();
       }
     },
+    focusInputRequired(){
+      document.getElementsByClassName("not-validation")[0].focus();
+    }
   },
 };
 </script>

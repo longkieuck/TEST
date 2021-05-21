@@ -19,7 +19,7 @@
       <div class="line"></div>
 
       <div v-if="typeOfAlertDialog == IS_REQUIRED">
-        <div class="btn-close-alert btn-green" @click="closeAlertDialog">
+        <div class="btn-close-alert btn-green" @click="btnCloseDialogRequired">
           Đóng
         </div>
       </div>
@@ -97,6 +97,10 @@ export default {
       this.closeAlertDialog();
       this.$emit("btnSave");
     },
+    btnCloseDialogRequired(){
+      this.closeAlertDialog();
+      // this.$emit("focusInputRequired")
+    }
   },
 };
 </script>
