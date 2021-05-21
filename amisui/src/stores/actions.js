@@ -99,14 +99,14 @@ export const actions = {
      * Hàm thực hiện việc show dialog để xác nhận xóa nhân viên
      * CreatedBy KDLong 18/05/2021
      */
-    showDialogConfirmDelete: (context, employee) => {
-        context.commit("showDialogConfirmDelete", employee);
+    showDialogConfirmDelete: (context, payload) => {
+        context.commit("showDialogConfirmDelete", payload);
     },
     /**
      * Hàm thực hiện việc show ra dialog thông báo không được để trống
      * CreatedBy KDLong 19/05/2021
      */
-    showDialogRequired: (context) => {
+    showDialogRequired: async(context) => {
         context.commit("showDialogRequired");
     },
     /**
@@ -141,9 +141,10 @@ export const actions = {
             context.commit("changePageIndex", context.state.pageIndex - 1);
         }
         axios
-            .delete(BASE_URL + "Employees/" + context.state.employee.employeeId)
+            .delete(BASE_URL + "Employees/" + context.state.employeeIdSelectDelete)
             .then(() => {
-                // Đóng dialog
+                context.state.employeeIdSelectDelete = ""
+                    // Đóng dialog
                 context.commit("closeAlertDialog");
                 // load lại data
                 callback();

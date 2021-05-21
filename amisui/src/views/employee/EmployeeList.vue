@@ -90,7 +90,7 @@
                           >Nhân bản</a
                         >
                       </a-menu-item>
-                      <a-menu-item key="1" @click="showDialogConfirmDelete(e)">
+                      <a-menu-item key="1" @click="showDialogConfirmDelete({employeeId:e.employeeId,employeeCode:e.employeeCode})">
                         <a href="#" class="option">Xóa</a>
                       </a-menu-item>
                       <a-menu-item key="2">
@@ -150,10 +150,7 @@
       @showNotification="showNotification"
     />
     <AlertDialog
-      v-if="
-        typeOfAlertDialog != IS_CLOSE_DIALOG &&
-          typeOfAlertDialog != IS_DATA_CHANGE
-      "
+      v-if="typeOfAlertDialog == IS_CONFIRM_DELETE"
       @showNotification="showNotification"
     />
   </div>
@@ -184,7 +181,7 @@ export default {
   data() {
     return {
       IS_CLOSE_DIALOG: AlertDialogConstant.IS_CLOSE_DIALOG,
-      IS_DATA_CHANGE: AlertDialogConstant.IS_DATA_CHANGE,
+      IS_CONFIRM_DELETE: AlertDialogConstant.IS_CONFIRM_DELETE,
       PageSizes,
     };
   },

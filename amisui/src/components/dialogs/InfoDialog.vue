@@ -215,7 +215,7 @@
       </div>
     </div>
     <AlertDialog
-      v-if="typeOfAlertDialog == IS_DATA_CHANGE"
+      v-if="typeOfAlertDialog != IS_CLOSE_DIALOG && typeOfAlertDialog != IS_CONFIRM_DELETE"
       @btnSave="btnSave"
     />
   </div>
@@ -241,7 +241,8 @@ export default {
       showDepartmentTooltip: false,
       showCodeTooltip: false,
       showNameTooltip: false,
-      IS_DATA_CHANGE: AlertDialogConstant.IS_DATA_CHANGE,
+      IS_CLOSE_DIALOG: AlertDialogConstant.IS_CLOSE_DIALOG,
+      IS_CONFIRM_DELETE:AlertDialogConstant.IS_CONFIRM_DELETE
     };
   },
   mounted: function() {
@@ -452,12 +453,6 @@ export default {
       if (this.checkIsEmptyRequired()) {
         this.showDialogRequired();
       } else {
-        let employeeStr = JSON.stringify(this.employee);
-        let cloneEmployeeStr = JSON.stringify(this.cloneEmployee);
-        if(employeeStr == cloneEmployeeStr){
-          this.closeInfoDialog();
-        }
-        else{
           //Nếu là dialog add thì thực hiện thêm nhân viên
         if (
           this.typeOfInfoDialog == InfoDialogConstant.IS_ADD ||
@@ -493,7 +488,6 @@ export default {
               );
             },
           });
-        }
         }
       }
     },
