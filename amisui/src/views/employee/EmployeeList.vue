@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+  @keydown.shift.65.prevent.stop="btnAdd"
+  >
     <div class="no-data" v-if="totalRecords == 0">
       <img
         src="https://actappg1.misacdn.net/img/bg_report_nodata.76e50bd8.svg"
@@ -187,6 +189,18 @@ export default {
   },
   created() {
     this.loadData();
+    document.addEventListener("keydown", function (e) {
+        e = e || window.event;//Get event
+        if (e.ctrlKey) {
+            var c = e.which || e.keyCode;//Get key code
+            switch (c) {
+                case 83: //Block Ctrl+S
+                    e.preventDefault();     
+                    e.stopPropagation();
+                break;
+            }
+        }
+        });
   },
   computed: {
     ...mapState({

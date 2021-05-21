@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div
+  @keydown.esc.prevent.stop="btnClose" 
+  @keydown.ctrl.83.prevent.stop.exact="btnSave" 
+  @keydown.ctrl.shift.83.prevent.stop="btnSaveAndAdd"
+  tabindex="0"
+  >
     <div class="dialog-box"></div>
     <div class="dialog-content">
       <div class="header-dialog-box">
@@ -14,7 +19,7 @@
         </div>
         <div class="top-right-option">
           <div class="btn-help"></div>
-          <div class="btn-close" @click="btnClose"></div>
+          <div class="btn-close" @click="btnClose" title="Đóng (ESC)"></div>
         </div>
       </div>
       <div class="content-dialog-box">
@@ -209,8 +214,8 @@
           <div class="white-button" @click="closeInfoDialog">Huỷ</div>
         </div>
         <div class="right-bottom-button">
-          <div class="white-button" @click="btnSave">Cất</div>
-          <div class="green-button" @click="btnSaveAndAdd">Cất và Thêm</div>
+          <div class="white-button" @click="btnSave" title="Cất (Ctrl + S)">Cất</div>
+          <div class="green-button" @click="btnSaveAndAdd" title="Cất và thêm (Ctrl + Shift + S)">Cất và Thêm</div>
         </div>
       </div>
     </div>
