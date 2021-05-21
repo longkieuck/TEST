@@ -30,7 +30,7 @@
           <div class="export" @click="exportData"></div>
         </div>
         <div class="grid-data">
-          <table>
+          <table class="table">
             <thead>
               <tr>
                 <div class="th-first" style="min-width:40px">

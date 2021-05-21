@@ -1,17 +1,17 @@
-table {
+table.table {
     border-collapse: separate;
     position: relative;
     border-spacing: 0;
 }
 
-table thead tr {
+table.table thead tr {
     align-items: center;
     line-height: 32px;
     height: 32px;
     background-color: #ECEEF1;
 }
 
-table thead th {
+table.table thead th {
     font-size: 12px;
     text-align: left;
     text-transform: uppercase;
@@ -24,46 +24,47 @@ table thead th {
     z-index: 10;
 }
 
-th:first-child,
-td:first-child {
+.table th:first-child,
+.table td:first-child {
     padding-left: 12px;
     border: none;
 }
 
-th {
+.table th {
     box-shadow: inset 0px 0px #c7c7c7, 0 1px #c7c7c7;
 }
 
-table tbody td {
+table.table tbody td {
     font-size: 13px;
     align-items: center;
     text-align: left;
     white-space: nowrap;
 }
 
-table tr {
-    border-bottom: 1px solid #c7c7c7;
+table.table tr {
+    /* border-bottom: 1px solid #c7c7c7 !important; */
     height: 48px;
 }
 
-table tr th {
+table.table tr th {
     padding-left: 7px;
     border-right: 1px solid #c7c7c7;
+    /* border-bottom: 1px solid #c7c7c7; */
+}
+
+table.table tr td {
+    padding-left: 7px;
+    border-right: 1px dotted #c7c7c7;
     border-bottom: 1px solid #c7c7c7;
 }
 
-table tr td {
-    padding-left: 7px;
-    border-right: 1px dotted #c7c7c7;
-}
-
-tbody tr:hover {
+.table tbody tr:hover {
     /* cursor: pointer; */
     background-color: #f7f7f7;
 }
 
-th:last-child,
-tr:last-child {
+.table th:last-child,
+.table tr:last-child {
     border-right: none;
 }
 
@@ -87,7 +88,6 @@ tr:last-child {
     min-width: 122px;
     position: sticky;
     background-color: #ECEEF1;
-    ;
     z-index: 14;
     height: 36px;
     border-top: 1px solid #ECEEF1;
@@ -102,7 +102,6 @@ tr:last-child {
     text-align: center;
     position: sticky;
     background-color: #ECEEF1;
-    ;
     z-index: 14;
     height: 36px;
     border-right: 1px solid #c7c7c7;
@@ -110,6 +109,7 @@ tr:last-child {
 }
 
 .td-last {
+    border-bottom: 1px solid #c7c7c7;
     display: flex;
     font-size: 13px;
     line-height: 48px;
@@ -121,11 +121,12 @@ tr:last-child {
     position: sticky;
     right: 0px;
     background-color: white;
-    height: 48px;
+    height: 49px;
     border-left: 1px dotted #c7c7c7;
 }
 
 .td-first {
+    border-bottom: 1px solid #c7c7c7;
     font-size: 13px;
     line-height: 48px;
     justify-content: center;
@@ -136,7 +137,7 @@ tr:last-child {
     position: sticky;
     left: 0px;
     background-color: white;
-    height: 48px;
+    height: 49.32px;
     border-right: 1px dotted #c7c7c7;
 }
 
@@ -170,9 +171,11 @@ tr:last-child {
 .option {
     color: #111111 !important;
 }
-.ant-dropdown{
+
+.ant-dropdown {
     z-index: 98 !important;
 }
+
 .option:hover {
     color: #2CA01C !important;
     background-color: #F4F5F6;
@@ -204,3 +207,8 @@ tr:last-child {
 .active {
     outline: 1px solid #0075c0;
 }
+
+
+/* table.table :last-child>:last-child>td {
+    border-bottom: none;
+} */

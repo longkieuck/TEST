@@ -31,7 +31,9 @@ export default {
   text-align: center;
   color: #111111;
 }
-
+label span{
+  color: #111111 !important;
+}
 ::-webkit-scrollbar {
   width: 5px;
   height: 7px;

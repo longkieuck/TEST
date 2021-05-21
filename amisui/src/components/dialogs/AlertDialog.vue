@@ -89,14 +89,26 @@ export default {
       );
       this.debounceLoad(() => this.loadEmployee(() => this.hideLoading()));
     },
+    /**
+    *Hàm thực hiện đóng dialog
+    *CreatedBy KDLong 18/05/2021 
+    */
     btnCloseInfoDialog() {
       this.closeAlertDialog();
       this.closeInfoDialog();
     },
+    /**
+     * Hàm thực hiện close dialog và lưu dữ liệu
+     * CreatedBy KDLong 18/05/2021 
+     */
     btnSave() {
       this.closeAlertDialog();
       this.$emit("btnSave");
     },
+    /**
+     * Thực hiện đóng dialog và focus vào ô validate
+     * CreatedBy KDLong 18/05/2021
+     */
     btnCloseDialogRequired(){
       this.closeAlertDialog();
       // this.$emit("focusInputRequired")

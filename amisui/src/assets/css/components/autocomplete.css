@@ -15,3 +15,7 @@
     color: #2CA01C !important;
     background-color: #ECEEF1 !important;
 }
+
+.ant-select-dropdown-menu-item {
+    color: #111111;
+}

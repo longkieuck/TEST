@@ -220,7 +220,8 @@
       </div>
     </div>
     <AlertDialog
-      v-if="typeOfAlertDialog != IS_CLOSE_DIALOG && typeOfAlertDialog != IS_CONFIRM_DELETE"
+      v-if="typeOfAlertDialog != IS_CLOSE_DIALOG 
+      && typeOfAlertDialog != IS_CONFIRM_DELETE"
       @btnSave="btnSave"
       @focusInputRequired="focusInputRequired"
     />
