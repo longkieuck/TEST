@@ -17,9 +17,11 @@ namespace MISA.CukCuk.Api.Controllers
     public class DepartmentController :BaseController<Department>
     {
         IDepartmentService _departmentService;
+        #region Constructor
         public DepartmentController(IDepartmentService departmentService):base(departmentService)
         {
             _departmentService = departmentService;
         }
+        #endregion
     }
 }

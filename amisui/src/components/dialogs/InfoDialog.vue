@@ -256,6 +256,11 @@ export default {
       employee: (state) => state.cloneEmployee,
       typeOfAlertDialog: (state) => state.typeOfAlertDialog,
     }),
+    noticeCodeExist:function(){
+      return InfoDialogConstant.NOTICE_CODE_EXIST_FRONT 
+            + this.employee.employeeCode
+            + InfoDialogConstant.NOTICE_CODE_EXIST_BACK;
+    }, 
     /**
      * set-get cho employee.dateOfBirth
      * CreatedBy KDLong 18/05/2021
@@ -268,7 +273,7 @@ export default {
       },
       //Lấy giá trị của inputdate gán cho dateOfBirth
       set(val) {
-        this.employee.dateOfBirth = val;
+        this.employee.dateOfBirth = moment(val).format("YYYY-MM-DDT00:00:00")
       },
     },
     /**
@@ -283,7 +288,7 @@ export default {
       },
       //Lấy giá trị của inputdate gán cho identifyDate
       set(val) {
-        this.employee.identifyDate = val;
+        this.employee.identifyDate = moment(val).format("YYYY-MM-DDT00:00:00")
       },
     },
   },
@@ -401,19 +406,20 @@ export default {
     checkIsEmptyRequired() {
       let flag = false;
       if (this.employee.employeeCode.trim() == "") {
-        this.changeMessageOfDialog("Mã không được để trống.");
+        this.changeMessageOfDialog(InfoDialogConstant.CODE_CANNOT_BLANK);
         this.$refs.employeeCode.classList.add("not-validation");
         flag = true;
       }
       if (this.employee.fullName.trim() == "") {
         if (this.messageOfDialog == "")
-          this.changeMessageOfDialog("Tên không được để trống.");
+          this.changeMessageOfDialog(InfoDialogConstant.NAME_CANNOT_BLANK);
         this.$refs.fullName.classList.add("not-validation");
+        
         flag = true;
       }
       if (this.employee.departmentName == "") {
         if (this.messageOfDialog == "")
-          this.changeMessageOfDialog("Đơn vị không được để trống.");
+          this.changeMessageOfDialog(InfoDialogConstant.DEPARTMENT_CANNOT_BLANK);
         let element = document.getElementsByClassName(
           "ant-select-selection"
         )[1];
@@ -461,15 +467,13 @@ export default {
             //nếu thêm thành công thì sẽ vào đây
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.$emit("showNotification","Thêm thành công!");
+              this.$emit("showNotification",InfoDialogConstant.INSERT_SUCCESS);
               this.loadData();
             },
             //Nếu thêm thất bại thì sẽ vào đây
             callbackFail: () => {
               this.showDialogCodeExist(
-                "Mã nhân viên <" +
-                  this.employee.employeeCode +
-                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+                this.noticeCodeExist
               );
             },
           });
@@ -479,15 +483,13 @@ export default {
             //thành công
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.$emit("showNotification","Sửa thành công!");
+              this.$emit("showNotification",InfoDialogConstant.EDIT_SUCCESS);
               this.loadData();
             },
             //Thất bại
             callbackFail: () => {
               this.showDialogCodeExist(
-                "Mã nhân viên <" +
-                  this.employee.employeeCode +
-                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+                this.noticeCodeExist
               );
             },
           });
@@ -509,16 +511,14 @@ export default {
             //nếu thêm thành công thì sẽ vào đây
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.$emit("showNotification","Thêm thành công!");
+              this.$emit("showNotification",InfoDialogConstant.INSERT_SUCCESS);
               this.loadData();
               this.$emit("btnAdd");
             },
             //Nếu thêm thất bại thì sẽ vào đây
             callbackFail: () => {
               this.showDialogCodeExist(
-                "Mã nhân viên <" +
-                  this.employee.employeeCode +
-                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+                this.noticeCodeExist
               );
             },
           });
@@ -528,16 +528,14 @@ export default {
             //thành công
             callbackSuccess: () => {
               this.closeInfoDialog();
-              this.$emit("showNotification","Sửa thành công!");
+              this.$emit("showNotification",InfoDialogConstant.EDIT_SUCCESS);
               this.loadData();
               this.$emit("btnAdd");
             },
             //Thất bại
             callbackFail: () => {
               this.showDialogCodeExist(
-                "Mã nhân viên <" +
-                  this.employee.employeeCode +
-                  "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại."
+                this.noticeCodeExist
               );
             },
           });

@@ -85,7 +85,7 @@ export default {
     btnDelete() {
       this.showLoading();
       this.deleteEmployee(() =>
-        this.$emit("showNotification", "Xóa thành công!")
+        this.$emit("showNotification", AlertDialogConstant.DELETE_SUCCESS)
       );
       this.debounceLoad(() => this.loadEmployee(() => this.hideLoading()));
     },

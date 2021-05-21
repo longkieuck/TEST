@@ -40,11 +40,11 @@
                 <th style="min-width:150px;text-align:center;padding-left:0px">
                   Ngày sinh
                 </th>
-                <th style="min-width:200px">Số CMND</th>
-                <th style="min-width:200px">Chức danh</th>
-                <th style="min-width:250px">Tên đơn vị</th>
+                <th style="min-width:150px">Số CMND</th>
+                <th style="min-width:150px">Chức danh</th>
+                <th style="min-width:200px">Tên đơn vị</th>
                 <th style="min-width:150px">Số tài khoản</th>
-                <th style="min-width:200px">Tên ngân hàng</th>
+                <th style="min-width:150px">Tên ngân hàng</th>
                 <th style="min-width:200px;border-right:none">
                   Chi nhánh TK ngân hàng
                 </th>
@@ -66,11 +66,11 @@
                 <td style="min-width:150px;text-align:center;padding-left:0px">
                   {{ e.dateOfBirth | formatDate }}
                 </td>
-                <td style="min-width:200px">{{ e.identifyNumber }}</td>
-                <td style="min-width:200px">{{ e.positionName }}</td>
-                <td style="min-width:250px">{{ e.departmentName }}</td>
+                <td style="min-width:150px">{{ e.identifyNumber }}</td>
+                <td style="min-width:150px">{{ e.positionName }}</td>
+                <td style="min-width:200px">{{ e.departmentName }}</td>
                 <td style="min-width:150px">{{ e.bankAccount }}</td>
-                <td style="min-width:200px">{{ e.bankName }}</td>
+                <td style="min-width:150px">{{ e.bankName }}</td>
                 <td style="min-width:200px;border-right:none">
                   {{ e.bankBranch }}
                 </td>
@@ -312,7 +312,7 @@ export default {
      * CreatedBy KDLong 18/05/2021
      */
     handleChageSearchText: _.debounce(function(e) {
-      //sau khi gõ TIME_OF_DEBOUNCE_TYPE ms sẽ thực hiện search
+      //sau khi gõ TIME_OF_DEBOUNCE ms sẽ thực hiện search
       this.showLoading();
       this.changePageIndex(1);
       this.changeSearchText(e.target.value);
