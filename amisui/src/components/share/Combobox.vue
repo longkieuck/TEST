@@ -1,15 +1,16 @@
 <template>
   <div>
     <a-select
-      style="width:250px"
+      @inputKeydown="inputKeydown"
+      :open="isShowDropdown"
+      :style="{width: lWidth+'px'}"
       show-search
-      option-filter-prop="children"
       :filter-option="filterOption"
-      v-model="optionSelected"
-      @change="handleChange"
+      @change="handleChangeSelect"
+      :placeholder="placeHolder"
     >
       <div slot="suffixIcon" class="cover-suffix">
-        <div v-show="isShowAddIcon" class="cover-add-icon">
+        <div v-show="isMultiple" class="cover-add-icon">
           <div class="add-icon" />
         </div>
         <div @click="showDropdown" class="cover-dropdown-icon">
@@ -19,25 +20,32 @@
           />
         </div>
       </div>
-      <a-select-opt-group>
-        <div slot="label" class="title-column">
-          <div>
-            Họ và tên
+      <a-select-option v-if="isMultiple" value="title" :disabled="true">
+          <div 
+            v-for="(title,index) in titleOptions" 
+            :key="index"
+            :style="{width: title.Width+'px'}"
+            >
+            {{title.Title}}
           </div>
-          <div>
-            Ngày sinh
-          </div>
+
+      </a-select-option>
+
+      <a-select-option
+        v-for="(data, index) in dataOptions"
+        :key="index"
+        :value="index"
+      >
+        <div
+          v-for="(value,key,index) in data"
+          :title="value"
+          :key="index"
+          class="text-overflow" 
+          :style="{width: titleOptions[index].Width+'px'}"
+          >
+            {{ value }}
         </div>
-        <a-select-option
-          v-for="data in dataOptions"
-          :key="data.Id"
-          :value="data.Name"
-        >
-          <div>{{ data.Name }}</div>
-          <!-- <div>{{ data.Id }}</div>
-          <div>{{ data.Id }}</div> -->
-        </a-select-option>
-      </a-select-opt-group>
+      </a-select-option>
     </a-select>
   </div>
 </template>
@@ -45,13 +53,18 @@
 <script>
 export default {
   props: {
-    dataOptions: Array,
+    dataOptions: Array,//Dữ liệu hiển thị
+    titleOptions:Array,//Tiêu đề hiển thị và kích thước
+    fieldDisplay:String,//Trường hiển thị khi đã chọn
+    fieldSearch:String,//Trường tìm kiếm
+    isMultiple:Boolean,//Hiển thị nhiều dữ liệu hay không
+    placeHolder:String,//Place holder
+    lWidth:Number// Độ rộng
   },
   data() {
     return {
       isShowDropdown: false,
-      isShowAddIcon: true,
-      optionSelected: "",
+      optionSelected: {},
     };
   },
   created() {
@@ -65,7 +78,8 @@ export default {
     let el = this.$el.getElementsByClassName(
       "ant-select-selection-selected-value"
     );
-    el[0].innerHTML = `<div>${this.optionSelected}</div>`;
+    if (el[0] != undefined)
+      el[0].innerHTML = `<div>${this.optionSelected[`${this.fieldDisplay}`]}</div>`;
   },
   methods: {
     /**
@@ -73,35 +87,34 @@ export default {
      * CreatedBy KDLong 18/05/2021
      */
     filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
-      );
+      for (let i = 0; i < this.dataOptions.length; i++) {
+        if (option.key == undefined) {
+          option.componentOptions.children[0].text = input;
+        }
+        if (option.key == i) {
+          option.componentOptions.children[0].text = this.dataOptions[i][
+            `${this.fieldSearch}`
+          ].toString();
+        }
+      }
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     },
-    handleChange(item) {
-      // this.$emit("setItemSelected", item);
-      this.optionSelected = item;
+    handleChangeSelect(index) {
+      this.$emit("setItemSelected", index);//Event pass from parent
+      this.optionSelected = this.dataOptions[index];
     },
     showDropdown() {
       this.isShowDropdown = !this.isShowDropdown;
     },
-    // inputKeydown(event) {
-    //   if (event.key == "Enter") {
-    //     this.isShowDropdown = false;
-    //   } else this.isShowDropdown = true;
-    // },
+    inputKeydown(event) {
+      if (event.key == "Enter") {
+        this.isShowDropdown = false;
+      } else this.isShowDropdown = true;
+    },
   },
 };
 </script>
 <style scoped>
-.title-column {
-  justify-content: space-between;
-  display: flex;
-  color: #212121;
-  font-size: 11px !important;
-  font-weight: bold;
-}
 .cover-option {
   display: flex !important;
   justify-content: space-between !important;
@@ -153,5 +166,10 @@ export default {
 }
 .rotate {
   transform: rotate(180deg);
+}
+.text-overflow{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
