@@ -38,7 +38,7 @@
 /* menu */
 
 .menu {
-    /* margin-top: 14px; */
+    padding-top: 14px;
     height: calc(100vh - 48px);
     overflow-x: auto;
     overflow-y: auto;
@@ -73,7 +73,7 @@
 
 .menu-item-title {
     color: white;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .dashboard {

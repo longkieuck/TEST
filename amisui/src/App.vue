@@ -20,9 +20,10 @@ export default {
   },
 };
 </script>
-
 <style>
+@import "./assets/css/components/checkbox.css";
 @import "./assets/css/components/button.css";
+@import "./assets/css/components/radiobutton.css";
 @import "./assets/css/components/autocomplete.css";
 #app {
   font-family: notosans-regular;
@@ -33,6 +34,9 @@ export default {
 }
 label span{
   color: #111111 !important;
+}::placeholder{
+  font-size: 11.5px;
+  font-weight: 500;
 }
 ::-webkit-scrollbar {
   width: 5px;

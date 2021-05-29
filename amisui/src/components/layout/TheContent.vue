@@ -1,18 +1,46 @@
 <template>
-    <div id="content">
-        <EmployeeList/>
-    </div>
+  <div id="content">
+    <Combobox
+        :dataOptions="dataOptions"
+        @setItemSelected="setItemSelected"
+    />
+  </div>
 </template>
 
 <script>
-    import EmployeeList from'../../views/employee/EmployeeList';
-    export default {
-        components:{
-            EmployeeList
+import Combobox from "../share/Combobox";
+export default {
+  data() {
+    return {
+      itemSelected:0,
+      dataOptions: [
+        {
+          Id: 1,
+          Name: "K Long Long",
+        },
+        {
+          Id: 2,
+          Name: "Long Long Long",
+        },
+        {
+          Id: 3,
+          Name: "L Long Long",
         }
-    }
+      ],
+    };
+  },
+  methods:{
+      setItemSelected(item){
+          
+          this.itemSelected = item
+      }
+  },
+  components: {
+    Combobox,
+  },
+};
 </script>
 
 <style>
-@import '../../assets/css/layout/content.css';
+@import "../../assets/css/layout/content.css";
 </style>

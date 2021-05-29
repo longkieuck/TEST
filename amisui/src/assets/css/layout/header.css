@@ -28,12 +28,40 @@
 }
 
 .branch-name {
+    margin-left: 10px;
     font-weight: 600;
-    max-width: 300px;
+    min-width: 165px;
     font-size: 14px;
     color: #111111;
     text-overflow: ellipsis;
     transition: all .2s ease;
+}
+
+.current-db {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ebedf0;
+    padding: 0 12px;
+    border-radius: 40px;
+    margin-left: 15px;
+    font-size: 13px;
+    cursor: pointer;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.icon-active-db {
+    width: 8px;
+    height: 8px;
+    background-color: #4ea344;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
+
+.name-current-db {
+    min-width: 44px;
+    padding-left: 7px;
+    font-weight: 400;
 }
 
 .left-down-arrow {
@@ -49,21 +77,11 @@
     cursor: pointer;
 }
 
-.user {
+.right-header {
     display: flex;
     align-items: center;
     line-height: 48px;
-}
-
-.icon-announce {
-    padding-right: 34px;
-    background-position: -788px -30px;
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    cursor: pointer;
-    background-image: url('../../img/Sprites.64af8f61.svg');
+    margin-right: 36px;
 }
 
 .user-avatar {
@@ -79,7 +97,7 @@
 .username {
     padding-left: 10px;
     font-weight: 600;
-    max-width: 300px;
+    min-width: 110px;
     font-size: 13px;
     color: #111111;
     text-overflow: ellipsis;
@@ -96,6 +114,135 @@
     min-width: 14px;
     min-height: 14px;
     cursor: pointer;
-    margin-right: 14px;
     margin-top: -4px;
+}
+
+.cover-icon {
+    /* background-color: #111; */
+    display: flex;
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.cover-icon:hover {
+    background-color: #000;
+    cursor: pointer;
+}
+
+.cover-icon-active:hover {
+    cursor: pointer;
+    background-color: #2ca01c;
+}
+
+.cover-icon-active {
+    display: flex;
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+}
+
+.cover-icon-active:hover::after {
+    content: "";
+    /* border-bottom: 24px solid transparent; */
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 10px solid #2ca01c;
+    position: absolute;
+    z-index: 1;
+    top: 48px;
+}
+
+.cover-icon:hover::after {
+    content: "";
+    /* border-bottom: 24px solid transparent; */
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 10px solid black;
+    position: absolute;
+    z-index: 1;
+    top: 48px;
+}
+
+.header-right .category-cover:hover {
+    background-color: #2ca01c;
+}
+
+.header-right .option-cover:hover:before {
+    content: "";
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 10px solid black;
+    position: absolute;
+    margin-left: -10px;
+    top: 48px;
+}
+
+.cover-icon-active:hover:before {
+    content: "";
+    /* border-bottom: 36px solid transparent; */
+    border-left: 22px solid transparent;
+    border-right: 22px solid transparent;
+    border-top: 10px solid #2ca01c;
+    position: absolute;
+    /* width: 44px; */
+    top: 48px;
+    left: 0px;
+}
+
+.cover-icon-active:hover>.icon-category {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -568px -76px;
+}
+
+.cover-icon:hover>.icon-setting {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -144px -88px;
+}
+
+.cover-icon:hover>.icon-chat {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -368px -88px;
+}
+
+.cover-icon:hover>.icon-notify {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -256px -88px;
+}
+
+.cover-icon:hover>.icon-question-header {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -200px -88px;
+}
+
+.icon-category {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -568px -30px;
+}
+
+.icon-setting {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -675px -30px;
+}
+
+.icon-chat {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -899px -30px;
+}
+
+.icon-question-header {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -731px -30px;
+}
+
+.icon-notify {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -788px -30px;
+}
+
+.icon-extend {
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat -1071px -27px;
 }
