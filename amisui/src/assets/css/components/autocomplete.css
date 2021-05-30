@@ -1,16 +1,21 @@
-.ant-select-dropdown-menu-item-selected {
-    /* font-weight: 500 !important; */
+.ant-select-dropdown--single .ant-select-dropdown-menu-item-selected {
+    font-weight: 400 !important;
     color: white !important;
     background-color: #2CA01C !important;
 }
 
-.ant-select-dropdown-menu-item-selected:hover:not(.ant-select-dropdown-menu-item-disabled) {
+.ant-select-dropdown--single .ant-select-dropdown-menu-item-selected:hover:not(.ant-select-dropdown-menu-item-disabled) {
     background-color: #2CA01C !important;
     /* font-weight: 500 !important; */
     color: white !important;
 }
 
-.ant-select-dropdown-menu-item-active {
+
+/* .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #ECEEF1 !important;
+} */
+
+.ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-selected) {
     /* font-weight: 500 !important; */
     color: #2CA01C !important;
     background-color: #ECEEF1 !important;
@@ -18,7 +23,6 @@
 
 .ant-select-dropdown-menu-item {
     display: flex !important;
-    color: #111111;
 }
 
 .ant-select-selection {
@@ -61,4 +65,35 @@
 
 .ant-select-selection--single .ant-select-selection__rendered {
     margin-right: 64px !important;
+}
+
+.ant-select-selection--multiple .ant-select-selection__rendered {
+    height: auto;
+    margin-bottom: -3px;
+    margin-left: 5px;
+    margin-right: 64px;
+}
+
+.ant-select-dropdown-menu-item {
+    color: #111111;
+}
+
+.ant-select-dropdown-menu-item:not(.ant-select-dropdown-menu-item-disabled) {
+    font-weight: 400 !important;
+}
+
+.ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #EBEDF0 !important;
+}
+
+.ant-select-dropdown--multiple .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #EBEDF0 !important;
+}
+
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-selected) .ant-select-selected-icon {
+    color: transparent !important;
+}
+
+.ant-select-dropdown-menu-item-selected .ant-select-selected-icon {
+    color: #2CA01C !important;
 }

@@ -1,23 +1,49 @@
 <template>
   <div id="content">
     <Combobox
-        :dataOptions="dataOptions"
-        @setItemSelected="setItemSelected"
-        :fieldDisplay="'Name'"
-        :fieldSearch="'Name'"
-        :titleOptions="titleOptions"
-        :isMultiple="false"
-        :placeHolder="'Họ và tên'"
-        :lWidth="500"
+      :dataOptions="dataOptions"
+      @setItemSelected="setItemSelected"
+      :fieldDisplay="'Id'"
+      :fieldSearch="'Name'"
+      :titleOptions="titleOptions"
+      :isMultiple="true"
+      :placeHolder="'Họ và tên'"
+      :lWidth="250"
     />
+    <ComboboxMultiple
+      :dataOptions="dataOptions"
+      @setItemSelected="setItemSelected"
+      :fieldDisplay="'Id'"
+      :fieldSearch="'Name'"
+      :titleOptions="titleOptions"
+      :isMultiple="true"
+      :placeHolder="'Họ và tên'"
+      :lWidth="250"
+    />
+    <Input
+      v-model="searchText"
+      :inputName="'Name'"
+      :lWidth="250"
+      :isRequired="true"
+    />
+    
   </div>
+  
 </template>
 
 <script>
 import Combobox from "../share/Combobox";
+import ComboboxMultiple from "../share/ComboboxMultiple";
+import Input from "../share/Input";
 export default {
+  components: {
+    Combobox,
+    ComboboxMultiple,
+    Input
+  },
   data() {
     return {
+      searchText:"",
       itemSelected:0,
       dataOptions: [
         {
@@ -59,14 +85,12 @@ export default {
     };
   },
   methods:{
-      setItemSelected(index){
-          alert(index)
-          // this.itemSelected = index
-      }
+      setItemSelected(){
+          // alert(value)
+          // this.itemSelected = indexvalue
+      },
   },
-  components: {
-    Combobox,
-  },
+  
 };
 </script>
 

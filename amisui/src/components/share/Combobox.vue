@@ -3,11 +3,12 @@
     <a-select
       @inputKeydown="inputKeydown"
       :open="isShowDropdown"
-      :style="{width: lWidth+'px'}"
+      :style="{ width: lWidth + 'px' }"
       show-search
       :filter-option="filterOption"
       @change="handleChangeSelect"
       :placeholder="placeHolder"
+      option-label-prop="label"
     >
       <div slot="suffixIcon" class="cover-suffix">
         <div v-show="isMultiple" class="cover-add-icon">
@@ -21,29 +22,29 @@
         </div>
       </div>
       <a-select-option v-if="isMultiple" value="title" :disabled="true">
-          <div 
-            v-for="(title,index) in titleOptions" 
-            :key="index"
-            :style="{width: title.Width+'px'}"
-            >
-            {{title.Title}}
-          </div>
-
+        <div
+          v-for="(title, index) in titleOptions"
+          :key="index"
+          :style="{ width: title.Width + 'px' }"
+        >
+          {{ title.Title }}
+        </div>
       </a-select-option>
 
       <a-select-option
         v-for="(data, index) in dataOptions"
         :key="index"
         :value="index"
+        :label="data[`${fieldDisplay}`]"
       >
         <div
-          v-for="(value,key,index) in data"
+          v-for="(value, key, index) in data"
           :title="value"
           :key="index"
-          class="text-overflow" 
-          :style="{width: titleOptions[index].Width+'px'}"
-          >
-            {{ value }}
+          class="text-overflow"
+          :style="{ width: titleOptions[index].Width + 'px' }"
+        >
+          {{ value }}
         </div>
       </a-select-option>
     </a-select>
@@ -53,38 +54,34 @@
 <script>
 export default {
   props: {
-    dataOptions: Array,//Dữ liệu hiển thị
-    titleOptions:Array,//Tiêu đề hiển thị và kích thước
-    fieldDisplay:String,//Trường hiển thị khi đã chọn
-    fieldSearch:String,//Trường tìm kiếm
-    isMultiple:Boolean,//Hiển thị nhiều dữ liệu hay không
-    placeHolder:String,//Place holder
-    lWidth:Number// Độ rộng
+    dataOptions: Array, //Dữ liệu hiển thị
+    titleOptions: Array, //Tiêu đề hiển thị và kích thước
+    fieldDisplay: String, //Trường hiển thị khi đã chọn
+    fieldSearch: String, //Trường tìm kiếm
+    isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
+    placeHolder: String, //Place holder
+    lWidth: Number, // Độ rộng
   },
   data() {
     return {
       isShowDropdown: false,
-      optionSelected: {},
     };
   },
   created() {
+    /**
+     * Khi click ra bên ngoài sẽ đóng dropdown
+     * CreatedBy KDLong 30/05/2021
+     */
     window.addEventListener("click", (e) => {
       if (!this.$el.contains(e.target)) {
         this.isShowDropdown = false;
       }
     });
   },
-  updated() {
-    let el = this.$el.getElementsByClassName(
-      "ant-select-selection-selected-value"
-    );
-    if (el[0] != undefined)
-      el[0].innerHTML = `<div>${this.optionSelected[`${this.fieldDisplay}`]}</div>`;
-  },
   methods: {
     /**
      * Hàm thực hiện lọc data cho auto complete
-     * CreatedBy KDLong 18/05/2021
+     * CreatedBy KDLong 30/05/2021
      */
     filterOption(input, option) {
       for (let i = 0; i < this.dataOptions.length; i++) {
@@ -97,15 +94,30 @@ export default {
           ].toString();
         }
       }
-      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
     },
+    /**
+     * Khi thay đổi lựa chọn sẽ thực hiện gọi qua cpn cha
+     * CreatedBy KDLong 30/05/2021
+     */
     handleChangeSelect(index) {
-      this.$emit("setItemSelected", index);//Event pass from parent
-      this.optionSelected = this.dataOptions[index];
+      this.$emit("setItemSelected", index); //Event pass from parent
     },
+    /**
+     * Khi click vào icon sẽ show dropdown
+     * CreatedBy KDLong 30/05/2021
+     */
     showDropdown() {
       this.isShowDropdown = !this.isShowDropdown;
     },
+    /**
+     * Khi sử dụng phím
+     * CreatedBy KDLong 30/05/2021
+     */
     inputKeydown(event) {
       if (event.key == "Enter") {
         this.isShowDropdown = false;
@@ -114,11 +126,7 @@ export default {
   },
 };
 </script>
-<style scoped>
-.cover-option {
-  display: flex !important;
-  justify-content: space-between !important;
-}
+<style>
 .cover-suffix {
   display: flex !important;
   margin-right: -11px;
@@ -167,7 +175,7 @@ export default {
 .rotate {
   transform: rotate(180deg);
 }
-.text-overflow{
+.text-overflow {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

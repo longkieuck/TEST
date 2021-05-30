@@ -12,7 +12,7 @@
         <div class="right-header">
             <InputSearch
                 @changeTextSearch="changeTextSearch"
-                :placeHolder="'Nhập từ khoá tìm kiếm'"
+                :placeholder="'Nhập từ khoá tìm kiếm'"
             />
             <div class="cover-icon-active" style="margin-left:20px">
                 <div class="icon icon-category"></div>
