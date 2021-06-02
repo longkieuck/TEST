@@ -39,6 +39,6 @@
     }
 </script>
 
-<style>
+<style scoped>
 @import '../../assets/css/layout/navbar.css';
 </style>

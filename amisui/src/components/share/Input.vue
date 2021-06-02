@@ -8,7 +8,6 @@
         v-bind="$attrs"
         v-on="inputSearchListeners"
         type="text"
-        rows="3"
         class="input"
         :style="{width:lWidth +'px'}"        
     />

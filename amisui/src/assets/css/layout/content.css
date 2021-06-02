@@ -1,5 +1,6 @@
 #content {
-    position: absolute;
+    overflow: auto;
+    position: fixed;
     top: 48px;
     left: 178px;
     right: 0px;

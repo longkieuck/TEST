@@ -100,40 +100,6 @@ export default {
       }
     });
   },
-  updated() {
-    /**
-     * Đóng dropdown khi click ra ngoài vùng cpn và dropdown
-     * CreatedBy KDLong 30/05/2021
-     */
-    // if (this.isShowDropdown == true) {
-    //   let elDropdownIcon = document.getElementById("cover-dropdown-icon");
-    //   let elDropdown = document.getElementsByClassName(
-    //     "ant-select-dropdown ant-select-dropdown--multiple"
-    //   );
-    //   window.addEventListener("click", (e) => {
-    //     //Nếu là click vào icon-dropdown thì bỏ qua do đã có chỗ sử lý sự kiện này
-    //     if (elDropdownIcon.contains(e.target)) {
-    //       return;
-    //     }
-    //     //Click vào khu vực cpn hiện tại
-    //     let isClickInsideCombobox = this.$el.contains(e.target);
-    //     //Click trong khu vực dropdown
-    //     elDropdown.forEach((eli) => {
-    //       let isClickInsideDropdown = eli.contains(e.target);
-    //       if (!isClickInsideDropdown && !isClickInsideCombobox) {
-    //         //Nếu k phải click trong khu vực hiện tại
-    //         //hoặc dropdown thì ẩn dropdown
-    //         this.isShowDropdown = false;
-    //         return;
-    //       } else if (isClickInsideDropdown) {
-    //         //Vẫn trong khu vực thì hiện dropdown
-    //         this.isShowDropdown = true;
-    //         return;
-    //       }
-    //     });
-    //   });
-    // }
-  },
   methods: {
     /**
      * Khi có sự thay đổi lựa chọn

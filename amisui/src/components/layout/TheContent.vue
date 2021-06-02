@@ -1,6 +1,6 @@
 <template>
   <div id="content">
-    <Combobox
+    <!-- <Combobox
       :dataOptions="dataOptions"
       @setItemSelected="setItemSelected"
       :fieldDisplay="'Id'"
@@ -25,21 +25,23 @@
       :inputName="'Name'"
       :lWidth="250"
       :isRequired="true"
-    />
-    
+    /> -->
+    <SupplierList/>
   </div>
   
 </template>
 
 <script>
-import Combobox from "../share/Combobox";
-import ComboboxMultiple from "../share/ComboboxMultiple";
-import Input from "../share/Input";
+// import Combobox from "../share/Combobox";
+// import ComboboxMultiple from "../share/ComboboxMultiple";
+// import Input from "../share/Input";
+import SupplierList from "../../views/SupplierList"
 export default {
   components: {
-    Combobox,
-    ComboboxMultiple,
-    Input
+    // Combobox,
+    // ComboboxMultiple,
+    // Input
+    SupplierList
   },
   data() {
     return {
@@ -94,6 +96,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../../assets/css/layout/content.css";
 </style>

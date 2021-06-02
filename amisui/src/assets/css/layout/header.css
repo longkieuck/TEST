@@ -77,7 +77,7 @@
     cursor: pointer;
 }
 
-.right-header {
+#header .right-header {
     display: flex;
     align-items: center;
     line-height: 48px;
@@ -245,4 +245,16 @@
 
 .icon-extend {
     background: url("../../img/Sprites.64af8f61.svg") no-repeat -1071px -27px;
+}
+
+@media screen and (max-width:1024px) {
+    .search-header {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    .search-header {
+        display: block;
+    }
 }

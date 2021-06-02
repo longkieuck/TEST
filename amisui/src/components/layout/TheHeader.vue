@@ -10,10 +10,12 @@
             </div>
         </div>
         <div class="right-header">
-            <InputSearch
+            <div class="search-header">
+                <InputSearch
                 @changeTextSearch="changeTextSearch"
                 :placeholder="'Nhập từ khoá tìm kiếm'"
-            />
+                />
+            </div>
             <div class="cover-icon-active" style="margin-left:20px">
                 <div class="icon icon-category"></div>
             </div>
@@ -50,6 +52,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import '../../assets/css/layout/header.css';
 </style>
