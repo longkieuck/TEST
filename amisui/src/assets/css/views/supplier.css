@@ -130,6 +130,8 @@
 
 .right-header .add-icon {
     padding-right: 5px;
+    top: 0;
+    right: 0;
     width: 16px;
     height: 16px;
     min-width: 16px;
@@ -240,7 +242,10 @@
     margin-right: 30px;
     height: 46px;
     box-sizing: border-box;
-    background-color: gray;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .option-grid-data {
@@ -367,14 +372,34 @@
     background-color: white;
 }
 
-.left-table-supplier {
-    width: 15px;
-    height: 15px;
-    background-color: greenyellow;
+.left-pagination {
+    margin-left: 15px;
+    font-size: 13px;
 }
 
-.left-table-supplier {
-    width: 20px;
-    height: 15px;
-    background-color: greenyellow;
+.btn-prev {
+    margin-right: 5px;
+}
+
+.btn-next {
+    margin-left: 5px;
+}
+
+.right-pagination {
+    margin-top: 10px;
+    margin-right: 20px;
+    display: flex;
+}
+
+.select-page {
+    /* background-color: red; */
+    right: 0;
+    margin-top: 3px;
+    height: 40px;
+    /* width: 360px; */
+}
+
+.select-record-number {
+    /* margin-top: 15px; */
+    margin-right: 10px;
 }

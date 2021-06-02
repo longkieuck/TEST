@@ -15,14 +15,14 @@
     justify-content: center;
     position: fixed;
     background-color: white;
-    height: 620px;
+    height: 660px;
     width: 900px;
-    top: calc(50% - 310px);
+    top: calc(50% - 330px);
     left: calc(50% - 450px);
 }
 
 .header-dialog-box {
-    margin: 25px;
+    margin: 20px 0px 20px 30px;
     display: flex;
     /* background-color: red; */
 }
@@ -30,11 +30,6 @@
 .dialog-title {
     font-weight: 600;
     font-size: 25px;
-}
-
-.option-user-box {
-    margin-left: 10px;
-    margin-top: 10px;
 }
 
 .top-right-option {
@@ -71,185 +66,61 @@
 }
 
 .content-dialog-box {
-    border-bottom: 1px solid #c4c4c4;
-    margin-left: 25px;
-    width: 850px;
-    height: 450px;
-    /* background-color: red; */
+    margin: 0 30px;
+    width: 840px;
+    height: 460px;
+    overflow: auto;
 }
 
-.line-input {
-    margin: 17px 0px;
+.base-info {
+    width: 835px;
+    height: 230px;
     display: flex;
+    justify-content: space-between;
 }
 
-.title-input {
-    text-align: left;
-    font-weight: 600;
+.left-base-info,
+.right-base-info {
+    width: 405px;
+    height: 230px;
 }
 
-.input-type1 {
-    border-radius: 2px;
-    font-size: 13px;
-    padding: 6px 10px;
-    outline: none;
+.tabs-info {
+    height: 250px;
+    width: 835px;
+}
+
+.tabs-option {
+    width: 835px;
     height: 32px;
-    width: 150px;
-    box-sizing: border-box;
-    border: 1px solid #babec5;
 }
 
-.input-type2 {
-    border-radius: 2px;
-    font-size: 13px;
-    padding: 6px 10px;
-    outline: none;
-    height: 32px;
-    width: 256px;
-    box-sizing: border-box;
-    border: 1px solid #babec5;
-}
-
-.input-type3 {
-    height: 32px;
-    width: 160px;
-    /* border: 1px solid #babec5; */
-}
-
-.ant-input {
-    color: #111 !important;
-    font-size: 13px !important;
-    border: 1px solid #babec5 !important;
-    border-radius: 2px !important;
-}
-
-.input-type4 {
-    border-radius: 2px;
-    font-size: 13px;
-    padding: 6px 10px;
-    outline: none;
-    height: 32px;
-    width: 412px;
-    box-sizing: border-box;
-    border: 1px solid #babec5;
-}
-
-.input-type4a {
-    height: 32px;
-    width: 412px;
-}
-
-
-/* .input-type4a:active {
-    border: 1px solid red !important;
-} */
-
-.input-type5 {
-    border-radius: 2px;
-    font-size: 13px;
-    padding: 6px 10px;
-    outline: none;
-    height: 32px;
-    width: 245px;
-    box-sizing: border-box;
-    border: 1px solid #babec5;
-}
-
-.input-type6 {
-    border-radius: 2px;
-    font-size: 13px;
-    padding: 6px 10px;
-    outline: none;
-    height: 32px;
-    width: 849px;
-    box-sizing: border-box;
-    border: 1px solid #babec5;
-}
-
-.input-type7 {
-    border-radius: 2px;
-    font-size: 13px;
-    padding: 6px 10px;
-    outline: none;
-    height: 32px;
-    width: 203px;
-    box-sizing: border-box;
-    border: 1px solid #babec5;
-}
-
-.space-type1 {
-    margin-left: 5px;
-}
-
-.space-type2 {
-    margin-left: 25px;
-}
-
-.gender {
-    margin-left: 15px;
-}
-
-.margin-gender-option {
-    margin-bottom: 5px;
+.tab-content {
+    height: 217px;
+    width: 835px;
+    border: 1px solid #c9ccd2;
+    padding: 1px;
 }
 
 .footer-dialog-box {
     justify-content: space-between;
     display: flex;
-    /* background-color: red; */
-    margin: 25px;
-    display: flex;
+    margin: 25px 30px;
     height: 36px;
-    width: 850px;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e0e0e0;
 }
 
 .right-bottom-button {
     display: flex;
 }
 
-.code-error {
-    padding: 3px;
-    align-items: center;
-    text-align: center;
-    margin-top: -5px;
-    margin-left: 5px;
-    color: snow;
-    position: absolute;
-    font-size: 11px;
-    height: 22px;
-    background-color: #292a2d;
-}
-
-.name-error {
-    padding: 3px;
-    align-items: center;
-    text-align: center;
-    margin-top: -5px;
-    margin-left: 50px;
-    color: snow;
-    position: absolute;
-    font-size: 11px;
-    height: 22px;
-    background-color: #292a2d;
-}
-
-.department-error {
-    padding: 3px;
-    align-items: center;
-    text-align: center;
-    margin-top: 50px;
-    margin-left: 110px;
-    color: snow;
-    position: absolute;
-    font-size: 11px;
-    height: 22px;
-    background-color: #292a2d;
-}
-
 
 /* custom antd */
 
-.option-page-size:hover {
+
+/* .option-page-size:hover {
     color: #2ca01c;
     background-color: #eceef1 !important;
 }
@@ -267,4 +138,4 @@ input[title]:hover::after {
     content: attr(title);
     background-color: #111;
     color: white;
-}
+} */

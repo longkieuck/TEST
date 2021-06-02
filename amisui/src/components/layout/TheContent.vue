@@ -6,11 +6,11 @@
       :fieldDisplay="'Id'"
       :fieldSearch="'Name'"
       :titleOptions="titleOptions"
-      :isMultiple="true"
+      :isMultiple="false"
       :placeHolder="'Họ và tên'"
       :lWidth="250"
-    />
-    <ComboboxMultiple
+    /> -->
+    <!-- <ComboboxMultiple
       :dataOptions="dataOptions"
       @setItemSelected="setItemSelected"
       :fieldDisplay="'Id'"

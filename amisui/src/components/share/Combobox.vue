@@ -32,6 +32,7 @@
       </a-select-option>
 
       <a-select-option
+        v-show="false"
         v-for="(data, index) in dataOptions"
         :key="index"
         :value="index"

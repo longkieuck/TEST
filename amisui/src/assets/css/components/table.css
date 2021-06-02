@@ -110,6 +110,14 @@ th:last-child {
     justify-content: center;
 }
 
+.cover-first-last .view-option {
+    cursor: pointer;
+    color: #0075C0;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
 .drop-down-icon {
     background-image: url('../../img/Sprites.64af8f61.svg');
     height: 16px;
@@ -120,4 +128,18 @@ th:last-child {
 
 .active {
     outline: 1px solid #0075c0;
+}
+
+.cover-option {
+    border-radius: 0% !important;
+    border: 1px solid #c7c7c7 !important;
+}
+
+.option {
+    color: #111111 !important;
+}
+
+.option:hover {
+    color: #2CA01C !important;
+    background-color: #F4F5F6;
 }
