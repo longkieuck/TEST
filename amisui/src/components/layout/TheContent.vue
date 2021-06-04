@@ -19,8 +19,8 @@
       :isMultiple="true"
       :placeHolder="'Họ và tên'"
       :lWidth="250"
-    />
-    <Input
+    /> -->
+    <!-- <Input
       v-model="searchText"
       :inputName="'Name'"
       :lWidth="250"

@@ -1,54 +1,59 @@
 <template>
-  <div class="combobox-multiple" :style="{ width: lWidth + 'px' }">
-    <a-select
-      @inputKeydown="inputKeydown"
-      mode="multiple"
-      :open="isShowDropdown"
-      :style="{ width: lWidth + 'px' }"
-      :filter-option="filterOption"
-      :placeholder="placeHolder"
-      @change="handleChangeSelect"
-      option-label-prop="label"
-    >
-      <a-select-option value="title" :disabled="true">
-        <div
-          v-for="(title, index) in titleOptions"
-          :key="index"
-          :style="{ width: title.Width + 'px' }"
-        >
-          {{ title.Title }}
-        </div>
-      </a-select-option>
-      <a-select-option
-        v-for="(data, index) in dataOptions"
-        :key="index"
-        :value="index"
-        :label="data[`${fieldDisplay}`]"
+  <div class="combobox-box">
+    <label v-show="comboboxName !=''" class="title">
+      {{comboboxName}}
+    </label>
+    <div class="combobox-multiple" :style="{ width: lWidth + 'px' }">
+      <a-select
+        @inputKeydown="inputKeydown"
+        mode="multiple"
+        :open="isShowDropdown"
+        :style="{ width: lWidth + 'px' }"
+        :filter-option="filterOption"
+        :placeholder="placeHolder"
+        @change="handleChangeSelect"
+        option-label-prop="label"
       >
-        <div
-          v-for="(value, key, index) in data"
-          :title="value"
+        <a-select-option value="title" :disabled="true">
+          <div
+            v-for="(title, index) in titleOptions"
+            :key="index"
+            :style="{ width: title.Width + 'px' }"
+          >
+            {{ title.Title }}
+          </div>
+        </a-select-option>
+        <a-select-option
+          v-for="(data, index) in dataOptions"
           :key="index"
-          class="text-overflow"
-          :style="{ width: titleOptions[index].Width + 'px' }"
+          :value="index"
+          :label="data[`${fieldDisplay}`]"
         >
-          {{ value }}
+          <div
+            v-for="(value, key, index) in data"
+            :title="value"
+            :key="index"
+            class="text-overflow"
+            :style="{ width: titleOptions[index].Width + 'px' }"
+          >
+            {{ value }}
+          </div>
+        </a-select-option>
+      </a-select>
+      <div class="suffix-box">
+        <div class="cover-add-icon cover-ver2">
+          <div class="add-icon icon-ver2" />
         </div>
-      </a-select-option>
-    </a-select>
-    <div class="suffix-box">
-      <div class="cover-add-icon cover-ver2">
-        <div class="add-icon icon-ver2" />
-      </div>
-      <div
-        @click="showDropdown"
-        id="dropdown-icon"
-        class="cover-dropdown-icon cover-ver2"
-      >
         <div
-          class="arrow-dropdown icon-ver2"
-          :class="isShowDropdown ? 'rotate' : null"
-        />
+          @click="showDropdown"
+          id="dropdown-icon"
+          class="cover-dropdown-icon cover-ver2"
+        >
+          <div
+            class="arrow-dropdown icon-ver2"
+            :class="isShowDropdown ? 'rotate' : null"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -64,6 +69,10 @@ export default {
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
     placeHolder: String, //Place holder
     lWidth: Number, // Độ rộng
+    comboboxName:{
+      type:String,
+      default:""
+    }
   },
   data() {
     return {
@@ -148,8 +157,115 @@ export default {
 </script>
 
 <style scoped>
+.cover-suffix {
+  display: flex !important;
+  margin-right: -11px;
+  margin-top: -9px;
+  cursor: pointer !important;
+}
+.cover-add-icon {
+  width: 30px;
+  height: 30px;
+  border-right: 1px solid #babec5;
+}
+.add-icon {
+  position: relative;
+  top: 6px;
+  right: -7px;
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  background-position: -32px -312px;
+  transition: 0.2s;
+}
+.cover-dropdown-icon {
+  /* margin-top: -9px; */
+  /* margin-right: -11px; */
+  width: 30px;
+  height: 30px;
+}
+.cover-add-icon:hover,
+.cover-dropdown-icon:hover {
+  background-color: #e0e0e0;
+}
+.arrow-dropdown {
+  position: relative;
+  top: 6px;
+  right: -7px;
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  background-position: -560px -359px;
+  transition: 0.2s;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.text-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .combobox-multiple {
   display: flex;
+  position: relative;
+}
+.cover-suffix {
+  display: flex !important;
+  margin-right: -11px;
+  margin-top: -9px;
+  cursor: pointer !important;
+}
+.cover-add-icon {
+  width: 30px;
+  height: 30px;
+  border-right: 1px solid #babec5;
+}
+.add-icon {
+  position: relative;
+  top: 6px;
+  right: -7px;
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  background-position: -32px -312px;
+  transition: 0.2s;
+}
+.cover-dropdown-icon {
+  /* margin-top: -9px; */
+  /* margin-right: -11px; */
+  width: 30px;
+  height: 30px;
+}
+.cover-add-icon:hover,
+.cover-dropdown-icon:hover {
+  background-color: #e0e0e0;
+}
+.arrow-dropdown {
+  position: relative;
+  top: 6px;
+  right: -7px;
+  background: url("../../assets/img/Sprites.64af8f61.svg") no-repeat;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  background-position: -560px -359px;
+  transition: 0.2s;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.text-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .suffix-box {
   display: flex;
@@ -167,5 +283,17 @@ export default {
 .selected-multiple {
   background-color: #fff !important;
   color: #111111 !important;
+}
+.combobox-box {
+  display: grid;
+  text-align: left;
+  margin-top: 2px;
+}
+.combobox-box .title {
+  display: flex;
+  font-size: 12px;
+  color: #212121;
+  font-weight: 700;
+  padding-bottom: 4px;
 }
 </style>

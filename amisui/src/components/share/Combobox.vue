@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="combobox-box">
+    <label v-show="comboboxName !=''" class="title">
+      {{comboboxName}}
+    </label>
     <a-select
       @inputKeydown="inputKeydown"
       :open="isShowDropdown"
@@ -62,6 +65,10 @@ export default {
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
     placeHolder: String, //Place holder
     lWidth: Number, // Độ rộng
+    comboboxName:{
+      type:String,
+      default: ""
+    }
   },
   data() {
     return {
@@ -180,5 +187,17 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.combobox-box{
+  display: grid;
+  text-align: left;
+  margin-top: 2px;
+}
+.combobox-box .title {
+    display: flex;
+    font-size: 12px;
+    color: #212121;
+    font-weight: 700;
+    padding-bottom: 4px;
 }
 </style>

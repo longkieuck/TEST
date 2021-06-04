@@ -17,14 +17,7 @@
         </div>
       </div>
       <div class="content-dialog-box">
-        <div class="base-info">
-          <div class="left-base-info">
-            <slot name="left-base-info"></slot>
-          </div>
-          <div class="right-base-info">
-            <slot name="right-base-info"></slot>
-          </div>
-        </div>
+        <slot name="base-info"></slot>
         <div class="tabs-info">
           <div class="tabs-option">
             <slot name="tabs-option"></slot>
