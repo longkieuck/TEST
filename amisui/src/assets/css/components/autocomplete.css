@@ -64,7 +64,7 @@
 }
 
 .ant-select-selection--single .ant-select-selection__rendered {
-    margin-right: 64px !important;
+    margin-right: 50px !important;
 }
 
 .ant-select-selection--multiple .ant-select-selection__rendered {
@@ -96,4 +96,10 @@
 
 .ant-select-dropdown-menu-item-selected .ant-select-selected-icon {
     color: #2CA01C !important;
+}
+
+.ant-select-selection__placeholder,
+.ant-select-search__field__placeholder {
+    font-size: 12px;
+    font-style: italic;
 }

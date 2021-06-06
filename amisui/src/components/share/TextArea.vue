@@ -1,25 +1,25 @@
 <template>
-  <div class="input-box">
-    <label v-if="inputName != ''" class="title">
-      {{inputName}}
-      <div v-if="isRequired" class="required">*</div>
+  <div class="textarea-box">
+    <label v-if="textareaName != ''" class="title">
+      {{textareaName}}
     </label>
-    <input 
+    <textarea 
         v-bind="$attrs"
         v-on="inputSearchListeners"
-        type="text"
-        class="input"
-        :style="{width:lWidth +'px'}"        
-    />
+        class="input text-area"
+
+        :style="{width:lWidth +'px',height:lHeight+'px'}"        
+    >
+    </textarea>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    inputName:String,//Title
+    textareaName:String,//Title
     lWidth: Number, //Độ rộng
-    isRequired: Boolean, //Có bắt buộc không
+    lHeight:Number,//Độ cao
   },
   computed: {
     /**
@@ -44,23 +44,19 @@ export default {
 </script>
 
 <style>
-.input-box {
+.textarea-box {
     display: inline-grid;
     text-align: left;
-    margin-top: 2px;
 }
-.input-box .title {
+.textarea-box .title {
     display: flex;
     font-size: 12px;
     color: #111111;
     font-weight: 700;
     padding-bottom: 4px;
 }
-.title .required{
-    color:red;
-    padding-left:2px;
-    font-weight: 400;
-    font-size: 12px;
+.text-area{
+  border-radius: 3px !important;
+  padding: 9px !important;
 }
-
 </style>

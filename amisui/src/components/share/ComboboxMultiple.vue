@@ -1,6 +1,6 @@
 <template>
   <div class="combobox-box">
-    <label v-show="comboboxName !=''" class="title">
+    <label v-show="comboboxName !=''" :style="{ width: lWidth + 'px' }" class="title">
       {{comboboxName}}
     </label>
     <div class="combobox-multiple" :style="{ width: lWidth + 'px' }">
@@ -285,14 +285,14 @@ export default {
   color: #111111 !important;
 }
 .combobox-box {
-  display: grid;
+  display: inline-grid;
   text-align: left;
   margin-top: 2px;
 }
 .combobox-box .title {
   display: flex;
   font-size: 12px;
-  color: #212121;
+  color: #111111;
   font-weight: 700;
   padding-bottom: 4px;
 }

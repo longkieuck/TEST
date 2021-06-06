@@ -70,11 +70,31 @@ input::placeholder {
   font-style: italic;
   color: #c4c4c4;
 }
+textarea{
+  resize: none !important;
+}
+textarea:focus{
+   border: 1px solid #2ca01c;
+}
+textarea::placeholder{
+  font-style: italic;
+  color: #c4c4c4;
+}
 input[type="checkbox"] {
   height: 18px;
   width: 18px;
   outline: none;
   border: 1px solid #afafaf;
+}
+.input {
+  border-radius: 2px;
+  font-size: 13px;
+  padding: 6px 10px;
+  padding-right: 30px;
+  outline: none;
+  height: 32px;
+  box-sizing: border-box;
+  border: 1px solid #babec5;
 }
 @font-face {
   font-family: "notosans-regular";

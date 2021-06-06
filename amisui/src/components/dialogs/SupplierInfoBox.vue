@@ -19,9 +19,7 @@
       <div class="content-dialog-box">
         <slot name="base-info"></slot>
         <div class="tabs-info">
-          <div class="tabs-option">
-            <slot name="tabs-option"></slot>
-          </div>
+          <slot name="tabs-option"></slot>
           <div class="tab-content">
             <slot name="tab-content"></slot>
           </div>
