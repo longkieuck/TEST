@@ -56,5 +56,5 @@ export default {
 
 <style>
 @import "../../assets/css/components/radiobutton.css";
-@import "../../assets/css/dialogs/infodialog.css";
+@import "../../assets/css/dialogs/supplierinfo.css";
 </style>

@@ -68,7 +68,7 @@ export default {
     fieldSearch: String, //Trường tìm kiếm
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
     placeHolder: String, //Place holder
-    lWidth: Number, // Độ rộng
+    lWidth: String, // Độ rộng
     comboboxName:{
       type:String,
       default:""

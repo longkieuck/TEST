@@ -18,7 +18,7 @@
 export default {
   props: {
     textareaName:String,//Title
-    lWidth: Number, //Độ rộng
+    lWidth: String, //Độ rộng
     lHeight:Number,//Độ cao
   },
   computed: {

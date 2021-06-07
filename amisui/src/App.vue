@@ -87,6 +87,7 @@ input[type="checkbox"] {
   border: 1px solid #afafaf;
 }
 .input {
+  /* min-width: 180px; */
   border-radius: 2px;
   font-size: 13px;
   padding: 6px 10px;

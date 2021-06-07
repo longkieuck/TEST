@@ -16,7 +16,7 @@
 <script>
 export default {
     props:{
-        lWidth:Number//Độ rộng
+        lWidth:String//Độ rộng
     },
     computed: {
         /**

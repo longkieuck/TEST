@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <SupplierInfo/>
+    <!-- <SupplierInfo/> -->
     <!-- <div class="header">
       <div class="left-header">
         <div class="header-title">
@@ -739,6 +739,7 @@
         </div>
       </div>
     </div> -->
+    <AddAccount/>
   </div>
 </template>
 
@@ -746,12 +747,15 @@
 import ClickOutside from 'vue-click-outside'
 // import InputSearch from "../components/share/InputSearch";
 // import Combobox from "../components/share/Combobox"
-import SupplierInfo from "../components/dialogs/SupplierInfo"
+// import SupplierInfo from "../components/dialogs/SupplierInfo"
+import AddAccount from "../components/dialogs/AddAccount"
+
 export default {
   components: {
     // InputSearch,
     // Combobox
-    SupplierInfo
+    // SupplierInfo
+    AddAccount
   },
   data() {
     return {

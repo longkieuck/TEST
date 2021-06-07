@@ -18,7 +18,7 @@
 export default {
   props: {
     inputName:String,//Title
-    lWidth: Number, //Độ rộng
+    lWidth: String, //Độ rộng
     isRequired: Boolean, //Có bắt buộc không
   },
   computed: {
@@ -45,6 +45,7 @@ export default {
 
 <style>
 .input-box {
+    
     display: inline-grid;
     text-align: left;
     margin-top: 2px;

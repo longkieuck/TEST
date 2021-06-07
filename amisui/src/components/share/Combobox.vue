@@ -2,6 +2,7 @@
   <div class="combobox-box">
     <label v-show="comboboxName !=''" :style="{ width: lWidth + 'px' }" class="title">
       {{comboboxName}}
+      <div v-if="isRequired" class="required">*</div>
     </label>
     <a-select
       @inputKeydown="inputKeydown"
@@ -12,6 +13,7 @@
       @change="handleChangeSelect"
       :placeholder="placeHolder"
       option-label-prop="label"
+      :disabled="isDisabled"
     >
       <div slot="suffixIcon" class="cover-suffix">
         <div v-show="isMultiple" class="cover-add-icon">
@@ -64,15 +66,15 @@ export default {
     fieldSearch: String, //Trường tìm kiếm
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
     placeHolder: String, //Place holder
-    lWidth: Number, // Độ rộng
-    comboboxName:{
-      type:String,
-      default: ""
-    }
+    lWidth: String, // Độ rộng
+    isRequired:Boolean,
+    isDisabled:Boolean,
+    comboboxName:String,
   },
   data() {
     return {
       isShowDropdown: false,
+
     };
   },
   created() {
@@ -120,6 +122,7 @@ export default {
      * CreatedBy KDLong 30/05/2021
      */
     showDropdown() {
+      if(!this.isDisabled)
       this.isShowDropdown = !this.isShowDropdown;
     },
     /**
@@ -192,6 +195,7 @@ export default {
   display: inline-grid;
   text-align: left;
   margin-top: 2px;
+  width: 100%;
 }
 .combobox-box .title {
     display: flex;
@@ -199,5 +203,11 @@ export default {
     color: #111111;
     font-weight: 700;
     padding-bottom: 4px;
+}
+.title .required{
+    color:red;
+    padding-left:2px;
+    font-weight: 400;
+    font-size: 12px;
 }
 </style>

@@ -55,7 +55,7 @@
 
 .ant-select-dropdown-menu-item-disabled {
     cursor: default !important;
-    color: #212121 !important;
+    color: #111111 !important;
     font-size: 11px !important;
     font-weight: bold !important;
     width: 100%;
