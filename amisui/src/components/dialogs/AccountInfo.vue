@@ -219,5 +219,5 @@ export default {
   min-width: 150px !important;
 }
 
-@import "../../assets/css/dialogs/addaccount.css";
+@import "../../assets/css/dialogs/accountinfo.css";
 </style>

@@ -143,3 +143,28 @@ th:last-child {
     color: #2CA01C !important;
     background-color: #F4F5F6;
 }
+
+.display-date {
+    display: flex;
+    justify-content: center;
+}
+
+.display-money {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+tr .total-money {
+    background-color: #F8F9FE !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-top: 2px solid #c7c7c7;
+    height: 32px !important;
+}
+
+.tr-total-money {
+    position: sticky;
+    bottom: 46px;
+}

@@ -80,7 +80,7 @@
 .right-header .add-box {
     cursor: pointer;
     height: 36px;
-    width: 105px;
+    width: 155px;
     background-color: #2CA01C;
     display: flex;
     align-items: center;
@@ -191,7 +191,7 @@
 }
 
 .top-grid-data .second {
-    background-color: #B8BCC3 !important;
+    background-color: #00A9F2 !important;
     margin-left: .5rem !important;
     margin-right: .5rem !important;
 }

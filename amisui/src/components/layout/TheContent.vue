@@ -26,7 +26,9 @@
       :lWidth="250"
       :isRequired="true"
     /> -->
+    <!-- <PaymentList/> -->
     <SupplierList/>
+    <!-- <AccountList/> -->
   </div>
   
 </template>
@@ -36,12 +38,17 @@
 // import ComboboxMultiple from "../share/ComboboxMultiple";
 // import Input from "../share/Input";
 import SupplierList from "../../views/SupplierList"
+// import AccountList from "../../views/AccountList"
+// import PaymentList from "../../views/PaymentList"
+
 export default {
   components: {
     // Combobox,
     // ComboboxMultiple,
     // Input
     SupplierList
+    // AccountList
+    // PaymentList
   },
   data() {
     return {
