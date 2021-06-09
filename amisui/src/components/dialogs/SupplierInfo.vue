@@ -25,20 +25,20 @@
             <Input
               style="width:170px;padding-right:12px"
               inputName="Mã số thuế"
-              lWidth="158"
+              lWidth=158
             />
-            <Input inputName="Mã nhà cung cấp" isRequired="true" lWidth="235" />
+            <Input inputName="Mã nhà cung cấp" isRequired="true" lWidth=235 />
           </div>
           <div class="row-input">
             <Input
               inputName="Tên nhà cung cấp"
               isRequired="true"
-              lWidth="405"
+              lWidth=405
             />
           </div>
           <TextArea
             textareaName="Địa chỉ"
-            lWidth="405"
+            lWidth=405
             lHeight="60"
             placeholder="VD: Số 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội"
           />
@@ -48,9 +48,9 @@
             <Input
               style="width:170px;padding-right:12px"
               inputName="Điện thoại"
-              lWidth="158"
+              lWidth=158
             />
-            <Input inputName="Website" lWidth="235" />
+            <Input inputName="Website" lWidth=235 />
           </div>
           <div class="row-input">
             <ComboboxMultiple
@@ -60,14 +60,14 @@
               :fieldSearch="'Name'"
               :titleOptions="titleOptions"
               comboboxName="Nhóm nhà cung cấp"
-              lWidth="405"
+              lWidth=405
             />
           </div>
           <div class="row-input" style="margin-top:2px">
             <Combobox
               isMultiple="true"
               comboboxName="Nhân viên mua hàng"
-              lWidth="405"
+              lWidth=405
             />
           </div>
         </div>
@@ -79,9 +79,9 @@
               style="width:247px;padding-right:12px"
               inputName="Mã nhà cung cấp"
               isRequired="true"
-              lWidth="235"
+              lWidth=235
             />
-            <Input inputName="Mã số thuế" lWidth="158" />
+            <Input inputName="Mã số thuế" lWidth=158/>
           </div>
           <div
             class="row-input"
@@ -89,15 +89,15 @@
           >
             <Combobox
               comboboxName="Tên nhà cung cấp"
-              lWidth="120"
+              lWidth=120
               placeHolder="Xưng hô"
             />
-            <Input lWidth="272" placeholder="Họ và tên" />
+            <Input lWidth=272 placeholder="Họ và tên" />
           </div>
           <TextArea
             textareaName="Địa chỉ"
-            lWidth="405"
-            lHeight="60"
+            lWidth=405
+            lHeight=60
             placeholder="VD: Số 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội"
           />
         </div>
@@ -110,14 +110,14 @@
               :fieldSearch="'Name'"
               :titleOptions="titleOptions"
               comboboxName="Nhóm nhà cung cấp"
-              lWidth="405"
+              lWidth=405
             />
           </div>
           <div class="row-input" style="margin-top:2px">
             <Combobox
               isMultiple="true"
               comboboxName="Nhân viên mua hàng"
-              lWidth="405"
+              lWidth=405
             />
           </div>
         </div>
@@ -141,24 +141,24 @@
                 Người liên hệ
               </div>
               <div class="location-line">
-                <Combobox placeHolder="Xưng hô" lWidth="125" />
+                <Combobox placeHolder="Xưng hô" lWidth=125 />
                 <Input
                   style="margin-top:-2px"
-                  lWidth="260"
+                  lWidth=260
                   placeholder="Họ và tên"
                 />
               </div>
               <div class="location-line">
                 <Input
                   style="margin-top:4px"
-                  lWidth="396"
+                  lWidth=396
                   placeholder="Email"
                 />
               </div>
               <div class="location-line">
                 <Input
                   style="margin-top:4px"
-                  lWidth="190"
+                  lWidth=190
                   placeholder="Số điện thoại"
                 />
               </div>
@@ -167,7 +167,7 @@
                   Đại diện theo PL
                 </div>
                 <div class="location-line">
-                  <Input lWidth="396" placeholder="Đại diện theo PL" />
+                  <Input lWidth=396 placeholder="Đại diện theo PL" />
                 </div>
               </div>
             </div>
@@ -179,7 +179,7 @@
                 <div class="location-line">
                   <Input
                     style="margin-top:-2px"
-                    lWidth="396"
+                    lWidth=396
                     placeholder="Đại diện theo PL"
                   />
                 </div>
@@ -191,21 +191,21 @@
                 <div class="location-line">
                   <Input
                     style="margin-top:-2px"
-                    lWidth="396"
+                    lWidth=396
                     placeholder="Người nhận hoá đơn điện tử"
                   />
                 </div>
                 <div class="location-line">
                 <Input
                   style="margin-top:4px"
-                  lWidth="396"
+                  lWidth=396
                   placeholder="Email, ngăn cách nhiều email bởi dấu chấm phẩy '';''"
                 />
               </div>
               <div class="location-line">
                 <Input
                   style="margin-top:4px"
-                  lWidth="190"
+                  lWidth=190
                   placeholder="Số điện thoại"
                 />
               </div>
@@ -216,22 +216,22 @@
             <div class="left-contact">
               <Input
                 inputName="Thông tin liên hệ"
-                lWidth="396"
+                lWidth=396
                 placeholder="Email"
               />
               <Input
                 style="display:block;margin-top:4px;"
-                lWidth="190"
+                lWidth=190
                 placeholder="Điện thoại di động"
               />
               <Input
                 style="display:block;margin-top:4px;"
-                lWidth="190"
+                lWidth=190
                 placeholder="Điện thoại cố định"
               />
               <Input
                 inputName="Đại diện theo PL"
-                lWidth="396"
+                lWidth=396
                 placeholder="Đại diện theo PL"
               />
             </div>
@@ -239,17 +239,21 @@
               <Input
                 style="display:block"
                 inputName="Thông tin CMND/Thẻ căn cước"
-                lWidth="190"
+                lWidth=190
                 placeholder="Số CMND/Thẻ căn cước"
               />
-              <Input
+              <!-- <Input
                 style="display:block;margin-top:4px;"
-                lWidth="190"
+                lWidth=190
                 placeholder="Ngày cấp"
-              />
+              /> -->
+              <a-date-picker 
+                placeholder="Ngày cấp"
+                style="margin-top:4px;width:190px;display:flex" 
+                :format="dateFormat" />
               <Input
                 style="display:block;margin-top:4px;"
-                lWidth="396"
+                lWidth=396
                 placeholder="Nơi cấp"
               />
             </div>
@@ -260,18 +264,18 @@
             <Combobox
               comboboxName="Điều khoản thanh toán"
               isMultiple="true"
-              lWidth="190"
+              lWidth=190
             />
-            <Input inputName="Số ngày nợ cước" isMultiple="true" lWidth="190" />
-            <Input inputName="Số nợ tối đa" isMultiple="true" lWidth="190" />
+            <Input inputName="Số ngày nợ cước" isMultiple="true" lWidth=190 />
+            <Input inputName="Số nợ tối đa" isMultiple="true" lWidth=190 />
           </div>
           <div class="term-payment-line2">
             <Combobox
               v-show="isCustomer"
               comboboxName="Tài khoản công nợ phải thu"
-              lWidth="190"
+              lWidth=190
             />
-            <Combobox comboboxName="Tài khoản công nợ phải trả" lWidth="190" />
+            <Combobox comboboxName="Tài khoản công nợ phải trả" lWidth=190 />
           </div>
         </div>
         <div v-show="tabSelected == 2" class="bank-account">
@@ -331,12 +335,12 @@
               Vị trí địa lý
             </div>
             <div class="location-line">
-              <Combobox lWidth="190" />
-              <Combobox placeHolder="Tỉnh/Thành phố" lWidth="190" />
+              <Combobox lWidth=190 />
+              <Combobox placeHolder="Tỉnh/Thành phố" lWidth=190 />
             </div>
             <div class="location-line" style="margin-top:10px">
-              <Combobox placeHolder="Quận/Huyện" lWidth="190" />
-              <Combobox placeHolder="Xã/Phường" lWidth="190" />
+              <Combobox placeHolder="Quận/Huyện" lWidth=190 />
+              <Combobox placeHolder="Xã/Phường" lWidth=190 />
             </div>
           </div>
           <div class="delivery-address">
@@ -355,7 +359,7 @@
                 :key="num"
               >
                 <div class="delivery-input">
-                  <Input style="margin-top:-5px" lWidth="325" />
+                  <Input style="margin-top:-5px" lWidth=325 />
                 </div>
                 <div class="delete-icon-box">
                   <div
@@ -376,7 +380,7 @@
           </div>
         </div>
         <div v-show="tabSelected == 4" class="note-tab">
-          <TextArea lWidth="815" lHeight="190" />
+          <TextArea lWidth=815 lHeight=190 />
         </div>
       </div>
     </supplier-info-box>
@@ -389,6 +393,7 @@ import Input from "../share/Input";
 import ComboboxMultiple from "../share/ComboboxMultiple";
 import Combobox from "../share/Combobox";
 import TextArea from "../share/TextArea";
+import moment from "moment"
 export default {
   components: {
     SupplierInfoBox,
@@ -399,6 +404,7 @@ export default {
   },
   data() {
     return {
+      dateFormat: 'DD/MM/YYYY',
       typeSupplier: 0,
       isCustomer: false,
       tabSelected: 0,
@@ -450,6 +456,7 @@ export default {
     };
   },
   methods: {
+    moment,
     handleTabs(index) {
       this.tabSelected = index;
     },

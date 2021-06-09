@@ -367,3 +367,8 @@
     width: 398px;
     /* display: flex; */
 }
+
+.payment-table {
+    position: relative;
+    display: block;
+}

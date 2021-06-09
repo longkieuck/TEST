@@ -14,9 +14,11 @@
       :placeholder="placeHolder"
       option-label-prop="label"
       :disabled="isDisabled"
+      :dropdownMatchSelectWidth=false
+      :default-value="defaultValue"
     >
       <div slot="suffixIcon" class="cover-suffix">
-        <div v-show="isMultiple" class="cover-add-icon">
+        <div v-show="isShowAddIcon" class="cover-add-icon">
           <div class="add-icon" />
         </div>
         <div @click="showDropdown" class="cover-dropdown-icon">
@@ -65,11 +67,13 @@ export default {
     fieldDisplay: String, //Trường hiển thị khi đã chọn
     fieldSearch: String, //Trường tìm kiếm
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
+    isShowAddIcon: Boolean, //Hiển thị nhiều dữ liệu hay không
     placeHolder: String, //Place holder
-    lWidth: String, // Độ rộng
+    lWidth: Number, // Độ rộng
     isRequired:Boolean,
     isDisabled:Boolean,
     comboboxName:String,
+    defaultValue:String
   },
   data() {
     return {

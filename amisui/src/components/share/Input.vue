@@ -7,7 +7,6 @@
     <input 
         v-bind="$attrs"
         v-on="inputSearchListeners"
-        type="text"
         class="input"
         :style="{width:lWidth +'px'}"        
     />
@@ -18,7 +17,7 @@
 export default {
   props: {
     inputName:String,//Title
-    lWidth: String, //Độ rộng
+    lWidth: Number, //Độ rộng
     isRequired: Boolean, //Có bắt buộc không
   },
   computed: {

@@ -23,6 +23,7 @@ export default {
 <style>
 @import "./assets/css/components/checkbox.css";
 @import "./assets/css/components/button.css";
+@import "./assets/css/components/datepicker.css";
 @import "./assets/css/components/radiobutton.css";
 @import "./assets/css/components/autocomplete.css";
 #app {
@@ -96,6 +97,11 @@ input[type="checkbox"] {
   height: 32px;
   box-sizing: border-box;
   border: 1px solid #babec5;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 @font-face {
   font-family: "notosans-regular";

@@ -8,7 +8,7 @@
       :titleOptions="titleOptions"
       :isMultiple="false"
       :placeHolder="'Họ và tên'"
-      :lWidth="250"
+      :lWidth=250
     /> -->
     <!-- <ComboboxMultiple
       :dataOptions="dataOptions"
@@ -18,17 +18,19 @@
       :titleOptions="titleOptions"
       :isMultiple="true"
       :placeHolder="'Họ và tên'"
-      :lWidth="250"
+      :lWidth=250
     /> -->
     <!-- <Input
       v-model="searchText"
       :inputName="'Name'"
-      :lWidth="250"
+      :lWidth=250
       :isRequired="true"
     /> -->
     <!-- <PaymentList/> -->
-    <SupplierList/>
+    <!-- <SupplierList/> -->
     <!-- <AccountList/> -->
+    <PaymentInfo/>
+    <!-- <SupplierInfo/> -->
   </div>
   
 </template>
@@ -37,18 +39,21 @@
 // import Combobox from "../share/Combobox";
 // import ComboboxMultiple from "../share/ComboboxMultiple";
 // import Input from "../share/Input";
-import SupplierList from "../../views/SupplierList"
+// import SupplierList from "../../views/SupplierList"
 // import AccountList from "../../views/AccountList"
 // import PaymentList from "../../views/PaymentList"
-
+// import SupplierInfo from "../dialogs/SupplierInfo"
+import PaymentInfo from "../dialogs/PaymentInfo"
 export default {
   components: {
     // Combobox,
     // ComboboxMultiple,
     // Input
-    SupplierList
+    // SupplierList
     // AccountList
     // PaymentList
+    PaymentInfo
+    // SupplierInfo
   },
   data() {
     return {
