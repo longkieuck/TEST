@@ -29,8 +29,11 @@
     <!-- <PaymentList/> -->
     <!-- <SupplierList/> -->
     <!-- <AccountList/> -->
-    <PaymentInfo/>
+    <!-- <AccountInfo/> -->
     <!-- <SupplierInfo/> -->
+    <!-- <PaymentInfo/> -->
+    <!-- <Home/> -->
+    <router-view></router-view>
   </div>
   
 </template>
@@ -43,7 +46,9 @@
 // import AccountList from "../../views/AccountList"
 // import PaymentList from "../../views/PaymentList"
 // import SupplierInfo from "../dialogs/SupplierInfo"
-import PaymentInfo from "../dialogs/PaymentInfo"
+// import AccountInfo from "../dialogs/AccountInfo"
+// import PaymentInfo from "../dialogs/PaymentInfo"
+// import Home from "../../views/Home"
 export default {
   components: {
     // Combobox,
@@ -52,8 +57,10 @@ export default {
     // SupplierList
     // AccountList
     // PaymentList
-    PaymentInfo
+    // AccountInfo
     // SupplierInfo
+    // PaymentInfo
+    // Home
   },
   data() {
     return {

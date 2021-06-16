@@ -1,4 +1,4 @@
-.dialog-box {
+.account-dialog-box {
     position: fixed;
     background-color: #000;
     opacity: 0.3;
@@ -6,11 +6,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 15;
+    z-index: 41;
 }
 
-.dialog-content {
-    z-index: 16;
+.account-dialog-content {
+    z-index: 42;
     justify-content: center;
     position: fixed;
     background-color: white;
@@ -29,7 +29,7 @@
     max-width: calc(100vw - 6px);
 }
 
-.resize {
+.account-resize {
     width: 12px;
     height: 50px;
     background: white;
@@ -45,7 +45,7 @@
     cursor: pointer;
 }
 
-.resize-icon {
+.account-resize-icon {
     background-position: -35px -360px;
     width: 9px;
     height: 14px;
@@ -57,18 +57,18 @@
     transform: rotateY(180deg);
 }
 
-.header-dialog-box {
+.account-header-dialog-box {
     margin: 14px 16px 24px 16px;
     display: flex;
     /* background-color: red; */
 }
 
-.dialog-title {
+.account-dialog-title {
     font-weight: 600;
     font-size: 24px;
 }
 
-.top-right-option {
+.account-top-right-option {
     display: flex;
     justify-content: space-between;
     right: 12px;
@@ -79,7 +79,7 @@
     /* background-color: green; */
 }
 
-.btn-help {
+.account-btn-help {
     cursor: pointer;
     background-image: url("../../img/Sprites.64af8f61.svg");
     width: 24px;
@@ -90,7 +90,7 @@
     background-repeat: no-repeat;
 }
 
-.btn-close {
+.account-btn-close {
     cursor: pointer;
     width: 24px;
     height: 24px;
@@ -101,18 +101,18 @@
     background-image: url("../../img/Sprites.64af8f61.svg");
 }
 
-.footer-dialog-box {
+.account-footer-dialog-box {
     justify-content: space-between;
     display: flex;
     padding: 15px;
     height: 36px;
 }
 
-.right-bottom-button {
+.account-right-bottom-button {
     display: flex;
 }
 
-.content-dialog-box {
+.account-content-dialog-box {
     height: calc(100vh - 142px);
     padding: 0 16px 16px 16px;
     overflow-y: auto;
@@ -123,30 +123,30 @@
     min-width: 0;
 }
 
-.divide {
+.account-divide {
     position: absolute;
     width: 100%;
     height: 4px;
     background-color: #f4f5f8;
 }
 
-.basic-information {
+.account-basic-information {
     height: 55%;
     width: 100%;
 }
 
-.collapse-information {
+.account-collapse-information {
     height: 45%;
     width: 100%;
 }
 
-.row-input-add-account {
+.account-row-input-add-account {
     width: 100%;
     display: flex;
     padding-bottom: 12px;
 }
 
-.exception-accounting {
+.account-exception-accounting {
     display: flex;
     margin-top: 13px;
     width: 160px;
@@ -155,7 +155,7 @@
     justify-content: space-between;
 }
 
-.collapse-information .header-item {
+.account-collapse-information .account-header-item {
     margin-top: 10px;
     margin-bottom: 5px;
     font-size: 16px;
@@ -163,12 +163,12 @@
     align-items: center;
 }
 
-.collapse-information .header-item:hover {
+.account-collapse-information .account-header-item:hover {
     color: #2CA01C;
     cursor: pointer;
 }
 
-.collapse-information .header-icon {
+.account-collapse-information .account-header-icon {
     transition-duration: .3s;
     margin-right: 5px;
     width: 16px;
@@ -184,26 +184,26 @@
     transform: rotate(90deg);
 }
 
-.collapse-information .content {
+.account-collapse-information .account-content {
     height: 100%;
     width: 100%;
     padding: 0 10px 10px;
     transition: all .2s ease-out;
 }
 
-.w-1div2-padding {
+.account-w-1div2-padding {
     width: 50%;
     padding-right: 9%;
     display: flex;
     align-items: center;
 }
 
-.w-1div2-none-padding {
+.account-w-1div2-none-padding {
     width: 50%;
     display: flex;
 }
 
-.content .title-checkbox {
+.account-content .account-title-checkbox {
     font-size: 13px;
     margin-left: 8px;
 }

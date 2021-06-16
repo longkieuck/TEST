@@ -2,6 +2,7 @@
 using MISA.Core.Entities;
 using MISA.Core.Interface.Repository;
 using MySqlConnector;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -100,6 +101,19 @@ namespace MISA.Infrastructure.Repository
                 return res;
             }
         }
+
+        //public async Task<IEnumerable<MISAEntity>> GetAll()
+        //{
+        //    //Kết nối DB 
+        //    using (dbConnection = new NpgsqlConnection(connectionString))
+        //    {
+
+        //        //Thực thi với DB 
+        //        var sqlCommand = string.Format(Properties.DatabaseResources.ProcedureGetAll, tableName);
+        //        var objects = await dbConnection.QueryAsync<MISAEntity>(sqlCommand, commandType: CommandType.StoredProcedure);
+        //        return objects;
+        //    }
+        //}
         #endregion
     }
 }

@@ -6,11 +6,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 15;
+    z-index: 41;
 }
 
 .dialog-content {
-    z-index: 16;
+    z-index: 42;
     border-radius: 4px;
     justify-content: center;
     position: fixed;
@@ -371,4 +371,16 @@
 .payment-table {
     position: relative;
     display: block;
+}
+
+.location-line .combobox-box {
+    margin-top: 0px;
+}
+
+.term-payment-line2 .combobox-box {
+    margin-right: 10px;
+}
+
+.term-payment-line1 .combobox-box {
+    width: auto;
 }

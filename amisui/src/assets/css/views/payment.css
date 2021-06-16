@@ -77,7 +77,7 @@
     background-color: #D2D3D6;
 }
 
-.right-header .add-box {
+.right-header .payment-add-box {
     cursor: pointer;
     height: 36px;
     width: 155px;
@@ -88,7 +88,7 @@
     border-radius: 30px;
 }
 
-.right-header .add-box:hover {
+.right-header .payment-add-box:hover {
     background-color: #35BF22;
 }
 

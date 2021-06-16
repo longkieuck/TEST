@@ -64,8 +64,18 @@ namespace MISA.CukCuk.Api
 
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+            services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         }

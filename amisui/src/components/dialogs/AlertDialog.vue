@@ -117,6 +117,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../../assets/css/dialogs/alertdialog.css";
 </style>

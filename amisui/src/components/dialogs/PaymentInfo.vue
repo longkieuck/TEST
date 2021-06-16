@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="payment-info-container">
     <div class="payment-header">
       <div class="left-payment-header">
         <div class="history-icon icon"></div>
@@ -13,7 +13,7 @@
       <div class="right-payment-header">
         <div class="tutorial-icon icon"></div>
         <div class="tutorial-text">Hướng dẫn</div>
-        <div class="setting-icon icon"></div>
+        <div class="setting-icon1 icon"></div>
         <div class="question-icon icon"></div>
         <div class="close-icon icon"></div>
       </div>
@@ -22,7 +22,7 @@
       <div class="basic-info">
         <div class="w3div4">
           <div class="w4div5">
-            <div class="row-input">
+            <div class="row-input1">
               <div style="width:43%">
                 <Combobox :isMultiple="true" :comboboxName="'Đối tượng'" />
               </div>
@@ -31,19 +31,19 @@
                 :inputName="'Người nhận'"
               />
             </div>
-            <div class="row-input">
+            <div class="row-input1">
               <Input
                 style="width: 100%;padding-right:16px"
                 :inputName="'Địa chỉ'"
               />
             </div>
-            <div class="row-input">
+            <div class="row-input1">
               <Input
                 style="width: 100%;padding-right:16px"
                 :inputName="'Lý do chi'"
               />
             </div>
-            <div class="row-input include">
+            <div class="row-input1 include">
               <div style="width:43%">
                 <Combobox :isMultiple="true" :comboboxName="'Nhân viên'" />
               </div>
@@ -55,7 +55,7 @@
               />
               <div class="original-doc">chứng từ gốc</div>
             </div>
-            <div class="row-input">
+            <div class="row-input1">
               <div>
                 Tham chiếu<span style="margin-left:15px;color: #0075c0;"
                   >...</span
@@ -247,9 +247,9 @@
     </div>
     <div class="payment-footer">
       <div class="left-payment-footer">
-        <div class="black-btn">
+        <router-link style="color:white" class="black-btn" to="/payment">
           Hủy
-        </div>
+        </router-link>
       </div>
       <div class="right-payment-footer">
         <div class="black-btn save">
@@ -307,6 +307,9 @@ const titleCurrencies = [
   },
 ];
 export default {
+  created(){
+    // alert(this.$route.params.id)
+  },
   data() {
     return {
       lineDataTable: 1,

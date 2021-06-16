@@ -1,10 +1,5 @@
 <template>
-  <div
-  @keydown.esc.prevent.stop="btnClose" 
-  @keydown.ctrl.83.prevent.stop.exact="btnSave" 
-  @keydown.ctrl.shift.83.prevent.stop="btnSaveAndAdd"
-  tabindex="0"
-  >
+  <div>
     <div class="dialog-box"></div>
     <div class="dialog-content">
       <div class="header-dialog-box">
@@ -25,15 +20,8 @@
           </div>
         </div>
       </div>
-      <div class="footer-dialog-box">
-        <div>
-          <div class="white-button">Huỷ</div>
-        </div>
-        <div class="right-bottom-button">
-          <div class="white-button" title="Cất (Ctrl + S)">Cất</div>
-          <div class="green-button" title="Cất và thêm (Ctrl + Shift + S)">Cất và Thêm</div>
-        </div>
-      </div>
+      <slot name="footer-dialog-box">
+      </slot>
     </div>
   </div>
 </template>
@@ -43,8 +31,10 @@
 export default {
   components: {
   },
+
   data() {
     return {
+      // id:this.$route.params.id
     };
   },
   methods:{
@@ -54,7 +44,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "../../assets/css/components/radiobutton.css";
 @import "../../assets/css/dialogs/supplierinfo.css";
 </style>

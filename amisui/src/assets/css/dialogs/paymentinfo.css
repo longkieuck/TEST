@@ -1,10 +1,11 @@
-.container {
+.payment-info-container {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: white;
+    z-index: 41;
 }
 
 .payment-header {
@@ -69,7 +70,7 @@
     background-position: -984px -144px;
 }
 
-.payment-header .setting-icon {
+.payment-header .setting-icon1 {
     background-position: -32px -144px;
 }
 
@@ -109,7 +110,7 @@
     left: 0;
 }
 
-.payment-content .row-input {
+.payment-content .row-input1 {
     height: 66px;
     padding-bottom: 12px;
     display: flex;

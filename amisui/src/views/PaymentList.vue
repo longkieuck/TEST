@@ -6,12 +6,12 @@
         <div class="header-title">
           Thu chi tiền mặt
         </div>
-        <div class="back-box">
+        <router-link class="back-box" to="/">
           <div class="back-icon"></div>
           <div class="back-text">
             Tất cả danh mục
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="right-header">
         <div class="tutorial-box">
@@ -26,12 +26,12 @@
           </div>
           <div class="white-btn-icon"></div>
         </div>
-        <div class="add-box">
+        <router-link class="payment-add-box"  to="/payment/paymentinfo">
           <div class="add-text">
             Thêm chi tiền
           </div>
           <div class="add-icon"></div>
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="top-grid-data" v-show="isShowTopGridData">
@@ -863,7 +863,7 @@
         </div>
       </div>
     </div>
-    <!-- <AccountInfo/> -->
+    <router-view/>
   </div>
 </template>
 
@@ -871,14 +871,14 @@
 import ClickOutside from "vue-click-outside";
 // import InputSearch from "../components/share/InputSearch";
 import Combobox from "../components/share/Combobox"
-// import SupplierInfo from "../components/dialogs/SupplierInfo"
+import PaymentInfo from "../components/dialogs/PaymentInfo"
 // import AccountInfo from "../components/dialogs/AccountInfo"
 
 export default {
   components: {
     // InputSearch,
-    Combobox
-    // SupplierInfo
+    Combobox,
+    PaymentInfo
     // AccountInfo
   },
   data() {

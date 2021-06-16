@@ -170,17 +170,23 @@
     display: flex;
     padding: 0 20px;
     align-items: center;
+    z-index: 40;
 }
 
 .ant-table-thead {
     position: sticky;
     top: 100px;
     height: 36px;
+    z-index: 40;
 }
 
 .ant-table-thead>tr>th,
 .ant-table-tbody>tr>td {
     padding: 0 !important;
+}
+
+.ant-table-tbody td:last-child {
+    background-color: white !important;
 }
 
 .ant-table-thead>tr>th {

@@ -17,8 +17,8 @@
 export default {
   props: {
     inputName:String,//Title
-    lWidth: Number, //Độ rộng
-    isRequired: Boolean, //Có bắt buộc không
+    lWidth: String, //Độ rộng
+    isRequired: String, //Có bắt buộc không
   },
   computed: {
     /**

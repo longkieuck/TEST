@@ -1,18 +1,8 @@
-//Hằng số form mode của Alert dialog và những câu thông báo dùng trong Alert dialog
-export const AlertDialogConstant = {
-    IS_CLOSE_DIALOG: 0,
-    IS_CODE_EXIST: 1, //Alertdialog trùng mã
-    IS_REQUIRED: 2, //Không được bỏ trống
-    IS_CONFIRM_DELETE: 3, //Xác nhận xoá
-    IS_DATA_CHANGE: 4, //Dữ liệu thay đổi
-    DELETE_SUCCESS: "Xoá thành công!", //Thông báo khi xoá dữ liệu thành công
-};
 //Hằng số form mode của infodialog và những câu thông báo dùng trong infodialog,
-export const InfoDialogConstant = {
-    IS_CLOSE_DIALOG: 0,
+export const SupplierConstant = {
+    IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
     IS_EDIT: 2, //Sửa
-    IS_CLONE: 3, //Nhân bản
     INSERT_SUCCESS: "Thêm thành công!", //Thông báo khi thêm thành công
     EDIT_SUCCESS: "Sửa thành công!", //Thông báo khi sửa thành công
     NOTICE_CODE_EXIST_FRONT: "Mã nhân viên <",
@@ -43,22 +33,50 @@ export const PageSizes = [
 ]
 
 //Khởi tạo nhân viên
-export const InitEmployee = {
-    "employeeCode": "",
-    "gender": -1,
-    "genderName": "",
-    "dateOfBirth": null,
-    "identifyNumber": "",
-    "positionName": "",
-    "departmentName": "",
-    "bankAccount": "",
-    "bankName": "",
-    "bankBranch": "",
-    "fullName": "",
-    "identifyDate": null,
-    "identifyPlace": "",
-    "address": "",
-    "phoneNumber": "",
-    "constantPhoneNumber": "",
-    "email": "",
+export const InitSupplier = {
+    "supplier_id": "00000000-0000-0000-0000-000000000000",
+    "supplier_code": null,
+    "supplier_name": null,
+    "supplier_type": 0,
+    "is_customer": null,
+    "tax_code": null,
+    "phone_number": null,
+    "website": null,
+    "address": null,
+    "supplier_group": null,
+    "puchasing_employee": null,
+    "vocative": null,
+    "contact_vocative": null,
+    "contact_name": null,
+    "contact_email": null,
+    "contact_phone_number": null,
+    "legal_representative": null,
+    "contact_telephone": null,
+    "identify_number": null,
+    "identify_date": null,
+    "identify_place": null,
+    "term_of_payment": null,
+    "number_day_owed": null,
+    "max_amount_debt": null,
+    "account_receive": null,
+    "account_pay": null,
+    "bank_account": "[{\"account_number\":\"\",\"bank_name\":\"\",\"bank_branch\":\"\",\"bank_city\":\"\"}]",
+    "note": null,
+    "country": null,
+    "city": null,
+    "district": null,
+    "commune": null,
+    "delivery_address": "[{\"address\":\"abc\"}]",
+    "invoice_recipient_name": null,
+    "invoice_recipient_email": null,
+    "invoice_recipient_phone": null
+}
+export const InitBankAccount = {
+    account_number: "",
+    bank_name: "",
+    bank_branch: "",
+    bank_city: ""
+}
+export const InitDeliveryAddress = {
+    address: ""
 }

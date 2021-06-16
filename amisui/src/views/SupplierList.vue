@@ -6,12 +6,12 @@
         <div class="header-title">
           Danh sách nhà cung cấp
         </div>
-        <div class="back-box">
+        <router-link class="back-box" to="/">
           <div class="back-icon"></div>
           <div class="back-text">
             Tất cả danh mục
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="right-header">
         <div class="tutorial-box">
@@ -26,7 +26,7 @@
           </div>
           <div class="white-btn-icon"></div>
         </div>
-        <div class="add-box">
+        <div class="add-box" @click="showFormAdd">
           <div class="add-text">
             Thêm
           </div>
@@ -119,21 +119,22 @@
           </tr>
         </thead>
         <tbody>
-          
-         
-          <tr>
+         <tr 
+          v-for="s in suppliers"
+          :key="s.supplier_id"
+         >
             <td></td>
             <td class="th-td-first">
               <div class="cover-first-last"><input type="checkbox" /></div>
             </td>
             <td style="min-width:180px">
-              Kiều Đức LongKiều Đức LongKiều Đức LongKiều Đức Long
+              {{s.supplier_code}}
             </td>
-            <td style="min-width:350px">Kiều Đức Long</td>
-            <td style="min-width:350px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px;border-right:none">Kiều Đức Long</td>
+            <td style="min-width:350px">{{s.supplier_name}}</td>
+            <td style="min-width:350px">{{s.address}}</td>
+            <td style="min-width:150px">{{s.tax_code}}</td>
+            <td style="min-width:150px">{{s.tax_code}}</td>
+            <td style="min-width:150px;border-right:none">{{s.identify_number}}</td>
             <td class="th-td-last">
               <div class="cover-first-last">
                 <div class="view-option">Xem</div>
@@ -143,10 +144,10 @@
                     </a>
                     <a-menu slot="overlay" class="cover-option">
                       <a-menu-item key="0">
-                        <a href="#" class="option">Sửa</a>
+                        <a @click="showFormEdit(s)" class="option">Sửa</a>
                       </a-menu-item>
                       <a-menu-item key="1">
-                        <a href="#" class="option">Xóa</a>
+                        <a @click="deleteSupplier(s.supplier_id)" class="option">Xóa</a>
                       </a-menu-item>
                       <a-menu-item key="2">
                         <a href="#" class="option">Ngưng sử dụng</a>
@@ -170,16 +171,16 @@
             :dataOptions="dataOptions"
             :fieldDisplay="'DisplayField'"
             :fieldSearch="'DisplayField'"
-            :isMultiple="false"
+            :isMultiple=false
             @setItemSelected="changePageSize"
             :titleOptions="titleOptions"
-            :lWidth="225"
+            lWidth=225
           />
         </div>
         <div class="select-page">
           <a-pagination
             size="small"
-            showLessItems="true"
+            :showLessItems="true"
             :total="100"
             :pageSize="10"
             :item-render="itemRender"
@@ -187,27 +188,42 @@
         </div>
       </div>
     </div>
-    <!-- <AccountInfo/> -->
+    <SupplierInfo
+      v-if="supplierFormMode != SupplierConstant.IS_CLOSE"
+      @closeSupplierInfo="closeSupplierInfo"
+    />
   </div>
 </template>
 
 <script>
 import ClickOutside from 'vue-click-outside'
-// import InputSearch from "../components/share/InputSearch";
+import InputSearch from "../components/share/InputSearch";
 import Combobox from "../components/share/Combobox"
-// import SupplierInfo from "../components/dialogs/SupplierInfo"
-// import AccountInfo from "../components/dialogs/AccountInfo"
-
+import SupplierInfo from "../components/dialogs/SupplierInfo"
+import {mapActions, mapState} from "vuex"
+import {SupplierConstant} from "../configs/constants"
 export default {
   components: {
-    // InputSearch,
-    Combobox
-    // SupplierInfo
-    // AccountInfo
+    InputSearch,
+    Combobox,
+    SupplierInfo
   },
+  computed:{
+    ...mapState({
+      suppliers:state=> state.supplier.suppliers,
+      supplierFormMode:state=>state.supplier.supplierFormMode
+    })
+  },
+  created(){
+    this.getSuppliers()
+  },
+  // mounted(){
+  //   alert(this.suppliers)
+  // },
   data() {
     return {
       isShowTopGridData: true,
+      SupplierConstant,
       dataOptions: [
         {
           DisplayField: "10 bản ghi trên 1 trang",
@@ -233,8 +249,23 @@ export default {
     };
   },
   methods: {
+    ...mapActions(
+      'supplier',
+      [
+        'getSuppliers',
+        'showFormAdd' ,
+        'showFormEdit',
+        'deleteSupplier'
+      ]
+    ),
     handleShowTopGridData() {
       this.isShowTopGridData = !this.isShowTopGridData;
+    },
+    showSupplierInfo(){
+      this.isShowSupplierInfo = true
+    },
+    closeSupplierInfo(){
+      this.isShowSupplierInfo = false
     },
     itemRender(current, type, originalElement) {
       if (type === 'prev') {

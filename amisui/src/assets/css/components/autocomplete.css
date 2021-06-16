@@ -75,7 +75,9 @@
 }
 
 .ant-select-dropdown-menu-item {
-    color: #111111;
+    color: #111111 !important;
+    font-family: notosans-regular !important;
+    font-size: 13px !important;
 }
 
 .ant-select-dropdown-menu-item:not(.ant-select-dropdown-menu-item-disabled) {

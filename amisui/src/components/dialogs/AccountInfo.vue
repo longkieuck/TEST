@@ -1,33 +1,33 @@
 <template>
   <div>
-    <div class="dialog-box"></div>
-    <div class="dialog-content" :class="isFullScreen ? 'is-full-screen' : null">
-      <div class="resize" @click="handleResizeScreen">
+    <div class="account-dialog-box"></div>
+    <div class="account-dialog-content" :class="isFullScreen ? 'is-full-screen' : null">
+      <div class="account-resize" @click="handleResizeScreen">
         <div
-          class="resize-icon"
+          class="account-resize-icon"
           :class="isFullScreen ? 'rotate-resize' : null"
         ></div>
       </div>
-      <div class="header-dialog-box">
-        <div class="dialog-title">Thêm Tài khoản</div>
-        <div class="top-right-option">
-          <div class="btn-help"></div>
-          <div class="btn-close" title="Đóng (ESC)"></div>
+      <div class="account-header-dialog-box">
+        <div class="account-dialog-title">Thêm Tài khoản</div>
+        <div class="account-top-right-option">
+          <div class="account-btn-help"></div>
+          <div class="account-btn-close" title="Đóng (ESC)"></div>
         </div>
       </div>
-      <div class="content-dialog-box">
-        <div class="basic-information">
-          <div class="row-input-add-account">
+      <div class="account-content-dialog-box">
+        <div class="account-basic-information">
+          <div class="account-row-input-add-account">
             <Input
               style="width:25%;padding-right:12px"
-              isRequired="true"
+              isRequired=true
               inputName="Số tài khoản"
             />
           </div>
-          <div class="row-input-add-account">
+          <div class="account-row-input-add-account">
             <Input
               style="width:50%"
-              isRequired="true"
+              isRequired=true
               inputName="Tên tài khoản"
             />
             <Input
@@ -35,122 +35,122 @@
               inputName="Tên tiếng Anh"
             />
           </div>
-          <div class="row-input-add-account">
+          <div class="account-row-input-add-account">
             <div style="width:25%;padding-right:12px">
               <Combobox comboboxName="Tài khoản tổng hợp" />
             </div>
             <div style="width:25%">
-              <Combobox isRequired="true" comboboxName="Tính chất" />
+              <Combobox isRequired=true comboboxName="Tính chất" />
             </div>
           </div>
-          <TextArea textareaName="Điễn giải" style="width:100%;" lHeight="60" />
-          <div class="exception-accounting">
+          <TextArea textareaName="Điễn giải" style="width:100%;" lHeight=60 />
+          <div class="account-exception-accounting">
             <input type="checkbox" />Có hạch toán ngoại lệ<br />
           </div>
         </div>
 
-        <div class="collapse-information">
-          <div class="header-item" @click="handleShowDetail">
+        <div class="account-collapse-information">
+          <div class="account-header-item" @click="handleShowDetail">
             <div
-              class="header-icon"
+              class="account-header-icon"
               :class="isShowDetail ? 'rotate-header-icon' : null"
             ></div>
             <div>Theo dõi chi tiết theo</div>
           </div>
-          <div class="content" v-show="isShowDetail">
-            <div class="row-input-add-account">
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+          <div class="account-content" v-show="isShowDetail">
+            <div class="account-row-input-add-account">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail1" />
-                  <div class="title-checkbox">Đối tượng</div>
+                  <div class="account-title-checkbox">Đối tượng</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail1" />
                 </div>
               </div>
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding" style="width:100%">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding" style="width:100%">
                   <input type="checkbox" v-model="isCheckedDetail2" />
-                  <div class="title-checkbox">Tài khoản ngân hàng</div>
+                  <div class="account-title-checkbox">Tài khoản ngân hàng</div>
                 </div>
               </div>
             </div>
-            <div class="row-input-add-account">
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+            <div class="account-row-input-add-account">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail3" />
-                  <div class="title-checkbox">Đối tượng THCP</div>
+                  <div class="account-title-checkbox">Đối tượng THCP</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail3" />
                 </div>
               </div>
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail4" />
-                  <div class="title-checkbox">Công trình</div>
+                  <div class="account-title-checkbox">Công trình</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail4" />
                 </div>
               </div>
             </div>
-            <div class="row-input-add-account">
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+            <div class="account-row-input-add-account">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail5" />
-                  <div class="title-checkbox">Đơn đặt hàng</div>
+                  <div class="account-title-checkbox">Đơn đặt hàng</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail5" />
                 </div>
               </div>
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail6" />
-                  <div class="title-checkbox">Hợp đồng bán</div>
+                  <div class="account-title-checkbox">Hợp đồng bán</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail6" />
                 </div>
               </div>
             </div>
-            <div class="row-input-add-account">
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+            <div class="account-row-input-add-account">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail7" />
-                  <div class="title-checkbox">Hợp đồng mua</div>
+                  <div class="account-title-checkbox">Hợp đồng mua</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail7" />
                 </div>
               </div>
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail8" />
-                  <div class="title-checkbox">Khoản mục CP</div>
+                  <div class="account-title-checkbox">Khoản mục CP</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail8" />
                 </div>
               </div>
             </div>
-            <div class="row-input-add-account">
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+            <div class="account-row-input-add-account">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail9" />
-                  <div class="title-checkbox">Đơn vị</div>
+                  <div class="account-title-checkbox">Đơn vị</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail9" />
                 </div>
               </div>
-              <div class="w-1div2-padding">
-                <div class="w-1div2-none-padding">
+              <div class="account-w-1div2-padding">
+                <div class="account-w-1div2-none-padding">
                   <input type="checkbox" v-model="isCheckedDetail10" />
-                  <div class="title-checkbox">Mã thống kê</div>
+                  <div class="account-title-checkbox">Mã thống kê</div>
                 </div>
-                <div class="w-1div2-none-padding">
+                <div class="account-w-1div2-none-padding">
                   <Combobox :isDisabled="!isCheckedDetail10" />
                 </div>
               </div>
@@ -158,12 +158,12 @@
           </div>
         </div>
       </div>
-      <div class="divide"></div>
-      <div class="footer-dialog-box">
+      <div class="account-divide"></div>
+      <div class="account-footer-dialog-box">
         <div>
-          <div class="white-button">Huỷ</div>
+          <div class="white-button" @click="$emit('closeAccountInfo')">Huỷ</div>
         </div>
-        <div class="right-bottom-button">
+        <div class="account-right-bottom-button">
           <div class="white-button" title="Cất (Ctrl + S)">Cất</div>
           <div class="green-button" title="Cất và thêm (Ctrl + Shift + S)">
             Cất và Thêm
@@ -207,6 +207,9 @@ export default {
     handleShowDetail() {
       this.isShowDetail = !this.isShowDetail;
     },
+    closeAccountInfo(){
+      this.$emit('closeAccountInfo')
+    }
   },
 };
 </script>

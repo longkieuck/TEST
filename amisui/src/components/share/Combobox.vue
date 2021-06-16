@@ -67,10 +67,13 @@ export default {
     fieldDisplay: String, //Trường hiển thị khi đã chọn
     fieldSearch: String, //Trường tìm kiếm
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
-    isShowAddIcon: Boolean, //Hiển thị nhiều dữ liệu hay không
+    isShowAddIcon: {
+      typeof:Boolean,
+      default:false
+    }, //Hiển thị icon add hay không
     placeHolder: String, //Place holder
-    lWidth: Number, // Độ rộng
-    isRequired:Boolean,
+    lWidth: String, // Độ rộng
+    isRequired:String,
     isDisabled:Boolean,
     comboboxName:String,
     defaultValue:String

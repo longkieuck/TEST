@@ -5,18 +5,18 @@
         <div class="header-title">
           Hệ thống tài khoản
         </div>
-        <div class="back-box">
+        <router-link class="back-box" to="/">
           <div class="back-icon"></div>
           <div class="back-text">
             Tất cả danh mục
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="right-header">
         <div class="switch-account-button">
           Chuyển tài khoản hạch toán
         </div>
-        <div class="add-account-button">
+        <div class="add-account-button" @click="showAccountInfo">
           Thêm
         </div>
       </div>
@@ -25,12 +25,12 @@
       <div class="left-top-table-content">
         <InputSearch
           placeholder="Tìm kiếm theo số, tên tài khoản"
-          :lWidth="250"
+          lWidth=250
         />
       </div>
       <div class="right-top-table-content">
         <div class="display-option" @click="handleExpandAllRows">
-          Mở rộng
+          Thu gọn
         </div>
         <div class="load-icon"></div>
         <div class="export-icon"></div>
@@ -91,10 +91,15 @@
     <div class="footer-table-account">
       <div style="font-size:13px">Tổng số: <b>20</b> bản ghi</div>
     </div>
+    <AccountInfo
+      v-if="isShowAccountInfo"
+      @closeAccountInfo="closeAccountInfo"
+    />
   </div>
 </template>
 
 <script>
+import AccountInfo from '../components/dialogs/AccountInfo.vue'
 import ClickOutside from 'vue-click-outside'
 import InputSearch from "../components/share/InputSearch.vue";
 const columns = [
@@ -383,15 +388,23 @@ const data = [
 export default {
   components: {
     InputSearch,
+    AccountInfo
   },
   data() {
     return {
       data,
       columns,
       expandedRowKeys: [],
+      isShowAccountInfo:false
     };
   },
   methods: {
+    showAccountInfo(){
+      this.isShowAccountInfo = true      
+    },
+    closeAccountInfo(){
+      this.isShowAccountInfo = false
+    },
     handleExpandAllRows(){
       this.expandedRowKeys=[]
     },
@@ -449,6 +462,6 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 @import "../assets/css/views/account.css";
 </style>

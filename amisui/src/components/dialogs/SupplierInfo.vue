@@ -6,41 +6,50 @@
           type="radio"
           name="type-supplier"
           value="0"
-          v-model="typeSupplier"
+          v-model="supplier.supplier_type"
         />Tổ chức<br />
         <input
           type="radio"
           name="type-supplier"
           value="1"
-          v-model="typeSupplier"
+          v-model="supplier.supplier_type"
         />Cá nhân<br />
       </div>
       <div class="is-customer" slot="is-customer">
-        <input type="checkbox" v-model="isCustomer" />Là khách hàng<br />
+        <input type="checkbox" v-model="supplier.is_customer" />Là khách hàng<br />
       </div>
 
-      <div v-show="typeSupplier == 0" slot="base-info" class="base-info">
+      <div v-show="supplier.supplier_type == 0" slot="base-info" class="base-info">
         <div class="left-base-info">
           <div class="row-input">
             <Input
               style="width:170px;padding-right:12px"
               inputName="Mã số thuế"
               lWidth=158
+              v-model="supplier.tax_code"
             />
-            <Input inputName="Mã nhà cung cấp" isRequired="true" lWidth=235 />
+            <Input 
+              inputName="Mã nhà cung cấp" 
+              isRequired=true 
+              lWidth=235 
+              v-model="supplier.supplier_code"
+            />
           </div>
           <div class="row-input">
             <Input
               inputName="Tên nhà cung cấp"
-              isRequired="true"
+              isRequired=true
               lWidth=405
+              v-model="supplier.supplier_name"
             />
           </div>
           <TextArea
             textareaName="Địa chỉ"
             lWidth=405
-            lHeight="60"
+            lHeight=60
             placeholder="VD: Số 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội"
+            v-model="supplier.address"
+            @keyup="handleChangeAddress"
           />
         </div>
         <div class="right-base-info">
@@ -49,13 +58,17 @@
               style="width:170px;padding-right:12px"
               inputName="Điện thoại"
               lWidth=158
+              v-model="supplier.phone_number"
             />
-            <Input inputName="Website" lWidth=235 />
+            <Input 
+              inputName="Website" 
+              lWidth=235 
+              v-model="supplier.website"
+            />
           </div>
           <div class="row-input">
             <ComboboxMultiple
               :dataOptions="dataOptions"
-              @setItemSelected="setItemSelected"
               :fieldDisplay="'Name'"
               :fieldSearch="'Name'"
               :titleOptions="titleOptions"
@@ -65,23 +78,29 @@
           </div>
           <div class="row-input" style="margin-top:2px">
             <Combobox
-              isMultiple="true"
+              isShowAddIcon=true
+              :isMultiple=true
               comboboxName="Nhân viên mua hàng"
               lWidth=405
             />
           </div>
         </div>
       </div>
-      <div v-show="typeSupplier == 1" slot="base-info" class="base-info">
+      <div v-show="supplier.supplier_type == 1" slot="base-info" class="base-info">
         <div class="left-base-info">
           <div class="row-input">
             <Input
               style="width:247px;padding-right:12px"
               inputName="Mã nhà cung cấp"
-              isRequired="true"
+              isRequired=true
               lWidth=235
+              v-model="supplier.supplier_code"
             />
-            <Input inputName="Mã số thuế" lWidth=158/>
+            <Input 
+              inputName="Mã số thuế" 
+              lWidth=158
+              v-model="supplier.tax_code"
+            />
           </div>
           <div
             class="row-input"
@@ -92,20 +111,24 @@
               lWidth=120
               placeHolder="Xưng hô"
             />
-            <Input lWidth=272 placeholder="Họ và tên" />
+            <Input 
+              lWidth=272 
+              placeholder="Họ và tên" 
+              v-model="supplier.supplier_name"
+            />
           </div>
           <TextArea
             textareaName="Địa chỉ"
             lWidth=405
             lHeight=60
             placeholder="VD: Số 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội"
+            v-model="supplier.address"
           />
         </div>
         <div class="right-base-info">
           <div class="row-input">
             <ComboboxMultiple
               :dataOptions="dataOptions"
-              @setItemSelected="setItemSelected"
               :fieldDisplay="'Name'"
               :fieldSearch="'Name'"
               :titleOptions="titleOptions"
@@ -115,7 +138,8 @@
           </div>
           <div class="row-input" style="margin-top:2px">
             <Combobox
-              isMultiple="true"
+              isShowAddIcon=true
+              :isMultiple=true
               comboboxName="Nhân viên mua hàng"
               lWidth=405
             />
@@ -135,17 +159,21 @@
       </div>
       <div slot="tab-content">
         <div v-show="tabSelected == 0" class="contact">
-          <div class="organization" v-show="typeSupplier == 0">
+          <div class="organization" v-show="supplier.supplier_type == 0">
             <div class="left-contact-organization">
               <div class="label-input" style="text-align:left">
                 Người liên hệ
               </div>
               <div class="location-line">
-                <Combobox placeHolder="Xưng hô" lWidth=125 />
+                <Combobox 
+                  placeHolder="Xưng hô" 
+                  lWidth=125 
+                />
                 <Input
                   style="margin-top:-2px"
                   lWidth=260
                   placeholder="Họ và tên"
+                  v-model="supplier.contact_name"
                 />
               </div>
               <div class="location-line">
@@ -153,6 +181,7 @@
                   style="margin-top:4px"
                   lWidth=396
                   placeholder="Email"
+                  v-model="supplier.contact_email"
                 />
               </div>
               <div class="location-line">
@@ -160,19 +189,24 @@
                   style="margin-top:4px"
                   lWidth=190
                   placeholder="Số điện thoại"
+                  v-model="supplier.contact_phone_number"
                 />
               </div>
-              <div v-show="isCustomer">
+              <div v-show="supplier.is_customer">
                 <div class="label-input" style="text-align:left;margin-top:6px">
                   Đại diện theo PL
                 </div>
                 <div class="location-line">
-                  <Input lWidth=396 placeholder="Đại diện theo PL" />
+                  <Input 
+                    lWidth=396 
+                    placeholder="Đại diện theo PL" 
+                    v-model="supplier.legal_representative"
+                    />
                 </div>
               </div>
             </div>
             <div class="right-contact-organization">
-              <div v-show="!isCustomer">
+              <div v-show="!supplier.is_customer">
                 <div class="label-input" style="text-align:left">
                   Đại diện theo PL
                 </div>
@@ -181,10 +215,11 @@
                     style="margin-top:-2px"
                     lWidth=396
                     placeholder="Đại diện theo PL"
+                    v-model="supplier.legal_representative"
                   />
                 </div>
               </div>
-              <div v-show="isCustomer">
+              <div v-show="supplier.is_customer">
                 <div class="label-input" style="text-align:left">
                   Người nhận hoá đơn điện tử
                 </div>
@@ -193,6 +228,7 @@
                     style="margin-top:-2px"
                     lWidth=396
                     placeholder="Người nhận hoá đơn điện tử"
+                    v-model="supplier.invoice_recipient_name"
                   />
                 </div>
                 <div class="location-line">
@@ -200,6 +236,7 @@
                   style="margin-top:4px"
                   lWidth=396
                   placeholder="Email, ngăn cách nhiều email bởi dấu chấm phẩy '';''"
+                  v-model="supplier.invoice_recipient_email"
                 />
               </div>
               <div class="location-line">
@@ -207,27 +244,31 @@
                   style="margin-top:4px"
                   lWidth=190
                   placeholder="Số điện thoại"
+                  v-model="supplier.invoice_recipient_phone"
                 />
               </div>
               </div>
             </div>
           </div>
-          <div class="personal" v-show="typeSupplier == 1">
+          <div class="personal" v-show="supplier.supplier_type == 1">
             <div class="left-contact">
               <Input
                 inputName="Thông tin liên hệ"
                 lWidth=396
                 placeholder="Email"
+                v-model="supplier.contact_email"
               />
               <Input
                 style="display:block;margin-top:4px;"
                 lWidth=190
                 placeholder="Điện thoại di động"
+                v-model="supplier.contact_phone_number"
               />
               <Input
                 style="display:block;margin-top:4px;"
                 lWidth=190
                 placeholder="Điện thoại cố định"
+                v-model="supplier.contact_telephone"
               />
               <Input
                 inputName="Đại diện theo PL"
@@ -241,6 +282,7 @@
                 inputName="Thông tin CMND/Thẻ căn cước"
                 lWidth=190
                 placeholder="Số CMND/Thẻ căn cước"
+                v-model="supplier.identify_number"
               />
               <!-- <Input
                 style="display:block;margin-top:4px;"
@@ -250,11 +292,14 @@
               <a-date-picker 
                 placeholder="Ngày cấp"
                 style="margin-top:4px;width:190px;display:flex" 
-                :format="dateFormat" />
+                :format="dateFormat" 
+                v-model="supplier.identify_date"
+                />
               <Input
                 style="display:block;margin-top:4px;"
                 lWidth=396
                 placeholder="Nơi cấp"
+                v-model="supplier.identify_place"
               />
             </div>
           </div>
@@ -263,19 +308,32 @@
           <div class="term-payment-line1">
             <Combobox
               comboboxName="Điều khoản thanh toán"
-              isMultiple="true"
+              :isMultiple=true
               lWidth=190
             />
-            <Input inputName="Số ngày nợ cước" isMultiple="true" lWidth=190 />
-            <Input inputName="Số nợ tối đa" isMultiple="true" lWidth=190 />
+            <Input 
+              inputName="Số ngày nợ cước" 
+              :isMultiple=true
+              lWidth=190 
+              v-model="supplier.number_day_owed"  
+            />
+            <Input 
+              inputName="Số nợ tối đa" 
+              :isMultiple=true
+              lWidth=190 
+              v-model="supplier.max_amount_debt"
+            />
           </div>
           <div class="term-payment-line2">
             <Combobox
-              v-show="isCustomer"
+              v-show="supplier.is_customer"
               comboboxName="Tài khoản công nợ phải thu"
               lWidth=190
             />
-            <Combobox comboboxName="Tài khoản công nợ phải trả" lWidth=190 />
+            <Combobox 
+              comboboxName="Tài khoản công nợ phải trả" 
+              lWidth=190 
+            />
           </div>
         </div>
         <div v-show="tabSelected == 2" class="bank-account">
@@ -297,23 +355,46 @@
                 <th style="min-width:40px"></th>
               </thead>
               <tbody>
-                <tr v-for="account in bankAccountCount" :key="account">
+                <tr 
+                  v-for="(account,index) in bankAccountHandle" 
+                  :key="index"
+                >
                   <td>
-                    <input type="text" class="input" style="width:130px" />
+                    <input 
+                      type="text" 
+                      class="input" 
+                      style="width:130px" 
+                      v-model="account.account_number"
+                    />
                   </td>
                   <td>
-                    <input type="text" class="input" style="width:180px" />
+                    <input 
+                      type="text" 
+                      class="input" 
+                      style="width:180px" 
+                      v-model="account.bank_name"
+                    />
                   </td>
                   <td>
-                    <input type="text" class="input" style="width:160px" />
+                    <input 
+                      type="text" 
+                      class="input" 
+                      style="width:160px" 
+                      v-model="account.bank_branch"
+                    />
                   </td>
                   <td>
-                    <input type="text" class="input" style="width:215px" />
+                    <input 
+                      type="text" 
+                      class="input" 
+                      style="width:215px" 
+                      v-model="account.bank_city"
+                    />
                   </td>
                   <td>
                     <div
                       class="delete-icon"
-                      @click="deleteCurrentLineBankAccount"
+                      @click="deleteCurrentLineBankAccount(index)"
                     ></div>
                   </td>
                 </tr>
@@ -349,22 +430,30 @@
                 Địa chỉ giao hàng
               </div>
               <div class="cover-checkbox-delivery">
-                <input type="checkbox" />Giống địa chỉ nhà cung cấp<br />
+                <input 
+                  @click="handleDeliveryAddress"
+                  type="checkbox"
+                  v-model="isSameSupplierAddress" 
+                />Giống địa chỉ nhà cung cấp<br />
               </div>
             </div>
             <div class="delivery-address-content">
               <div
                 class="delivery-address-line"
-                v-for="num in addressCount"
-                :key="num"
+                v-for="(delivery_address,index) in deliveryAddressHandle"
+                :key="index"
               >
                 <div class="delivery-input">
-                  <Input style="margin-top:-5px" lWidth=325 />
+                  <Input 
+                    style="margin-top:-5px" 
+                    lWidth=325 
+                    v-model="delivery_address.address"
+                  />
                 </div>
                 <div class="delete-icon-box">
                   <div
                     class="delete-icon"
-                    @click="deleteCurrentLineAddress"
+                    @click="deleteCurrentLineAddress(index)"
                   ></div>
                 </div>
               </div>
@@ -380,9 +469,19 @@
           </div>
         </div>
         <div v-show="tabSelected == 4" class="note-tab">
-          <TextArea lWidth=815 lHeight=190 />
+          <TextArea v-model="supplier.note" lWidth=815 lHeight=190 />
         </div>
       </div>
+      <div slot="footer-dialog-box" class="footer-dialog-box">
+        <div>
+          <div class="white-button" @click="closeForm">Huỷ</div>
+        </div>
+        <div class="right-bottom-button">
+          <div class="white-button" title="Cất (Ctrl + S)" @click="btnSave">Cất</div>
+          <div class="green-button" title="Cất và thêm (Ctrl + Shift + S)">Cất và Thêm</div>
+        </div>
+      </div>
+    
     </supplier-info-box>
   </div>
 </template>
@@ -394,6 +493,8 @@ import ComboboxMultiple from "../share/ComboboxMultiple";
 import Combobox from "../share/Combobox";
 import TextArea from "../share/TextArea";
 import moment from "moment"
+import {mapActions,mapState} from  'vuex'
+import { SupplierConstant,InitBankAccount,InitDeliveryAddress } from '../../configs/constants';
 export default {
   components: {
     SupplierInfoBox,
@@ -402,13 +503,26 @@ export default {
     Combobox,
     TextArea,
   },
+  mounted(){
+    this.bankAccountHandle = [...JSON.parse(this.supplier.bank_account)]
+    this.deliveryAddressHandle = [...JSON.parse(this.supplier.delivery_address)]
+  },
+  computed:{
+    ...mapState({
+      supplier:state=> state.supplier.supplier,
+      supplierFormMode:state=> state.supplier.supplierFormMode,
+    }),
+  },
   data() {
     return {
+      //Sử lý tài khoản ngân hàng
+      bankAccountHandle:[],
+      //Sử lý địa chỉ giao hàng
+      deliveryAddressHandle:[],
+      //Giống địa chỉ nhà cung cấp không
+      isSameSupplierAddress:false,
       dateFormat: 'DD/MM/YYYY',
-      typeSupplier: 0,
-      isCustomer: false,
       tabSelected: 0,
-      addressCount: 0,
       bankAccountCount: 0,
       dataOptions: [
         {
@@ -456,28 +570,59 @@ export default {
     };
   },
   methods: {
+    ...mapActions(
+      'supplier',
+      [
+        'closeForm',
+        'postSupplier',
+        'putSupplier'
+      ]
+    ),
     moment,
     handleTabs(index) {
       this.tabSelected = index;
     },
     addLineAddress() {
-      this.addressCount++;
+      this.deliveryAddressHandle.push({...InitDeliveryAddress})
     },
     removeAllLineAddress() {
-      this.addressCount = 0;
+      this.deliveryAddressHandle = [{...InitDeliveryAddress}]
     },
-    deleteCurrentLineAddress() {
-      this.addressCount--;
+    deleteCurrentLineAddress(index) {
+      this.deliveryAddressHandle = this.deliveryAddressHandle.filter((item,i)=>i!=index)
     },
     addLineBankAccount() {
-      this.bankAccountCount++;
+      this.bankAccountHandle.push({...InitBankAccount});
     },
     removeAllLineBankAccount() {
-      this.bankAccountCount = 0;
+      this.bankAccountHandle = [{...InitBankAccount}];
     },
-    deleteCurrentLineBankAccount() {
-      this.bankAccountCount--;
+    deleteCurrentLineBankAccount(index) {
+      this.bankAccountHandle = this.bankAccountHandle.filter((item,i)=>i!=index)
     },
+    btnSave(){
+      //Lọc bỏ các tài khoản ngân hàng rỗng trước khi cất
+      this.bankAccountHandle = this.bankAccountHandle.filter(item=>JSON.stringify(item) != JSON.stringify(InitBankAccount))
+      this.supplier.bank_account = JSON.stringify(this.bankAccountHandle)
+      //Lọc các địa chỉ giao hàng rỗng trc khi cất
+      this.deliveryAddressHandle = this.deliveryAddressHandle.filter(item=>JSON.stringify(item) != JSON.stringify(InitDeliveryAddress))
+      this.supplier.delivery_address = JSON.stringify(this.deliveryAddressHandle)
+      if(this.supplierFormMode == SupplierConstant.IS_ADD){
+        this.postSupplier()
+      }else{
+        this.putSupplier()
+      }
+    },
+    handleDeliveryAddress(){
+      if(this.isSameSupplierAddress == false){
+        this.deliveryAddressHandle = [{address:this.supplier.address}]
+      }
+    },
+    handleChangeAddress(e){
+      if(this.isSameSupplierAddress == true && this.deliveryAddressHandle.length > 0){
+        this.deliveryAddressHandle = [{address:e.target.value}]
+      }
+    }
   },
 };
 </script>
