@@ -45,7 +45,6 @@ namespace MISA.Infrastructure.Repository
         {
             using (dbConnection = new MySqlConnection(connectionString))
             {
-                var a = 1;
                 var res = dbConnection.QueryFirstOrDefault<string>($"Proc_GetMaxEmployeeCode", commandType: CommandType.StoredProcedure);
                 return res;
             }
@@ -61,16 +60,16 @@ namespace MISA.Infrastructure.Repository
         /// </param>
         /// <returns>Danh sách nv</returns>
         /// CreatedBy KDLong 07/05/2021
-        public Pagging<Employee> GetEmployees(EmployeeFilter employeeFilter)
+        public Pagging<Employee> GetEmployees(Filter employeeFilter)
         {
             using (dbConnection = new MySqlConnection(connectionString))
             {
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Search", employeeFilter.Search);
+                parameters.Add("@Search", employeeFilter.fil);
 
                 var totalRecords = dbConnection.QueryFirstOrDefault<int>("Proc_GetTotalEmployees", param: parameters, commandType: CommandType.StoredProcedure);
 
-                var totalPages = Math.Ceiling((decimal)totalRecords / employeeFilter.PageSize);
+                var totalPages = Math.Ceiling((decimal)totalRecords / employeeFilter.page_size);
 
                 var employees = dbConnection.Query<Employee>("Proc_GetEmployeesFilter", param: employeeFilter, commandType: CommandType.StoredProcedure);
 
@@ -80,8 +79,8 @@ namespace MISA.Infrastructure.Repository
                     TotalRecords = totalRecords,
                     TotalPages = (int)totalPages,
                     Data = employees,
-                    PageIndex = employeeFilter.Page,
-                    PageSize = employeeFilter.PageSize
+                    PageIndex = employeeFilter.page_index,
+                    PageSize = employeeFilter.page_size
                 };
                 return paging;
             }

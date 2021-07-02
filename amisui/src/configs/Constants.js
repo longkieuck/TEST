@@ -3,19 +3,18 @@ export const SupplierConstant = {
     IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
     IS_EDIT: 2, //Sửa
-    INSERT_SUCCESS: "Thêm thành công!", //Thông báo khi thêm thành công
-    EDIT_SUCCESS: "Sửa thành công!", //Thông báo khi sửa thành công
-    NOTICE_CODE_EXIST_FRONT: "Mã nhân viên <",
-    NOTICE_CODE_EXIST_BACK: "> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.",
-    NAME_CANNOT_BLANK: "Tên không được để trống!", //Tooltip khi để trống name
-    CODE_CANNOT_BLANK: "Mã không được để trống!", //Tooltip khi để trống code
-    DEPARTMENT_CANNOT_BLANK: "Đơn vị không được để trống!", //Tooltip khi để trống code
+    IS_READ_ONLY: 3 //Chỉ xem
 };
-//Hằng số trong mutations
-export const MutationsConstant = {
-    DATA_CHANGE_QUESTION: "Dữ liệu đã bị thay đổi. Bạn có muốn cất không?",
-    DELETE_QUESTION_FRONT: "Bạn có thực sự muốn xóa nhân viên <",
-    DELETE_QUESTION_BACK: "> không?",
+export const AccountConstant = {
+    IS_CLOSE: 0,
+    IS_ADD: 1, //Dialog Thêm
+    IS_EDIT: 2, //Sửa
+};
+//Hằng số trong Alert
+export const AlertDialogConstant = {
+    IS_CLOSE: 0,
+    IS_CONFIRM_DELETE: 1,
+    DELETE_FAILURE: 2
 };
 //Server
 export const BASE_URL = 'https://localhost:44378/api/v1/';
@@ -27,7 +26,6 @@ export const TIME_OF_NOTIFICATION = 1; //s
 export const PageSizes = [
     { text: "10 bản ghi trên 1 trang", value: 10 },
     { text: "20 bản ghi trên 1 trang", value: 20 },
-    { text: "30 bản ghi trên 1 trang", value: 30 },
     { text: "50 bản ghi trên 1 trang", value: 50 },
     { text: "100 bản ghi trên 1 trang", value: 100 },
 ]
@@ -66,7 +64,7 @@ export const InitSupplier = {
     "city": null,
     "district": null,
     "commune": null,
-    "delivery_address": "[{\"address\":\"abc\"}]",
+    "delivery_address": "[{\"address\":\"\"}]",
     "invoice_recipient_name": null,
     "invoice_recipient_email": null,
     "invoice_recipient_phone": null
@@ -79,4 +77,233 @@ export const InitBankAccount = {
 }
 export const InitDeliveryAddress = {
     address: ""
+}
+
+export const SupplierGroup = [{
+        code: "NCC001",
+        name: "Công ty cổ phần 1"
+    },
+    {
+        code: "NCC002",
+        name: "Công ty cổ phần 2"
+    },
+    {
+        code: "NCC003",
+        name: "Công ty cổ phần 3"
+    },
+    {
+        code: "NCC004",
+        name: "Công ty cổ phần 4"
+    }
+]
+
+export const PuchasingEmployee = [{
+        code: "NV001",
+        name: "Kiều Đức Long"
+    },
+    {
+        code: "NV002",
+        name: "Nguyễn Văn Hiến"
+    },
+    {
+        code: "NV003",
+        name: "Đỗ Thành Đạt"
+    },
+    {
+        code: "NV004",
+        name: "Trần Trung Thiệp"
+    }
+]
+
+export const Vocative = [{
+        name: "Anh"
+    },
+    {
+        name: "Bà"
+    },
+    {
+        name: "Bạn"
+    },
+    {
+        name: "Chị"
+    },
+    {
+        name: "Miss"
+    },
+    {
+        name: "Mr"
+    },
+    {
+        name: "Mrs"
+    },
+    {
+        name: "Ông"
+    },
+]
+
+export const TermOfPayment = [{
+        name: "Điều khoản 1",
+    },
+    {
+        name: "Điều khoản 2",
+    },
+    {
+        name: "Điều khoản 3",
+    },
+    {
+        name: "Điều khoản 4",
+    }
+]
+
+export const AccountReceive = [{
+        code: "0123456789",
+        name: "Ngoại tệ"
+    },
+    {
+        code: "1231231234",
+        name: "Phải thu của khách"
+    },
+    {
+        code: "1112223333",
+        name: "Phải thu"
+    }
+]
+export const AccountPay = [{
+        code: "0123456789",
+        name: "Ngoại tệ"
+    },
+    {
+        code: "1231231234",
+        name: "Phải thu của khách"
+    },
+    {
+        code: "1112223333",
+        name: "Phải thu"
+    }
+]
+
+export const Country = [{
+        name: "Việt Nam"
+    },
+    {
+        name: "Thái Lan"
+    },
+    {
+        name: "Lào"
+    },
+    {
+        name: "Campuchia"
+    },
+]
+export const City = [{
+        name: "Hà Nội"
+    },
+    {
+        name: "Hồ Chí Minh"
+    },
+    {
+        name: "Cần Thơ"
+    },
+    {
+        name: "Hải Phòng"
+    },
+]
+
+export const District = [{
+        name: "Cầu Giấy"
+    },
+    {
+        name: "Đống Đa"
+    },
+    {
+        name: "Đông Anh"
+    },
+    {
+        name: "Thạch Thất"
+    },
+]
+export const Commune = [{
+        name: "Cần Kiệm"
+    },
+    {
+        name: "Đồng Trúc"
+    },
+    {
+        name: "Tân Xã"
+    },
+    {
+        name: "Thạch Xá"
+    },
+]
+
+export const InitAccount = {
+    "account_id": "00000000-0000-0000-0000-000000000000",
+    "account_code": null,
+    "nature": "Dư nợ",
+    "account_name": null,
+    "english_name": null,
+    "description": null,
+    "is_exception_accounting": false,
+    "is_bank_account": false,
+    "object_type": null,
+    "object_type_thcp": null,
+    "order": null,
+    "sale_contract": null,
+    "department": null,
+    "construction": null,
+    "purchase_contract": null,
+    "expense_item": null,
+    "stats_code": null,
+    "parent_account_id": null
+}
+
+export const ObjectType = [{
+        name: "Nhà cung cấp"
+    },
+    {
+        name: "Khách hàng"
+    },
+    {
+        name: "Nhân viên"
+    }
+]
+export const Other = [{
+        name: "Chỉ cảnh báo"
+    },
+    {
+        name: "Bắt buộc nhập"
+    }
+]
+
+export const Nature = [{
+        name: "Dư nợ"
+    },
+    {
+        name: "Dư có"
+    },
+    {
+        name: "Lưỡng tính"
+    },
+    {
+        name: "Không có số dư"
+    }
+]
+
+export const InitPayment = {
+    "payment_id": "00000000-0000-0000-0000-000000000000",
+    "payment_code": null,
+    "supplier_id": null,
+    "receiver": null,
+    "address": null,
+    "payment_reason": null,
+    "employee_name": null,
+    "attach": null,
+    "accounting_date": null,
+    "payment_date": null,
+    "accounting": null,
+    "money": null,
+    "supplier_code": null,
+    "supplier_name": null,
+    "currency": null,
+    "rate": null
 }

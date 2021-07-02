@@ -36,12 +36,12 @@ namespace MISA.AMIS.Api.Controllers
         /// </returns>
         /// CreatedBy: KDLong 07/05/2021
         [HttpGet("Filter")]
-        public IActionResult GetEmployees([FromQuery] EmployeeFilter employeeFilter)
+        public IActionResult GetEmployees([FromQuery] Filter employeeFilter)
         {
             var pagging = _employeeService.GetEmployees(employeeFilter);
 
             // Xử lý kết quả trả về cho client.
-            if (pagging.Data.Any() && employeeFilter.Page >= 0 && employeeFilter.PageSize >= 0)
+            if (pagging.Data.Any() && employeeFilter.page_index >= 0 && employeeFilter.page_size >= 0)
             {
                 return Ok(pagging);
             }
@@ -69,7 +69,7 @@ namespace MISA.AMIS.Api.Controllers
         /// <summary>
         /// Export file Excel
         /// </summary>
-        /// <param name="employeeFilter">
+        /// <param name="filter">
         /// Page - Trang cần lấy
         /// PageSize - Số bản ghi trong trang
         /// Search - Mã,Tên nhân viên
@@ -77,9 +77,9 @@ namespace MISA.AMIS.Api.Controllers
         /// <returns>Trang Excel Đang Hiện Trên Màn Hình</returns>
         /// CreatedBy KDLong 12/05/2021
         [HttpGet("Export")]
-        public IActionResult Export([FromQuery] EmployeeFilter employeeFilter)
+        public IActionResult Export([FromQuery] Filter filter)
         {
-            var stream = _employeeService.ExportExcel(employeeFilter);
+            var stream = _employeeService.ExportExcel(filter);
             string excelName = $"Danh-sach-nhan-vien.xlsx";
 
             //return File(stream, "application/octet-stream", excelName);
@@ -88,11 +88,9 @@ namespace MISA.AMIS.Api.Controllers
         /// <summary>
         /// Export file Excel
         /// </summary>
-        /// <param name="employeeFilter">
         /// Page - Trang cần lấy
         /// PageSize - Số bản ghi trong trang
         /// Search - Mã,Tên nhân viên
-        /// </param>
         /// <returns>Trang Excel Đang Hiện Trên Màn Hình</returns>
         /// CreatedBy KDLong 12/05/2021
         [HttpGet("ExportAll")]

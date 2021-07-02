@@ -8,7 +8,7 @@
         <slot name="is-customer"></slot>
         <div class="top-right-option">
           <div class="btn-help"></div>
-          <div class="btn-close" title="Đóng (ESC)"></div>
+          <div @click="closeForm" class="btn-close" title="Đóng (ESC)"></div>
         </div>
       </div>
       <div class="content-dialog-box">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-
+import {mapActions} from  'vuex'
 export default {
   components: {
   },
@@ -38,7 +38,12 @@ export default {
     };
   },
   methods:{
-
+  ...mapActions(
+        'supplier',
+        [
+          'closeForm',
+        ]
+      ),
   }
   
 };

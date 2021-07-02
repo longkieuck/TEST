@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.Core.AttributeCustom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,14 @@ namespace MISA.Core.Entities
 {
     public class account
     {
-        public Guid? account_id { get; set; }
+        public Guid account_id { get; set; }
+        [MISAIgnore]
+        public Guid? key {
+            get
+            {
+                return account_id;
+            }
+        }
         public string account_code { get; set; }
         public string nature { get; set; }
         public string account_name { get; set; }
@@ -28,7 +36,9 @@ namespace MISA.Core.Entities
         public string expense_item { get; set; }
         public string stats_code { get; set; }
         public Guid? parent_account_id { get; set; }
-
-
+        [MISAIgnore]
+        public int level { get; set; }
+        [MISAIgnore]
+        public List<account> children { get; set; }
     }
 }

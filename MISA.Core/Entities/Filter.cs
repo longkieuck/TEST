@@ -10,19 +10,19 @@ namespace MISA.Core.Entities
     /// Endpoint filter
     /// </summary>
     /// CreatedBy KDLong 07/05/2021
-    public class EmployeeFilter
+    public class Filter
     {
         /// <summary>
         /// Trang hiện tại
         /// </summary>
-        public int Page { get; set; } = 1;
+        public int page_index { get; set; } = 1;
         /// <summary>
         /// Tổng số bản ghi trên 1 trang
         /// </summary>
-        public int PageSize { get; set; } = 10;
+        public int page_size { get; set; } = 20;
         /// <summary>
         /// Dữ liệu dùng để filter
         /// </summary>
-        public string Search { get; set; } = "";
+        public string fil { get; set; } = "";
     }
 }

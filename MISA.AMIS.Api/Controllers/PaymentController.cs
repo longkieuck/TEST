@@ -11,62 +11,68 @@ namespace MISA.AMIS.Api.Controllers
 {
     [Route("api/v1/[controller]s")]
     [ApiController]
-    public class AccountController : BaseController<account>
+    public class PaymentController : BaseController<payment>
     {
-        IAccountService _accountService;
-        public AccountController(IAccountService accountService):base(accountService)
+        IPaymentService _paymentService;
+        public PaymentController(IPaymentService paymentService) :base(paymentService)
         {
-            _accountService = accountService;
+            _paymentService = paymentService;
         }
         /// <summary>
-        /// Lấy danh sách tài khoản đã convert
+        /// Lấy mã phiếu chi mới
         /// </summary>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
-        /// HttpStatus code 204 - Không có dữ liệu
+        /// Mã nhân viên mới
         /// </returns>
         /// CreatedBy: KDLong 07/05/2021
-        [HttpGet("All")]
-        public IActionResult GetAccounts()
+        [HttpGet("NewPaymentCode")]
+        public IActionResult GetNewPaymentCode()
         {
-            var entities = _accountService.GetAccounts();
-            if (entities.Count() > 0)
+            var res = _paymentService.GetNewPaymentCode();
+            if (res != null)
             {
-                return Ok(entities);
+                return Ok(res);
             }
             return NoContent();
         }
         /// <summary>
-        /// Lấy danh sách các tài khoản có con
+        /// Filter
         /// </summary>
+        /// <param name="filter"></param>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
         /// CreatedBy: KDLong 07/05/2021
-        [HttpGet("ParentIdList")]
-        public IActionResult GetParentList()
+        [HttpGet("Filter")]
+        public IActionResult GetPayments([FromQuery] Filter filter)
         {
-            var entities = _accountService.GetParentList();
-            if (entities.Count() > 0)
+            var pagging = _paymentService.GetPayments(filter);
+
+            // Xử lý kết quả trả về cho client.
+            if (pagging.Data.Any() && filter.page_index >= 0 && filter.page_size >= 0)
             {
-                return Ok(entities);
+                return Ok(pagging);
             }
+
             return NoContent();
         }
         /// <summary>
-        /// Lấy tổng số tài khoản
+        /// Filter
         /// </summary>
+        /// <param name="filter"></param>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
         /// CreatedBy: KDLong 07/05/2021
-        [HttpGet("TotalRecord")]
-        public IActionResult GetTotalRecord()
+        [HttpGet("TotalMoney")]
+        public IActionResult GetTotalMoney([FromQuery] Filter filter)
         {
-            var res = _accountService.GetTotalRecord();
-            return Ok(res);
+            var result = _paymentService.GetTotalMoney(filter);
+
+            return Ok(result);
         }
     }
 }

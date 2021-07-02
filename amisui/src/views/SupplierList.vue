@@ -82,7 +82,10 @@
       </div>
       <div class="right-option-grid-data">
         <div class="search-box">
-          <InputSearch placeholder="Nhập từ khoá tìm kiếm" />
+          <InputSearch 
+            placeholder="Nhập từ khoá tìm kiếm" 
+            @keyup="handleChangeFilter"
+          />
         </div>
         <div class="load-icon"></div>
         <div class="export-icon"></div>
@@ -137,7 +140,7 @@
             <td style="min-width:150px;border-right:none">{{s.identify_number}}</td>
             <td class="th-td-last">
               <div class="cover-first-last">
-                <div class="view-option">Xem</div>
+                <div class="view-option" @click="showFormReadOnly(s)">Xem</div>
                   <a-dropdown :trigger="['click']">
                     <a class="ant-dropdown-link">
                     <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
@@ -147,7 +150,7 @@
                         <a @click="showFormEdit(s)" class="option">Sửa</a>
                       </a-menu-item>
                       <a-menu-item key="1">
-                        <a @click="deleteSupplier(s.supplier_id)" class="option">Xóa</a>
+                        <a @click="showDialogConfirmDelete(s)" class="option">Xóa</a>
                       </a-menu-item>
                       <a-menu-item key="2">
                         <a href="#" class="option">Ngưng sử dụng</a>
@@ -164,33 +167,60 @@
       </table>
     </div>
     <div class="pagination">
-      <div class="left-pagination">Tổng số: <b>20</b> bản ghi</div>
+      <div class="left-pagination">Tổng số: <b>{{totalRecords}}</b> bản ghi</div>
       <div class="right-pagination">
         <div class="select-record-number">
-          <Combobox
-            :dataOptions="dataOptions"
-            :fieldDisplay="'DisplayField'"
-            :fieldSearch="'DisplayField'"
-            :isMultiple=false
-            @setItemSelected="changePageSize"
-            :titleOptions="titleOptions"
-            lWidth=225
-          />
+          <a-select
+                style="width:225px;margin-top:15px"
+                show-search
+                placeholder="Số bản ghi trên 1 trang"
+                option-filter-prop="children"
+                @change="handleChangePageSize"
+                :open="isShowDropdown"
+                v-click-outside="closeDropdown"
+                v-model="pageSize"
+            >
+                <div slot="suffixIcon" class="cover-suffix-s">
+                  <div @click="showDropdown" class="cover-dropdown-icon-s">
+                    <div
+                      class="arrow-dropdown-s"
+                      :class="isShowDropdown ? 'rotate' : null"
+                    />
+                  </div>
+                </div>
+                <a-select-option 
+                  v-for="page in PageSizes"
+                  :key="page.value"
+                  class="option-page-size" 
+                  :value="page.value"
+                  @change="handleChangePageSize"
+                >
+                {{page.text}}
+                </a-select-option>
+            </a-select>
         </div>
         <div class="select-page">
           <a-pagination
             size="small"
             :showLessItems="true"
-            :total="100"
-            :pageSize="10"
+            :total="totalRecords"
+            :pageSize="pageSize"
             :item-render="itemRender"
+            @change="handleChangePageIndex"
+            v-model="pageIndex"
           />
         </div>
       </div>
     </div>
     <SupplierInfo
       v-if="supplierFormMode != SupplierConstant.IS_CLOSE"
-      @closeSupplierInfo="closeSupplierInfo"
+    />
+    <AlertDialog
+      v-if="isShowDialogConfirmDelete"
+      :alertFormMode="AlertDialogConstant.IS_CONFIRM_DELETE"
+      :messageOfDialog="messageOfDialog"
+      @closeAlertDialog="closeAlertDialog"
+      @confirmDelete="confirmDelete"
     />
   </div>
 </template>
@@ -198,20 +228,24 @@
 <script>
 import ClickOutside from 'vue-click-outside'
 import InputSearch from "../components/share/InputSearch";
-import Combobox from "../components/share/Combobox"
 import SupplierInfo from "../components/dialogs/SupplierInfo"
+import AlertDialog from "../components/dialogs/AlertDialog"
 import {mapActions, mapState} from "vuex"
-import {SupplierConstant} from "../configs/constants"
+import {SupplierConstant,AlertDialogConstant,PageSizes} from "../configs/constants"
 export default {
   components: {
     InputSearch,
-    Combobox,
-    SupplierInfo
+    SupplierInfo,
+    AlertDialog
   },
   computed:{
     ...mapState({
       suppliers:state=> state.supplier.suppliers,
-      supplierFormMode:state=>state.supplier.supplierFormMode
+      supplierFormMode:state=>state.supplier.supplierFormMode,
+      totalRecords:state=>state.supplier.totalRecords,
+      pageSize:state=>state.supplier.pageSize,
+      pageIndex:state=>state.supplier.pageIndex,
+      filter:state=>state.supplier.filter
     })
   },
   created(){
@@ -222,30 +256,14 @@ export default {
   // },
   data() {
     return {
+      supplierIdForDelete:"",
       isShowTopGridData: true,
       SupplierConstant,
-      dataOptions: [
-        {
-          DisplayField: "10 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "20 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "30 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "50 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "100 bản ghi trên 1 trang",
-        }
-      ],
-      titleOptions:[
-        {
-          Width:150
-        },
-      ]
+      AlertDialogConstant,
+      PageSizes,
+      isShowDropdown:false,
+      isShowDialogConfirmDelete:false,
+      messageOfDialog:""
     };
   },
   methods: {
@@ -255,7 +273,11 @@ export default {
         'getSuppliers',
         'showFormAdd' ,
         'showFormEdit',
-        'deleteSupplier'
+        'showFormReadOnly',
+        'deleteSupplier',
+        'changePageIndex',
+        'changePageSize',
+        'changeFilter'
       ]
     ),
     handleShowTopGridData() {
@@ -267,6 +289,25 @@ export default {
     closeSupplierInfo(){
       this.isShowSupplierInfo = false
     },
+    showDialogConfirmDelete(s){
+      this.supplierIdForDelete = s.supplier_id
+      this.messageOfDialog = "Bạn có chắc chắn muốn xoá nhà cung cấp<"+s.supplier_code+"> không?"
+      this.isShowDialogConfirmDelete = true
+    },
+    confirmDelete(){
+      this.deleteSupplier({
+        supplier_id:this.supplierIdForDelete,
+        callbackSuccess:()=>{
+          this.showNotification("Xoá thành công!")
+        },
+        callbackFail:()=>{
+          this.showNotification("Xoá thất bại!")
+        }
+      })
+    },
+    closeAlertDialog(){
+      this.isShowDialogConfirmDelete = false
+    },
     itemRender(current, type, originalElement) {
       if (type === 'prev') {
         return <a class="btn-prev">Trước</a>;
@@ -275,8 +316,14 @@ export default {
       }
       return originalElement;
     },
-    changePageSize(index){
-      console.log(index)
+    handleChangePageSize(value){
+      this.changePageSize(value)
+    },
+    handleChangePageIndex(value){
+      this.changePageIndex(value)
+    },
+    handleChangeFilter(e){
+      this.changeFilter(e.target.value)
     },
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
@@ -284,6 +331,12 @@ export default {
      */
     activeOption(event){
       event.currentTarget.classList.add('active');
+    },
+    showDropdown(){
+      this.isShowDropdown=!this.isShowDropdown
+    },
+    closeDropdown(){
+      this.isShowDropdown = false
     },
     /**
      * Hàm thực hiện loại bỏ border cho mũi tên khi click ra ngoài
@@ -308,6 +361,12 @@ export default {
       }
       
     },
+    showNotification(message){
+      this.$notification['success']({
+        message,
+        duration:2
+      });
+    }
   },
   directives: {
     ClickOutside
@@ -316,6 +375,7 @@ export default {
 </script>
 
 <style scoped>
+
 @import "../assets/css/views/supplier.css";
 @import "../assets/css/components/table.css";
 @import "../assets/css/components/pagination.css";

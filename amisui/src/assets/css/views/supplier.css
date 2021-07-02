@@ -403,3 +403,36 @@
     margin-top: -15px;
     margin-right: 10px;
 }
+
+.cover-suffix-s {
+    display: flex !important;
+    margin-right: -11px;
+    margin-top: -9px;
+    cursor: pointer !important;
+}
+
+.cover-dropdown-icon-s {
+    width: 30px;
+    height: 30px;
+}
+
+.cover-dropdown-icon-s:hover {
+    background-color: #e0e0e0;
+}
+
+.arrow-dropdown-s {
+    position: relative;
+    top: 6px;
+    right: -7px;
+    background: url("../../img/Sprites.64af8f61.svg") no-repeat;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    background-position: -560px -359px;
+    transition: 0.2s;
+}
+
+.rotate-s {
+    transform: rotate(180deg);
+}

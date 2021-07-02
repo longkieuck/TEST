@@ -10,6 +10,14 @@ using System.Threading.Tasks;
 /// CreatedBy: KDLong 28/04/2021
 namespace MISA.Core.AttributeCustom
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class MISAIgnore : Attribute
+    {
+        public MISAIgnore()
+        {
+
+        }
+    }
     /// <summary>
     /// Validate bắt buộc nhập
     /// </summary>

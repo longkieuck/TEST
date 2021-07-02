@@ -103,6 +103,9 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+input:disabled, textarea:disabled {
+  background: #f5f5f5;
+}
 @font-face {
   font-family: "notosans-regular";
   src: url("./assets/fonts/notosans-regular.2cb88a13.woff2") format("opentype");

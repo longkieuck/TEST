@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MISA.Core.AttributeCustom;
 using MISA.Core.Interface.Repository;
 using MySqlConnector;
 using Npgsql;
@@ -98,7 +99,13 @@ namespace MISA.Infrastructure.Repository
                 DynamicParameters parameters = new DynamicParameters();
                 foreach (var prop in props)
                 {
-                    parameters.Add($"@_{prop.Name}", prop.GetValue(entity));
+                    var ignoreProp = prop.GetCustomAttributes(typeof(MISAIgnore), true);
+                    if (ignoreProp.Length  == 0)
+                    {
+
+                        parameters.Add($"@_{prop.Name}", prop.GetValue(entity));
+
+                    }
                 }
                 var rowsAffect = dbConnection.QueryFirstOrDefault<int>($"proc_insert_{tableName}", param: parameters, commandType: CommandType.StoredProcedure);
                 return rowsAffect;
@@ -118,7 +125,13 @@ namespace MISA.Infrastructure.Repository
                 DynamicParameters parameters = new DynamicParameters();
                 foreach( var prop in props)
                 {
-                    parameters.Add($"@_{prop.Name}", prop.GetValue(entity));
+                    var ignoreProp = prop.GetCustomAttributes(typeof(MISAIgnore), true);
+                    if (ignoreProp.Length == 0)
+                    {
+
+                        parameters.Add($"@_{prop.Name}", prop.GetValue(entity));
+
+                    }
                 }
                 var rowsAffect = dbConnection.QueryFirstOrDefault<int>($"proc_update_{tableName}", param: parameters, commandType: CommandType.StoredProcedure);
                 return rowsAffect;

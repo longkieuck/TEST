@@ -10,12 +10,13 @@
       :style="{ width: lWidth + 'px' }"
       show-search
       :filter-option="filterOption"
-      @change="handleChangeSelect"
-      :placeholder="placeHolder"
       option-label-prop="label"
       :disabled="isDisabled"
-      :dropdownMatchSelectWidth=false
+      :dropdownMatchSelectWidth="!isMultiple"
       :default-value="defaultValue"
+      :placeholder="placeHolder"
+      @change="handleChangeSelect"
+      :value="value"
     >
       <div slot="suffixIcon" class="cover-suffix">
         <div v-show="isShowAddIcon" class="cover-add-icon">
@@ -42,7 +43,7 @@
         v-show="false"
         v-for="(data, index) in dataOptions"
         :key="index"
-        :value="index"
+        :value="data[`${fieldValue}`]"
         :label="data[`${fieldDisplay}`]"
       >
         <div
@@ -63,20 +64,28 @@
 export default {
   props: {
     dataOptions: Array, //Dữ liệu hiển thị
-    titleOptions: Array, //Tiêu đề hiển thị và kích thước
+    titleOptions: Array,
     fieldDisplay: String, //Trường hiển thị khi đã chọn
     fieldSearch: String, //Trường tìm kiếm
-    isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
+    fieldValue:String,//Trường giá trị
+    isMultiple: {
+      typeof:Boolean,
+      default:false
+    }, //Hiển thị nhiều dữ liệu hay không
     isShowAddIcon: {
       typeof:Boolean,
       default:false
     }, //Hiển thị icon add hay không
     placeHolder: String, //Place holder
     lWidth: String, // Độ rộng
-    isRequired:String,
+    isRequired:{
+      type:Boolean,
+      default:false
+    },
     isDisabled:Boolean,
     comboboxName:String,
-    defaultValue:String
+    defaultValue:String,
+    value:[String, Number]
   },
   data() {
     return {
@@ -121,8 +130,8 @@ export default {
      * Khi thay đổi lựa chọn sẽ thực hiện gọi qua cpn cha
      * CreatedBy KDLong 30/05/2021
      */
-    handleChangeSelect(index) {
-      this.$emit("setItemSelected", index); //Event pass from parent
+    handleChangeSelect(value) {
+      this.$emit("handleChangeSelect", value); //Event pass from parent
     },
     /**
      * Khi click vào icon sẽ show dropdown

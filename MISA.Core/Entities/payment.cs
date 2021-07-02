@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.Core.AttributeCustom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace MISA.Core.Entities
     {
         public Guid payment_id { get; set; }
         public string payment_code { get; set; }
-        public Guid supplier_id { get; set; }
+        public Guid? supplier_id { get; set; }
         public string receiver { get; set; }
         public string address { get; set; }
         public string payment_reason { get; set; }
@@ -21,5 +22,12 @@ namespace MISA.Core.Entities
         public DateTime? payment_date { get; set; }
         [JsonPropertyName("accounting")]
         public string accounting { get; set; }
+        public float money { get; set; }
+        [MISAIgnore]
+        public string supplier_code { get; set; }
+        [MISAIgnore]
+        public string supplier_name { get; set; }
+        public string currency { get; set; }
+        public float rate { get; set; }
     }
 }

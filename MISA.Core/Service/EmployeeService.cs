@@ -38,7 +38,7 @@ namespace MISA.Core.Service
         /// PageSize nhân viên trong trang Page theo tiêu chí Search 
         /// </returns>
         /// CreatedBy KDLong 07/05/2021
-        public Pagging<Employee> GetEmployees(EmployeeFilter employeeFilter)
+        public Pagging<Employee> GetEmployees(Filter employeeFilter)
         {
             var pagging = _employeeRepository.GetEmployees(employeeFilter);
             return pagging;
@@ -105,7 +105,7 @@ namespace MISA.Core.Service
         /// </param>
         /// <returns>Trang Excel Đang Hiện Trên Màn Hình</returns>
         /// CreatedBy KDLong 12/05/2021
-        public Stream ExportExcel(EmployeeFilter employeeFilter)
+        public Stream ExportExcel(Filter employeeFilter)
         {
             var res = _employeeRepository.GetEmployees(employeeFilter);
             var list = res.Data.ToList();

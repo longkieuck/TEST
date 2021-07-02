@@ -80,7 +80,10 @@
       </div>
       <div class="right-option-grid-data">
         <div class="search-box">
-          <InputSearch placeholder="Nhập từ khoá tìm kiếm" />
+          <InputSearch
+            placeholder="Nhập từ khoá tìm kiếm" 
+            @keyup="handleChangeFilter"
+          />
         </div>
         <div class="load-icon"></div>
         <div class="export-icon"></div>
@@ -119,675 +122,24 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
+          
+          <tr 
+            v-for="payment in payments"
+            :key="payment.payment_id"
+            
+          >
             <td></td>
             <td class="th-td-first">
               <div class="cover-first-last"><input type="checkbox" /></div>
             </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
-            <td class="th-td-last">
-              <div class="cover-first-last">
-                <div class="view-option">Xem</div>
-                <a-dropdown :trigger="['click']">
-                  <a class="ant-dropdown-link">
-                    <div
-                      class="drop-down-icon"
-                      @click="activeOption($event)"
-                      v-click-outside="removeActiveOption"
-                    ></div>
-                  </a>
-                  <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
-                    </a-menu-item>
-                    <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
-                    </a-menu-item>
-                  </a-menu>
-                </a-dropdown>
-              </div>
-            </td>
-            <td class="th-td-white"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="th-td-first">
-              <div class="cover-first-last"><input type="checkbox" /></div>
-            </td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:150px;padding:0"><div class="display-date">27/11/2000</div></td>
-            <td style="min-width:200px">PC00000</td>
-            <td style="min-width:350px">Chi tiền cho nhân viên A</td>
-            <td style="min-width:150px"><div class="display-money">1.000.000.000</div></td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:150px">Kiều Đức Long</td>
-            <td style="min-width:350px;border-right:none">Kiều Đức Long</td>
+            <td style="min-width:150px;padding:0"><div class="display-date">{{ payment.accounting_date|formatDate}}</div></td>
+            <td style="min-width:150px;padding:0"><div class="display-date">{{payment.payment_date |formatDate}}</div></td>
+            <td style="min-width:200px">{{payment.payment_code}}</td>
+            <td style="min-width:350px">{{payment.payment_reason}}</td>
+            <td style="min-width:150px"><div class="display-money">{{payment.money}}</div></td>
+            <td style="min-width:150px">{{payment.supplier_name}}</td>
+            <td style="min-width:150px">{{payment.supplier_code}}</td>
+            <td style="min-width:350px;border-right:none">{{payment.address}}</td>
             <td class="th-td-last">
               <div class="cover-first-last">
                 <div class="view-option">Xem</div>
@@ -825,7 +177,7 @@
             <td style="min-width:150px;padding:0" class="total-money"></td>
             <td style="min-width:200px" class="total-money"></td>
             <td style="min-width:350px" class="total-money"></td>
-            <td style="min-width:150px" class="total-money"><div class="display-money"><b>1.000.000.000</b></div></td>
+            <td style="min-width:150px" class="total-money"><div class="display-money"><b>{{totalMoney}}</b></div></td>
             <td style="min-width:150px" class="total-money"></td>
             <td style="min-width:150px" class="total-money"></td>
             <td style="min-width:350px" class="total-money"></td>
@@ -839,26 +191,30 @@
       </table>
     </div>
     <div class="pagination">
-      <div class="left-pagination">Tổng số: <b>20</b> bản ghi</div>
+      <div class="left-pagination">Tổng số: <b>{{totalRecords}}</b> bản ghi</div>
       <div class="right-pagination">
         <div class="select-record-number">
           <Combobox
-            :dataOptions="dataOptions"
-            :fieldDisplay="'DisplayField'"
-            :fieldSearch="'DisplayField'"
+            :dataOptions="PageSizes"
+            :fieldDisplay="'text'"
+            :fieldSearch="'text'"
+            :fieldValue="'value'"
             :isMultiple="false"
-            @setItemSelected="changePageSize"
-            :titleOptions="titleOptions"
-            :lWidth="225"
+            @handleChangeSelect="handleChangePageSize"
+            :titleOptions="[{Title:'',Width:200},{Title:'',Width:0}]"
+            lWidth="225"
+            :value="pageSize"
           />
         </div>
         <div class="select-page">
           <a-pagination
             size="small"
-            showLessItems="true"
-            :total="100"
-            :pageSize="10"
+            :showLessItems="true"
+            :total="totalRecords"
+            :pageSize="pageSize"
             :item-render="itemRender"
+            @change="handleChangePageIndex"
+            v-model="pageIndex"
           />
         </div>
       </div>
@@ -868,47 +224,50 @@
 </template>
 
 <script>
+import moment from "moment"
 import ClickOutside from "vue-click-outside";
-// import InputSearch from "../components/share/InputSearch";
+import InputSearch from "../components/share/InputSearch";
 import Combobox from "../components/share/Combobox"
-import PaymentInfo from "../components/dialogs/PaymentInfo"
+// import PaymentInfo from "../components/dialogs/PaymentInfo"
+import {PageSizes} from "../configs/constants"
 // import AccountInfo from "../components/dialogs/AccountInfo"
-
+import {mapActions,mapState} from "vuex"
 export default {
   components: {
-    // InputSearch,
+    InputSearch,
     Combobox,
-    PaymentInfo
+    // PaymentInfo
     // AccountInfo
+  },
+  created(){
+    this.getPayments()
+  },
+  computed:{
+    ...mapState({
+      payments:state=> state.payment.payments,
+      totalRecords:state=>state.payment.totalRecords,
+      pageSize:state=>state.payment.pageSize,
+      pageIndex:state=>state.payment.pageIndex,
+      filter:state=>state.payment.filter,
+      totalMoney:state=>state.payment.totalMoney
+    })
   },
   data() {
     return {
       isShowTopGridData: true,
-      dataOptions: [
-        {
-          DisplayField: "10 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "20 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "30 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "50 bản ghi trên 1 trang",
-        },
-        {
-          DisplayField: "100 bản ghi trên 1 trang",
-        },
-      ],
-      titleOptions: [
-        {
-          Width: 150,
-        },
-      ],
+      PageSizes
     };
   },
   methods: {
+    ...mapActions(
+      'payment',
+      [
+        'getPayments',
+        'changePageIndex',
+        'changePageSize',
+        'changeFilter'
+      ]
+    ),
     handleShowTopGridData() {
       this.isShowTopGridData = !this.isShowTopGridData;
     },
@@ -920,8 +279,14 @@ export default {
       }
       return originalElement;
     },
-    changePageSize(index) {
-      console.log(index);
+    handleChangePageSize(value){
+      this.changePageSize(value)
+    },
+    handleChangePageIndex(value){
+      this.changePageIndex(value)
+    },
+    handleChangeFilter(e){
+      this.changeFilter(e.target.value)
     },
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
@@ -954,6 +319,13 @@ export default {
           activeElement.classList.remove("active");
         });
       }
+    },
+  },
+  filters: {
+    //Thực hiện lọc ngày tháng năm để show lên UI
+    formatDate: function(value) {
+      if (value == null) return "";
+      return moment(value).format("DD/MM/YYYY");
     },
   },
   directives: {

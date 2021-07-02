@@ -3,70 +3,125 @@ import { BASE_URL, InitSupplier, SupplierConstant } from '../../configs/constant
 const state = {
     suppliers: [],
     supplier: {...InitSupplier },
-    supplierFormMode: SupplierConstant.IS_CLOSE
+    supplierFormMode: SupplierConstant.IS_CLOSE,
+    pageIndex: 1,
+    pageSize: 20,
+    filter: "",
+    totalPages: 0,
+    totalRecords: 0
 }
 const actions = {
-    getSuppliers({ commit }) {
-        axios.get(BASE_URL + 'Suppliers')
+    getSuppliers(context) {
+        axios.get(BASE_URL +
+                'Suppliers/Filter?page_index=' + context.state.pageIndex +
+                '&page_size=' + context.state.pageSize +
+                '&fil=' + context.state.filter)
             .then(res => {
-                commit("getSuppliers", res.data)
+                context.commit("getSuppliers", res.data)
             })
             .catch(() => alert("Connection failure!"))
     },
-    postSupplier(context) {
+    getNewSupplierCode({ commit }) {
+        axios.get(BASE_URL + 'Suppliers/NewSupplierCode')
+            .then(res => {
+                commit("getNewSupplierCode", res.data)
+            })
+            .catch(() => alert("Connection failure!"))
+    },
+    postSupplier(context, payload) {
         axios.post(BASE_URL + 'Suppliers', context.state.supplier)
             .then(() => {
-                alert("Thêm thành công!")
                 context.dispatch('getSuppliers')
                 context.commit("closeForm")
+                payload.callbackSuccess()
             })
             .catch(() => {
-                alert("Thêm thất bại!")
+
                 context.commit("closeForm")
+                payload.callbackFail()
             })
     },
-    putSupplier(context) {
+    putSupplier(context, payload) {
         axios.put(BASE_URL + 'Suppliers', context.state.supplier)
             .then(() => {
-                alert("Sửa thành công!")
+                context.dispatch('getSuppliers')
                 context.commit("closeForm")
+                payload.callbackSuccess()
             })
             .catch(() => {
-                alert("Sửa thất bại!")
+
                 context.commit("closeForm")
+                payload.callbackFail()
             })
     },
-    deleteSupplier(context, supplier_id) {
-        axios.delete(BASE_URL + 'Suppliers/' + supplier_id)
+    deleteSupplier(context, payload) {
+        axios.delete(BASE_URL + 'Suppliers/' + payload.supplier_id)
             .then(() => {
-                alert("Xoá thành công!")
                 context.dispatch('getSuppliers')
+                payload.callbackSuccess()
             })
             .catch(() => {
                 this.getSuppliers()
-                alert("Xoá thất bại!")
+                payload.callbackFail()
             })
     },
-    showFormAdd({ commit }) {
-        commit("showFormAdd")
+    showFormAdd(context) {
+        context.dispatch('getNewSupplierCode')
+        context.commit("showFormAdd")
     },
     showFormEdit({ commit }, supplier) {
         commit("showFormEdit", supplier)
     },
+    showFormReadOnly({ commit }, supplier) {
+        commit("showFormReadOnly", supplier)
+    },
     closeForm({ commit }) {
         commit("closeForm")
+    },
+    changePageIndex(context, value) {
+        context.state.pageIndex = value
+        context.dispatch('getSuppliers')
+    },
+    changePageSize(context, value) {
+        context.state.pageSize = value
+        context.dispatch('getSuppliers')
+    },
+    changeFilter(context, value) {
+        context.state.filter = value
+        context.state.pageSize = 20
+        context.state.pageIndex = 1
+        context.dispatch('getSuppliers')
+    },
+    changeFormMode(context) {
+        context.state.supplierFormMode = SupplierConstant.IS_EDIT
     }
 }
 const mutations = {
     getSuppliers: (state, data) => {
-        state.suppliers = data
+        if (data == "") {
+            state.suppliers = []
+            state.totalRecords = 0
+            state.totalPages = 0
+        } else {
+            state.suppliers = data.data
+            state.totalRecords = data.totalRecords
+            state.totalPages = data.totalPages
+        }
+    },
+    getNewSupplierCode: (state, data) => {
+        state.supplier = {...InitSupplier }
+        state.supplier.supplier_code = data
     },
     showFormAdd: (state) => {
         state.supplierFormMode = SupplierConstant.IS_ADD
     },
     showFormEdit: (state, supplier) => {
-        state.supplier = supplier
+        state.supplier = {...supplier }
         state.supplierFormMode = SupplierConstant.IS_EDIT
+    },
+    showFormReadOnly: (state, supplier) => {
+        state.supplier = {...supplier }
+        state.supplierFormMode = SupplierConstant.IS_READ_ONLY
     },
     closeForm: (state) => {
         state.supplierFormMode = SupplierConstant.IS_CLOSE

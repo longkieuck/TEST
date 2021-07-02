@@ -16,7 +16,7 @@
         <div class="switch-account-button">
           Chuyển tài khoản hạch toán
         </div>
-        <div class="add-account-button" @click="showAccountInfo">
+        <div class="add-account-button" @click="showFormAdd">
           Thêm
         </div>
       </div>
@@ -30,7 +30,12 @@
       </div>
       <div class="right-top-table-content">
         <div class="display-option" @click="handleExpandAllRows">
-          Thu gọn
+          <div v-show="isExpand">
+            Thu gọn
+          </div>
+          <div v-show="!isExpand">
+            Mở rộng
+          </div>
         </div>
         <div class="load-icon"></div>
         <div class="export-icon"></div>
@@ -39,21 +44,21 @@
     <div class="cover-table-account">
       <a-table
         :columns="columns"
-        :data-source="data"
+        :data-source="accounts"
         :expanded-row-keys.sync="expandedRowKeys"
         :customRow="customRow"
         :pagination="false"
       >
         <template slot="action" slot-scope="text,record">
             <div class="cover-action">
-              <div class="edit-option" @click="handleEdit(record)">Sửa</div>
+              <div class="edit-option" @click="showFormEdit(record)">Sửa</div>
                   <a-dropdown :trigger="['click']">
                     <a class="ant-dropdown-link">
                     <div class="drop-down-icon" @click="activeOption($event)" v-click-outside="removeActiveOption"></div>    
                     </a>
                     <a-menu slot="overlay" class="cover-option">
                       <a-menu-item key="1">
-                        <a href="#" class="option" @click="handleDelete(record)">Xóa</a>
+                        <a href="#" class="option" @click="btnDelete(record)">Xóa</a>
                       </a-menu-item>
                       <a-menu-item key="2">
                         <a href="#" class="option">Ngưng sử dụng</a>
@@ -63,59 +68,69 @@
             </div>
         </template>
         <template slot="status" slot-scope="text,record">
-            <div v-if="record.hasChild == true"><b>{{text}}</b></div>
-            <div v-else>{{text}}</div>
+            <div v-if="record.children != null"><b>Đang hoạt động</b></div>
+            <div v-else>Đang hoạt động</div>
         </template>
         <template slot="explain" slot-scope="text,record">
-            <div v-if="record.hasChild == true"><b>{{text}}</b></div>
+            <div v-if="record.children != null"><b>{{text}}</b></div>
             <div v-else>{{text}}</div>
         </template>
-        <template slot="englishName" slot-scope="text,record">
-            <div v-if="record.hasChild == true"><b>{{text}}</b></div>
+        <template slot="english_name" slot-scope="text,record">
+            <div v-if="record.children != null"><b>{{text}}</b></div>
             <div v-else>{{text}}</div>
         </template>
         <template slot="nature" slot-scope="text,record">
-            <div v-if="record.hasChild == true"><b>{{text}}</b></div>
+            <div v-if="record.children != null"><b>{{text}}</b></div>
             <div v-else>{{text}}</div>
         </template>
-        <template slot="accountName" slot-scope="text,record">
-            <div v-if="record.hasChild == true"><b>{{text}}</b></div>
+        <template slot="account_name" slot-scope="text,record">
+            <div v-if="record.children != null"><b>{{text}}</b></div>
             <div v-else>{{text}}</div>
         </template>
-        <template slot="accountNumber" slot-scope="text,record">
-            <div v-if="record.hasChild == true" style="display:contents"><b>{{text}}</b></div>
+        <template slot="account_code" slot-scope="text,record">
+            <div v-if="record.children != null" style="display:contents"><b>{{text}}</b></div>
             <div v-else style="display:contents">{{text}}</div>
         </template>
       </a-table>
     </div>
     <div class="footer-table-account">
-      <div style="font-size:13px">Tổng số: <b>20</b> bản ghi</div>
+      <div style="font-size:13px">Tổng số: <b>{{totalRecords}}</b> bản ghi</div>
     </div>
     <AccountInfo
-      v-if="isShowAccountInfo"
-      @closeAccountInfo="closeAccountInfo"
+      v-if="accountFormMode != AccountConstant.IS_CLOSE"
+    />
+    <AlertDialog
+      v-if="isShowDialogConfirmDelete"
+      :alertFormMode="acceptDelete ? AlertDialogConstant.IS_CONFIRM_DELETE : AlertDialogConstant.DELETE_FAILURE"
+      :messageOfDialog="messageOfDialog"
+      @closeAlertDialog="closeAlertDialog"
+      @confirmDelete="confirmDelete"
     />
   </div>
 </template>
 
 <script>
+
+import {AccountConstant,AlertDialogConstant} from "../configs/constants"
+import {mapActions,mapState} from 'vuex'
 import AccountInfo from '../components/dialogs/AccountInfo.vue'
+import AlertDialog from '../components/dialogs/AlertDialog.vue'
 import ClickOutside from 'vue-click-outside'
 import InputSearch from "../components/share/InputSearch.vue";
 const columns = [
   {
     title: "Số tài khoản",
-    dataIndex: "accountNumber",
-    key: "accountNumber",
+    dataIndex: "account_code",
+    key: "account_code",
     width: 240,
-    scopedSlots: { customRender: "accountNumber" },
+    scopedSlots: { customRender: "account_code" },
   },
   {
     title: "Tên tài khoản",
-    dataIndex: "accountName",
-    key: "accountName",
+    dataIndex: "account_name",
+    key: "account_name",
     width: 230,
-    scopedSlots: { customRender: "accountName" },
+    scopedSlots: { customRender: "account_name" },
   },
   {
     title: "Tính chất",
@@ -126,10 +141,10 @@ const columns = [
   },
   {
     title: "Tên tiếng Anh",
-    dataIndex: "englishName",
+    dataIndex: "english_name",
     width: 230,
-    key: "englishName",
-    scopedSlots: { customRender: "englishName" },
+    key: "english_name",
+    scopedSlots: { customRender: "english_name" },
   },
   {
     title: "Diễn giải",
@@ -154,251 +169,47 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:true,
-    children: [
-      {
-        key: 2,
-        accountNumber: "Kiều Đức Long",
-        accountName: "Kiều Đức Long",
-        nature: "Kiều Đức Long",
-        englishName: "11111",
-        explain: "11111",
-        status: "11111",
-        hasChild:false,
-      },
-      {
-        key: 3,
-        accountNumber: "Kiều Đức Long",
-        accountName: "Kiều Đức Long",
-        nature: "Kiều Đức Long",
-        englishName: "11111",
-        explain: "11111",
-        status: "11111",
-        hasChild:true,
-        children: [
-          {
-            key: 4,
-            accountNumber: "Kiều Đức Long",
-            accountName: "Kiều Đức Long",
-            nature: "Kiều Đức Long",
-            englishName: "11111",
-            explain: "11111",
-            status: "11111",
-            hasChild:false,
-          },
-        ],
-      },
-      {
-        key: 5,
-        accountNumber: "Kiều Đức Long",
-        accountName: "Kiều Đức Long",
-        nature: "Kiều Đức Long",
-        englishName: "11111",
-        explain: "11111",
-        status: "11111",
-        hasChild:true,
-        children: [
-          {
-            key: 6,
-            accountNumber: "Kiều Đức Long",
-            accountName: "Kiều Đức Long",
-            nature: "Kiều Đức Long",
-            englishName: "11111",
-            explain: "11111",
-            status: "11111",
-            hasChild:true,
-            children: [
-              {
-                key: 7,
-                accountNumber: "Kiều Đức Long",
-                accountName: "Kiều Đức Long",
-                nature: "Kiều Đức Long",
-                englishName: "11111",
-                explain: "11111",
-                status: "11111",
-                hasChild:false,
-              },
-              {
-                key: 8,
-                accountNumber: "Kiều Đức Long",
-                accountName: "Kiều Đức Long",
-                nature: "Kiều Đức Long",
-                englishName: "11111",
-                explain: "11111",
-                status: "11111",
-                hasChild:false,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-  {
-    key: 1,
-    accountNumber: "Kiều Đức Long",
-    accountName: "Kiều Đức Long",
-    nature: "Kiều Đức Long",
-    englishName: "11111",
-    explain: "11111",
-    status: "11111",
-    hasChild:false,
-  },
-];
-
 export default {
   components: {
     InputSearch,
-    AccountInfo
+    AccountInfo,
+    AlertDialog
+  },
+  computed:{
+    ...mapState({
+      accounts:state =>state.account.accounts,
+      accountFormMode:state =>state.account.accountFormMode,
+      parentIdList:state =>state.account.parentIdList,
+      totalRecords:state =>state.account.totalRecords
+    })
+  },
+  created(){
+    this.getAccounts()
   },
   data() {
     return {
-      data,
+      AccountConstant,
+      isExpand:false,
+      accountIdSelected:"",
       columns,
       expandedRowKeys: [],
-      isShowAccountInfo:false
+      isShowAccountInfo:false,
+      AlertDialogConstant,
+      isShowDialogConfirmDelete:false,
+      messageOfDialog:"",
+      acceptDelete:false
     };
   },
   methods: {
+    ...mapActions(
+      'account',
+      [
+        'getAccounts',
+        'showFormAdd',
+        'showFormEdit',
+        'deleteAccount'
+      ]
+    ),
     showAccountInfo(){
       this.isShowAccountInfo = true      
     },
@@ -406,25 +217,49 @@ export default {
       this.isShowAccountInfo = false
     },
     handleExpandAllRows(){
-      this.expandedRowKeys=[]
+      this.isExpand = !this.isExpand
+      if(this.isExpand == false){
+        this.expandedRowKeys=[]
+      }else{
+        this.expandedRowKeys=this.parentIdList
+      }
     },
     customRow(record) {
       return {
         on: {
           click: () => {
-            alert(this.expandedRowKeys)
+            // alert(this.expandedRowKeys)
           },
           dblclick: () => {
-            this.handleEdit(record)
+            this.showFormEdit(record)
           },
         },
       };
     },
-    handleEdit(record){
-      alert(record.accountNumber)      
+    btnDelete(record){
+      this.isShowDialogConfirmDelete = true
+      if(record.children != null){
+        this.acceptDelete = false
+        this.messageOfDialog = "Không thể xoá danh mục cha nếu chưa xoá tất cả các danh mục con."
+      }else{
+        this.accountIdSelected = record.account_id
+        this.acceptDelete = true
+        this.messageOfDialog = "Bạn có thực sự muốn xoá Tài khoản <"+record.account_code+"> không?"
+      }
     },
-    handleDelete(record){
-      alert(record.accountNumber)
+    closeAlertDialog(){
+      this.isShowDialogConfirmDelete = false
+    },
+    confirmDelete(){
+      this.deleteAccount({
+        account_id:this.accountIdSelected,
+        callbackSuccess:()=>{
+          this.showNotification("Xoá thành công!")
+        },
+        callbackFail:()=>{
+          this.showNotification("Xoá thất bại!")
+        }
+      })
     },
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
@@ -456,6 +291,12 @@ export default {
       }
       
     },
+    showNotification(message){
+      this.$notification['success']({
+        message,
+        duration:2
+      });
+    }
   },
   directives: {
     ClickOutside

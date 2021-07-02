@@ -7,7 +7,7 @@
           Phiếu chi PC00131
         </div>
         <div class="type-payment">
-          <Combobox :lWidth="350" />
+          <Combobox lWidth="350" />
         </div>
       </div>
       <div class="right-payment-header">
@@ -24,23 +24,29 @@
           <div class="w4div5">
             <div class="row-input1">
               <div style="width:43%">
-                <Combobox :isMultiple="true" :comboboxName="'Đối tượng'" />
+                <Combobox 
+                  :isMultiple="true" 
+                  :comboboxName="'Đối tượng'" 
+                />
               </div>
               <Input
                 style="width: 57%;padding: 0 16px 0 12px;"
                 :inputName="'Người nhận'"
+                v-model="payment.receiver"
               />
             </div>
             <div class="row-input1">
               <Input
                 style="width: 100%;padding-right:16px"
                 :inputName="'Địa chỉ'"
+                v-model="payment.address"
               />
             </div>
             <div class="row-input1">
               <Input
                 style="width: 100%;padding-right:16px"
                 :inputName="'Lý do chi'"
+                v-model="payment.payment_reason"
               />
             </div>
             <div class="row-input1 include">
@@ -51,7 +57,9 @@
                 style="padding-right:6px;padding-left:12px;"
                 :inputName="'Kèm theo'"
                 placeholder="Số lượng"
-                :lWidth="142"
+                lWidth="142"
+                maxlength="20"
+                v-model="payment.attach"
               />
               <div class="original-doc">chứng từ gốc</div>
             </div>
@@ -67,19 +75,19 @@
             <div class="row-input-right">
               <label class="date-title">Ngày hạch toán</label>
               <a-date-picker
-                :default-value="moment('2015/01/01', dateFormat)"
                 :format="dateFormat"
+                v-model="payment.accounting_date"
               />
             </div>
             <div class="row-input-right">
               <label class="date-title">Ngày phiếu chi</label>
               <a-date-picker
-                :default-value="moment('2015/01/01', dateFormat)"
                 :format="dateFormat"
+                v-model="payment.payment_date"
               />
             </div>
             <div class="row-input-right">
-              <Input :lWidth="168" :inputName="'Số phiếu chi'" />
+              <Input lWidth="168" :inputName="'Số phiếu chi'" />
             </div>
           </div>
         </div>
@@ -99,7 +107,7 @@
             <div class="text" style="margin-right:8px">Loại tiền</div>
             <Combobox
               @setItemSelected="handleChangeCurrency"
-              :lWidth="100"
+              lWidth="100"
               :dataOptions="currencies"
               :fieldDisplay="'Symbol'"
               :fieldSearch="'Name'"
@@ -110,7 +118,7 @@
           </div>
           <div v-show="currency=='VND'" class="currency">
             <div class="text">Tỷ giá</div>
-            <Input :lWidth="90" type="number" />
+            <Input lWidth="90" type="number" maxlength="20" />
           </div>
         </div>
       </div>
@@ -172,6 +180,7 @@
                   min="0"
                   class="input"
                   style="width:130px"
+                  maxlength="20"
                 />
               </td>
               <td class="money" v-show="currency == 'VND'">
@@ -259,7 +268,7 @@
           <div class="save-and-print">
             Cất và in
           </div>
-          <div class="line"></div>
+          <div class="line1"></div>
 
           <a-dropdown :trigger="['click']">
             <a class="ant-dropdown-link">
@@ -283,6 +292,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import moment from "moment";
 import Combobox from "../share/Combobox.vue";
 import Input from "../share/Input.vue";
@@ -319,12 +329,19 @@ export default {
       titleCurrencies,
     };
   },
+  computed:{
+    ...mapState({
+      payment:(state)=>state.payment.payment
+    })
+  },
   components: {
     Combobox,
     Input,
   },
   methods: {
     moment,
+    ...mapActions("payment", [
+    ]),
     handleChangeCurrency(index) {
       this.currency= this.currencies[index].Symbol
     },

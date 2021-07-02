@@ -4,12 +4,17 @@
       {{inputName}}
       <div v-if="isRequired" class="required">*</div>
     </label>
-    <input 
+    <input
+        ref="input"
         v-bind="$attrs"
         v-on="inputSearchListeners"
         class="input"
-        :style="{width:lWidth +'px'}"        
+        :style="{width:lWidth +'px'}"
+        @blur="blurInput($event)"
+        :class="{'input-required':!isValidated}"
+        @focus="focusInput"        
     />
+    <div v-if="!isValidated" class="pop-up">{{inputName}} không được để trống</div>
   </div>
 </template>
 
@@ -18,7 +23,36 @@ export default {
   props: {
     inputName:String,//Title
     lWidth: String, //Độ rộng
-    isRequired: String, //Có bắt buộc không
+    isRequired: {
+      type : Boolean,
+      default: false
+    }, //Có bắt buộc không
+  },
+  data(){
+    return{
+      isValidated : true
+    }
+  },
+  methods:{
+    focus(){
+      this.$refs.input.focus()
+    },
+    blurInput(event){
+      if((event.target.value == null || event.target.value.trim() == "") && this.isRequired == true){
+              this.isValidated = false
+            }else{
+              this.isValidated = true
+            }
+    },
+    focusInput(){
+      this.isValidated = true
+    },
+    setValidateState(state){
+      this.isValidated = state
+    },
+    getValidateState(){
+      return this.isValidated
+    }
   },
   computed: {
     /**
@@ -34,6 +68,11 @@ export default {
           input: function(event) {
             // Sự kiện overide
             vm.$emit("input", event.target.value);
+            if((event.target.value == null || event.target.value.trim() == "") && vm.isRequired == true){
+              vm.isValidated = false
+            }else{
+              vm.isValidated = true
+            }
           },
         }
       );
@@ -44,7 +83,7 @@ export default {
 
 <style>
 .input-box {
-    
+    position: relative;
     display: inline-grid;
     text-align: left;
     margin-top: 2px;
@@ -62,5 +101,19 @@ export default {
     font-weight: 400;
     font-size: 12px;
 }
-
+.input-required{
+  border-color: red;
+}
+.input-box .pop-up{
+  position: absolute;
+  top: 54px;
+  font-size: 12px;
+  background-color: #241717;
+  color: white;
+  padding: 0 5px;
+  display: none;
+}
+.input-box:hover .pop-up{
+  display: block;
+}
 </style>

@@ -13,6 +13,8 @@
         :placeholder="placeHolder"
         @change="handleChangeSelect"
         option-label-prop="label"
+        :value="value"
+        :disabled="isDisabled"
       >
         <a-select-option value="title" :disabled="true">
           <div
@@ -26,7 +28,7 @@
         <a-select-option
           v-for="(data, index) in dataOptions"
           :key="index"
-          :value="index"
+          :value="data.code"
           :label="data[`${fieldDisplay}`]"
         >
           <div
@@ -69,10 +71,9 @@ export default {
     isMultiple: Boolean, //Hiển thị nhiều dữ liệu hay không
     placeHolder: String, //Place holder
     lWidth: String, // Độ rộng
-    comboboxName:{
-      type:String,
-      default:""
-    }
+    comboboxName:String,
+    isDisabled:Boolean,
+    value: Array
   },
   data() {
     return {
@@ -115,13 +116,15 @@ export default {
      * CreatedBy KDLong 30/05/2021
      */
     handleChangeSelect(value) {
-      this.$emit("setItemSelected", value); //Event pass from parent
+      // alert(value)
+      this.$emit("handleChangeSelect", value); //Event pass from parent
     },
     /**
      * Khi click vào icon-dropdown
      * CreatedBy KDLong 30/05/2021
      */
     showDropdown() {
+      if(!this.isDisabled)
       this.isShowDropdown = !this.isShowDropdown;
     },
     /**
