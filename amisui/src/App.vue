@@ -106,6 +106,15 @@ input[type=number]::-webkit-outer-spin-button {
 input:disabled, textarea:disabled {
   background: #f5f5f5;
 }
+.ant-calendar-body td:last-child{
+  background-color: white !important;
+}
+.ant-input[disabled] {
+    color: #111111 !important;
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 1;
+}
 @font-face {
   font-family: "notosans-regular";
   src: url("./assets/fonts/notosans-regular.2cb88a13.woff2") format("opentype");

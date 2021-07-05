@@ -26,11 +26,17 @@
           </div>
           <div class="white-btn-icon"></div>
         </div>
-        <router-link class="payment-add-box"  to="/payment/paymentinfo">
-          <div class="add-text">
+        <router-link 
+          class="payment-add-box"  
+          to="/payment/paymentinfo/"
+          
+        >
+          <div class="payment-add-box" @click="showFormAdd">
+            <div class="add-text">
             Thêm chi tiền
           </div>
           <div class="add-icon"></div>
+          </div>
         </router-link>
       </div>
     </div>
@@ -136,13 +142,17 @@
             <td style="min-width:150px;padding:0"><div class="display-date">{{payment.payment_date |formatDate}}</div></td>
             <td style="min-width:200px">{{payment.payment_code}}</td>
             <td style="min-width:350px">{{payment.payment_reason}}</td>
-            <td style="min-width:150px"><div class="display-money">{{payment.money}}</div></td>
+            <td style="min-width:150px"><div class="display-money">{{payment.money | formatMoney}}</div></td>
             <td style="min-width:150px">{{payment.supplier_name}}</td>
             <td style="min-width:150px">{{payment.supplier_code}}</td>
             <td style="min-width:350px;border-right:none">{{payment.address}}</td>
             <td class="th-td-last">
               <div class="cover-first-last">
-                <div class="view-option">Xem</div>
+                <div 
+                  @click="showFormReadOnly" 
+                  class="view-option">
+                  <router-link :to="`/payment/paymentinfo/${payment.payment_id}`" style="color:#0075C0" >Xem</router-link>
+                </div>
                 <a-dropdown :trigger="['click']">
                   <a class="ant-dropdown-link">
                     <div
@@ -152,11 +162,11 @@
                     ></div>
                   </a>
                   <a-menu slot="overlay" class="cover-option">
-                    <a-menu-item key="0">
-                      <a href="#" class="option">Sửa</a>
+                    <a-menu-item key="0" @click="showFormEdit">
+                      <router-link  :to="`/payment/paymentinfo/${payment.payment_id}`" class="option">Sửa</router-link>
                     </a-menu-item>
                     <a-menu-item key="1">
-                      <a href="#" class="option">Xóa</a>
+                      <a @click="showDialogConfirmDelete(payment)" class="option">Xóa</a>
                     </a-menu-item>
                     <a-menu-item key="2">
                       <a href="#" class="option">Ngưng sử dụng</a>
@@ -177,7 +187,7 @@
             <td style="min-width:150px;padding:0" class="total-money"></td>
             <td style="min-width:200px" class="total-money"></td>
             <td style="min-width:350px" class="total-money"></td>
-            <td style="min-width:150px" class="total-money"><div class="display-money"><b>{{totalMoney}}</b></div></td>
+            <td style="min-width:150px" class="total-money"><div class="display-money"><b>{{totalMoney |formatMoney}}</b></div></td>
             <td style="min-width:150px" class="total-money"></td>
             <td style="min-width:150px" class="total-money"></td>
             <td style="min-width:350px" class="total-money"></td>
@@ -220,6 +230,13 @@
       </div>
     </div>
     <router-view/>
+    <AlertDialog
+      v-if="isShowDialogConfirmDelete"
+      :alertFormMode="AlertDialogConstant.IS_CONFIRM_DELETE"
+      :messageOfDialog="messageOfDialog"
+      @closeAlertDialog="closeAlertDialog"
+      @confirmDelete="confirmDelete"
+    />
   </div>
 </template>
 
@@ -228,14 +245,15 @@ import moment from "moment"
 import ClickOutside from "vue-click-outside";
 import InputSearch from "../components/share/InputSearch";
 import Combobox from "../components/share/Combobox"
-// import PaymentInfo from "../components/dialogs/PaymentInfo"
-import {PageSizes} from "../configs/constants"
-// import AccountInfo from "../components/dialogs/AccountInfo"
+import {PageSizes,AlertDialogConstant} from "../configs/constants"
+import AlertDialog from "../components/dialogs/AlertDialog"
+
 import {mapActions,mapState} from "vuex"
 export default {
   components: {
     InputSearch,
     Combobox,
+    AlertDialog
     // PaymentInfo
     // AccountInfo
   },
@@ -255,7 +273,10 @@ export default {
   data() {
     return {
       isShowTopGridData: true,
-      PageSizes
+      PageSizes,
+      AlertDialogConstant,
+      isShowDialogConfirmDelete:false,
+      paymentIdForDelete:"",
     };
   },
   methods: {
@@ -265,7 +286,11 @@ export default {
         'getPayments',
         'changePageIndex',
         'changePageSize',
-        'changeFilter'
+        'changeFilter',
+        'showFormAdd',
+        'showFormEdit',
+        'showFormReadOnly',
+        'deletePayment'
       ]
     ),
     handleShowTopGridData() {
@@ -287,6 +312,25 @@ export default {
     },
     handleChangeFilter(e){
       this.changeFilter(e.target.value)
+    },
+    showDialogConfirmDelete(p){
+      this.paymentIdForDelete = p.payment_id
+      this.messageOfDialog = "Bạn có chắc chắn muốn xoá phiếu chi<"+p.payment_code+"> không?"
+      this.isShowDialogConfirmDelete = true
+    },
+    closeAlertDialog(){
+      this.isShowDialogConfirmDelete = false
+    },
+    confirmDelete(){
+      this.deletePayment({
+        payment_id:this.paymentIdForDelete,
+        callbackSuccess:()=>{
+          this.showNotification("Xoá thành công!")
+        },
+        callbackFail:()=>{
+          this.showNotification("Xoá thất bại!")
+        }
+      })
     },
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
@@ -320,12 +364,23 @@ export default {
         });
       }
     },
+    showNotification(message){
+      this.$notification['success']({
+        message,
+        duration:2
+      });
+    }
   },
   filters: {
     //Thực hiện lọc ngày tháng năm để show lên UI
     formatDate: function(value) {
       if (value == null) return "";
       return moment(value).format("DD/MM/YYYY");
+    },
+    formatMoney:function(value){
+      return new Intl.NumberFormat()
+          .format(value)
+          .replaceAll(",", ".")+",0";
     },
   },
   directives: {

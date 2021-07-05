@@ -5,6 +5,12 @@ export const SupplierConstant = {
     IS_EDIT: 2, //Sửa
     IS_READ_ONLY: 3 //Chỉ xem
 };
+export const PaymentConstant = {
+    IS_CLOSE: 0,
+    IS_ADD: 1, //Dialog Thêm
+    IS_EDIT: 2, //Sửa
+    IS_READ_ONLY: 3 //Chỉ xem
+};
 export const AccountConstant = {
     IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
@@ -295,15 +301,51 @@ export const InitPayment = {
     "supplier_id": null,
     "receiver": null,
     "address": null,
-    "payment_reason": null,
+    "payment_reason": "Chi tiền cho ",
     "employee_name": null,
     "attach": null,
     "accounting_date": null,
     "payment_date": null,
-    "accounting": null,
-    "money": null,
+    "accounting": "[{\"explain\":\"Chi tiền cho \",\"debt_account_id\":\"\",\"over_account_id\":\"\",\"supplier_id\":\"\",\"supplier_name\":\"\",\"amount\":0,\"exchange\":0,\"bank_account\":\"\"}]",
+    "money": 0,
     "supplier_code": null,
     "supplier_name": null,
-    "currency": null,
-    "rate": null
+    "currency": "VND",
+    "rate": 23500
+}
+export const Employees = [{
+        employee_code: "NV001",
+        employee_name: "Kiều Đức Long",
+        department: "Phòng kế toán",
+        phone_number: "0949887410"
+    },
+    {
+        employee_code: "NV002",
+        employee_name: "Đỗ Thành Đạt",
+        department: "Phòng kế toán",
+        phone_number: "0949666410"
+    },
+    {
+        employee_code: "NV003",
+        employee_name: "Nguyễn Văn Hiến",
+        department: "Phòng kế toán",
+        phone_number: "0949777410"
+    },
+    {
+        employee_code: "NV004",
+        employee_name: "Trần Trung Thiệp",
+        department: "Phòng kế toán",
+        phone_number: "0949887888"
+    }
+]
+
+export const InitAccounting = {
+    explain: "Chi tiền cho ",
+    debt_account_id: "",
+    over_account_id: "",
+    supplier_id: "",
+    supplier_name: "",
+    amount: 0,
+    exchange: 0,
+    bank_account: ""
 }

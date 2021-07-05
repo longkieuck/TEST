@@ -105,3 +105,9 @@
     font-size: 12px;
     font-style: italic;
 }
+
+.ant-select-dropdown-menu-item-disabled {
+    position: sticky !important;
+    top: -4px !important;
+    z-index: 1 !important;
+}
