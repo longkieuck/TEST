@@ -17,6 +17,7 @@
       :placeholder="placeHolder"
       @change="handleChangeSelect"
       :value="value"
+      :autoFocus="autoFocus"
     >
       <div slot="suffixIcon" class="cover-suffix">
         <div v-show="isShowAddIcon" class="cover-add-icon">
@@ -83,6 +84,7 @@ export default {
       default:false
     },
     isDisabled:Boolean,
+    autoFocus:Boolean,
     comboboxName:String,
     defaultValue:String,
     value:[String, Number]

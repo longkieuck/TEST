@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div
+    @keydown.esc.prevent.stop="closeForm" 
+    @keydown.ctrl.83.prevent.stop.exact="btnSave" 
+    @keydown.ctrl.shift.83.prevent.stop="btnSaveAndAdd"
+    tabindex="0"
+  >
     <supplier-info-box>
       <div class="option-supplier-box" slot="type-supplier">
         <input
@@ -18,10 +23,11 @@
         />Cá nhân<br />
       </div>
       <div class="is-customer" slot="is-customer">
-        <input 
+        <input
           :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
-          type="checkbox" 
-          v-model="supplier.is_customer" />Là khách hàng<br />
+          type="checkbox"
+          v-model="supplier.is_customer"
+        />Là khách hàng<br />
       </div>
 
       <div
@@ -35,6 +41,7 @@
               style="width:170px;padding-right:12px"
               inputName="Mã số thuế"
               lWidth="158"
+              ref="taxCode"
               v-model="supplier.tax_code"
               :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
             />
@@ -222,7 +229,9 @@
               </div>
               <div class="location-line">
                 <Combobox
-                  :isDisabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                  :isDisabled="
+                    supplierFormMode == SupplierConstant.IS_READ_ONLY
+                  "
                   :isMultiple="true"
                   :titleOptions="titleVocative"
                   :dataOptions="vocative"
@@ -265,7 +274,9 @@
                 </div>
                 <div class="location-line">
                   <Input
-                    :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                    :disabled="
+                      supplierFormMode == SupplierConstant.IS_READ_ONLY
+                    "
                     lWidth="396"
                     placeholder="Đại diện theo PL"
                     v-model="supplier.legal_representative"
@@ -280,7 +291,9 @@
                 </div>
                 <div class="location-line">
                   <Input
-                    :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                    :disabled="
+                      supplierFormMode == SupplierConstant.IS_READ_ONLY
+                    "
                     style="margin-top:-2px"
                     lWidth="396"
                     placeholder="Đại diện theo PL"
@@ -294,7 +307,9 @@
                 </div>
                 <div class="location-line">
                   <Input
-                    :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                    :disabled="
+                      supplierFormMode == SupplierConstant.IS_READ_ONLY
+                    "
                     style="margin-top:-2px"
                     lWidth="396"
                     placeholder="Người nhận hoá đơn điện tử"
@@ -303,7 +318,9 @@
                 </div>
                 <div class="location-line">
                   <Input
-                    :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                    :disabled="
+                      supplierFormMode == SupplierConstant.IS_READ_ONLY
+                    "
                     style="margin-top:4px"
                     lWidth="396"
                     placeholder="Email, ngăn cách nhiều email bởi dấu chấm phẩy '';''"
@@ -312,7 +329,9 @@
                 </div>
                 <div class="location-line">
                   <Input
-                    :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                    :disabled="
+                      supplierFormMode == SupplierConstant.IS_READ_ONLY
+                    "
                     style="margin-top:4px"
                     lWidth="190"
                     placeholder="Số điện thoại"
@@ -468,7 +487,9 @@
                 <tr v-for="(account, index) in bankAccountHandle" :key="index">
                   <td>
                     <input
-                      :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                      :disabled="
+                        supplierFormMode == SupplierConstant.IS_READ_ONLY
+                      "
                       type="text"
                       class="input"
                       style="width:130px"
@@ -477,7 +498,9 @@
                   </td>
                   <td>
                     <input
-                      :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                      :disabled="
+                        supplierFormMode == SupplierConstant.IS_READ_ONLY
+                      "
                       type="text"
                       class="input"
                       style="width:180px"
@@ -486,7 +509,9 @@
                   </td>
                   <td>
                     <input
-                      :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                      :disabled="
+                        supplierFormMode == SupplierConstant.IS_READ_ONLY
+                      "
                       type="text"
                       class="input"
                       style="width:160px"
@@ -495,7 +520,9 @@
                   </td>
                   <td>
                     <input
-                      :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                      :disabled="
+                        supplierFormMode == SupplierConstant.IS_READ_ONLY
+                      "
                       type="text"
                       class="input"
                       style="width:215px"
@@ -601,7 +628,9 @@
               >
                 <div class="delivery-input">
                   <Input
-                    :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
+                    :disabled="
+                      supplierFormMode == SupplierConstant.IS_READ_ONLY
+                    "
                     style="margin-top:-5px"
                     lWidth="325"
                     v-model="delivery_address.address"
@@ -626,10 +655,10 @@
           </div>
         </div>
         <div v-show="tabSelected == 4" class="note-tab">
-          <TextArea 
-            v-model="supplier.note" 
-            lWidth="815" 
-            lHeight="190" 
+          <TextArea
+            v-model="supplier.note"
+            lWidth="815"
+            lHeight="190"
             :disabled="supplierFormMode == SupplierConstant.IS_READ_ONLY"
           />
         </div>
@@ -639,11 +668,12 @@
           <div class="white-button" @click="closeForm">Huỷ</div>
         </div>
         <div class="right-bottom-button">
-          <div 
+          <div
             v-if="supplierFormMode != SupplierConstant.IS_READ_ONLY"
-            class="white-button" 
-            title="Cất (Ctrl + S)" 
-            @click="btnSave">
+            class="white-button"
+            title="Cất (Ctrl + S)"
+            @click="btnSave"
+          >
             Cất
           </div>
           <div
@@ -655,29 +685,36 @@
             Cất và Thêm
           </div>
 
-          <div 
+          <div
             v-if="supplierFormMode == SupplierConstant.IS_READ_ONLY"
-            class="white-button" 
-            @click="changeFormMode"
+            class="white-button"
+            @click="btnEdit"
           >
             Sửa
           </div>
-          <div
+          <!-- <div
             v-if="supplierFormMode == SupplierConstant.IS_READ_ONLY"
             class="green-button"
             @click="closeForm"
           >
             Đóng
-          </div>
+          </div> -->
         </div>
       </div>
     </supplier-info-box>
+    <AlertDialog
+      v-if="isShowDialogCodeExist"
+      :alertFormMode="AlertDialogConstant.DELETE_FAILURE"
+      :messageOfDialog="messageOfDialog"
+      @closeAlertDialog="closeAlertDialog"
+    />
   </div>
 </template>
 
 <script>
 import SupplierInfoBox from "./SupplierInfoBox";
 import Input from "../share/Input";
+import AlertDialog from "./AlertDialog.vue";
 import ComboboxMultiple from "../share/ComboboxMultiple";
 import Combobox from "../share/Combobox";
 import TextArea from "../share/TextArea";
@@ -697,6 +734,8 @@ import {
   City,
   District,
   Commune,
+  InitSupplier,
+  AlertDialogConstant,
 } from "../../configs/constants";
 export default {
   components: {
@@ -705,9 +744,29 @@ export default {
     ComboboxMultiple,
     Combobox,
     TextArea,
+    AlertDialog,
+  },
+  created() {
+    // block ctrl S de trinh duyet nhan lenh ctrl S cua dev
+    document.addEventListener("keydown", function(e) {
+      e = e || window.event; //Get event
+      if (e.ctrlKey) {
+        var c = e.which || e.keyCode; //Get key code
+        switch (c) {
+          case 83: //Block Ctrl+S
+            e.preventDefault();
+            e.stopPropagation();
+            break;
+        }
+      }
+    });
   },
   mounted() {
-    this.$refs.supplierCode1.focus();
+    if (this.supplier.supplier_type == 1) {
+      setTimeout(() => this.$refs.supplierCode2.focus(), 100);
+    } else {
+      setTimeout(() => this.$refs.taxCode.focus(), 100);
+    }
     this.bankAccountHandle = [...JSON.parse(this.supplier.bank_account)];
     this.deliveryAddressHandle = [
       ...JSON.parse(this.supplier.delivery_address),
@@ -755,7 +814,10 @@ export default {
       isSameSupplierAddress: false,
       dateFormat: "DD/MM/YYYY",
       tabSelected: 0,
+      isShowDialogCodeExist: false,
+      messageOfDialog: "",
       supplierGroupSelected: [],
+      AlertDialogConstant,
       supplierGroup: [...SupplierGroup],
       titleSupplierGroup: [
         {
@@ -845,13 +907,23 @@ export default {
       ],
     };
   },
+  // watch:{
+  //   supplierFormMode:function(newValue){
+  //     if(newValue == SupplierConstant.IS_ADD){
+  //       this.bankAccountHandle = [...JSON.parse(InitSupplier.bank_account)];
+  //       this.deliveryAddressHandle = [
+  //         ...JSON.parse(InitSupplier.delivery_address),
+  //       ];
+  //     }
+  //   }
+  // },
   methods: {
     ...mapActions("supplier", [
       "closeForm",
       "postSupplier",
       "putSupplier",
       "showFormAdd",
-      "changeFormMode"
+      "changeFormMode",
     ]),
     moment,
     handleChangePuchasingEmployee(value) {
@@ -906,106 +978,126 @@ export default {
         (item, i) => i != index
       );
     },
+    btnEdit() {
+      this.changeFormMode(() => {
+        if (this.supplier.supplier_type == 1) {
+          this.$nextTick(function() {
+            this.$refs.supplierCode2.focus();
+          });
+        } else {
+          this.$nextTick(function() {
+            this.$refs.supplierCode1.focus();
+          });
+        }
+      });
+    },
     btnSave() {
       if (
         this.supplier.supplier_code == null ||
-        this.supplier.supplier_name == null
+        this.supplier.supplier_name == null ||
+        this.supplier.supplier_code == "" ||
+        this.supplier.supplier_name == ""
       ) {
-        if (this.supplier.supplier_code == null) {
-          this.$refs.supplierCode1.setValidateState(false);
-          this.$refs.supplierCode2.setValidateState(false);
-        }
-        if (this.supplier.supplier_name == null) {
-          this.$refs.supplierName.setValidateState(false);
-        }
+        this.validateNotEmpty();
       } else {
-        //Lọc bỏ các tài khoản ngân hàng rỗng trước khi cất
-        this.bankAccountHandle = this.bankAccountHandle.filter(
-          (item) => JSON.stringify(item) != JSON.stringify(InitBankAccount)
-        );
-        this.supplier.bank_account = JSON.stringify(this.bankAccountHandle);
-        //Lọc các địa chỉ giao hàng rỗng trc khi cất
-        this.deliveryAddressHandle = this.deliveryAddressHandle.filter(
-          (item) => JSON.stringify(item) != JSON.stringify(InitDeliveryAddress)
-        );
-        this.supplier.delivery_address = JSON.stringify(
-          this.deliveryAddressHandle
-        );
+        this.removeEmptyData();
         if (this.supplierFormMode == SupplierConstant.IS_ADD) {
           this.postSupplier({
-            callbackSuccess:()=>{
-              this.showNotification("Thêm thành công!")
+            callbackSuccess: () => {
+              this.showNotification("Thêm thành công!", "success");
             },
-            callbackFail:()=>{
-              this.showNotification("Thêm thất bại!")
-            }
+            callbackFail: () => {
+              // this.showNotification(
+              //   "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
+              //   "error"
+              // );
+              this.showDialogCodeExist();
+            },
           });
         } else {
-          this.putSupplier(
-            {
-            callbackSuccess:()=>{
-              this.showNotification("Sửa thành công!")
+          this.putSupplier({
+            callbackSuccess: () => {
+              this.showNotification("Sửa thành công!", "success");
             },
-            callbackFail:()=>{
-              this.showNotification("Sửa thất bại!")
-            }
-          }
-          );
+            callbackFail: () => {
+              // this.showNotification(
+              //   "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
+              //   "error"
+              // );
+              this.showDialogCodeExist();
+            },
+          });
         }
       }
     },
     btnSaveAndAdd() {
       if (
         this.supplier.supplier_code == null ||
-        this.supplier.supplier_name == null
+        this.supplier.supplier_name == null ||
+        this.supplier.supplier_code == "" ||
+        this.supplier.supplier_name == ""
       ) {
-        if (this.supplier.supplier_code == null) {
-          this.$refs.supplierCode1.setValidateState(false);
-          this.$refs.supplierCode2.setValidateState(false);
-        }
-        if (this.supplier.supplier_name == null) {
-          this.$refs.supplierName.setValidateState(false);
-        }
+        this.validateNotEmpty();
       } else {
-        //Lọc bỏ các tài khoản ngân hàng rỗng trước khi cất
-        this.bankAccountHandle = this.bankAccountHandle.filter(
-          (item) => JSON.stringify(item) != JSON.stringify(InitBankAccount)
-        );
-        this.supplier.bank_account = JSON.stringify(this.bankAccountHandle);
-        //Lọc các địa chỉ giao hàng rỗng trc khi cất
-        this.deliveryAddressHandle = this.deliveryAddressHandle.filter(
-          (item) => JSON.stringify(item) != JSON.stringify(InitDeliveryAddress)
-        );
-        this.supplier.delivery_address = JSON.stringify(
-          this.deliveryAddressHandle
-        );
+        this.removeEmptyData();
         if (this.supplierFormMode == SupplierConstant.IS_ADD) {
           this.postSupplier({
-            callbackSuccess:()=>{
-              this.showNotification("Thêm thành công!")
-              this.showFormAdd()
-              this.$refs.supplierCode1.focus()
+            callbackSuccess: () => {
+              this.showNotification("Thêm thành công!", "success");
+              this.initData();
             },
-            callbackFail:()=>{
-              this.showNotification("Thêm thất bại!")
-              this.showFormAdd()
-              this.$refs.supplierCode1.focus()
-            }
+            callbackFail: () => {
+              this.showNotification(
+                "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
+                "error"
+              );
+            },
           });
         } else {
           this.putSupplier({
-            callbackSuccess:()=>{
-              this.showNotification("Sửa thành công!")
-              this.showFormAdd()
-              this.$refs.supplierCode1.focus()
+            callbackSuccess: () => {
+              this.showNotification("Sửa thành công!", "success");
+              //Khởi tạo lại dữ liệu ban đầu cho các trường json
+              this.initData();
             },
-            callbackFail:()=>{
-              this.showNotification("Sửa thất bại!")
-              this.showFormAdd()
-              this.$refs.supplierCode1.focus()
-            }
+            callbackFail: () => {
+              this.showNotification(
+                "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
+                "error"
+              );
+            },
           });
         }
+      }
+    },
+    validateNotEmpty() {
+      if (
+        this.supplier.supplier_code == null ||
+        this.supplier.supplier_code == ""
+      ) {
+        this.$refs.supplierCode1.setValidateState(false);
+        this.$refs.supplierCode2.setValidateState(false);
+      }
+      if (
+        this.supplier.supplier_name == null ||
+        this.supplier.supplier_name == ""
+      ) {
+        this.$refs.supplierName.setValidateState(false);
+      }
+
+      if (
+        this.supplier.supplier_code == null ||
+        this.supplier.supplier_code == ""
+      ) {
+        this.showNotification("Mã nhà cung cấp không được để trống!", "error");
+        return;
+      }
+      if (
+        this.supplier.supplier_name == null ||
+        this.supplier.supplier_name == ""
+      ) {
+        this.showNotification("Tên nhà cung cấp không được để trống!", "error");
+        return;
       }
     },
     handleDeliveryAddress() {
@@ -1028,12 +1120,55 @@ export default {
       );
       this.supplier.supplier_group = JSON.stringify(arrSupplierGroupSelected);
     },
-    showNotification(message){
-      this.$notification['success']({
-        message,
-        duration:2
+    removeEmptyData() {
+      //Lọc bỏ các tài khoản ngân hàng rỗng trước khi cất
+      this.bankAccountHandle = this.bankAccountHandle.filter(
+        (item) => JSON.stringify(item) != JSON.stringify(InitBankAccount)
+      );
+      if (this.bankAccountHandle.length == 0) {
+        this.bankAccountHandle = [...JSON.parse(InitSupplier.bank_account)];
+      }
+      this.supplier.bank_account = JSON.stringify(this.bankAccountHandle);
+      //Lọc các địa chỉ giao hàng rỗng trc khi cất
+      this.deliveryAddressHandle = this.deliveryAddressHandle.filter(
+        (item) => JSON.stringify(item) != JSON.stringify(InitDeliveryAddress)
+      );
+      if (this.deliveryAddressHandle.length == 0) {
+        this.deliveryAddressHandle = [
+          ...JSON.parse(InitSupplier.delivery_address),
+        ];
+      }
+      this.supplier.delivery_address = JSON.stringify(
+        this.deliveryAddressHandle
+      );
+    },
+    initData() {
+      this.showFormAdd();
+      this.$nextTick(function() {
+        this.$refs.taxCode.focus();
       });
-    }
+      this.bankAccountHandle = [...JSON.parse(InitSupplier.bank_account)];
+      this.deliveryAddressHandle = [
+        ...JSON.parse(InitSupplier.delivery_address),
+      ];
+      this.supplierGroupSelected = [];
+    },
+    showDialogCodeExist() {
+      this.isShowDialogCodeExist = true;
+      this.messageOfDialog =
+        "Mã nhà cung cấp <" +
+        this.supplier.supplier_code +
+        "> đã tồn tại, Vui lòng nhập lại!";
+    },
+    closeAlertDialog() {
+      this.isShowDialogCodeExist = false;
+    },
+    showNotification(message, type) {
+      this.$notification[type]({
+        message,
+        duration: 2,
+      });
+    },
   },
 };
 </script>

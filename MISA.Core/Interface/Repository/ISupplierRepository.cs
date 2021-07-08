@@ -26,6 +26,7 @@ namespace MISA.Core.Interface.Repository
         /// <returns>Danh sách nv</returns>
         /// CreatedBy KDLong 07/05/2021
         public Pagging<supplier> GetSuppliers(Filter filter);
-        
+        public Guid? GetSupplierIdByCode(string code);
+        bool CheckSupplierCodeExist(string code);
     }
 }

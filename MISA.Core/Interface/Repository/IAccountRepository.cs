@@ -9,5 +9,7 @@ namespace MISA.Core.Interface.Repository
 {
     public interface IAccountRepository : IBaseRepository<account>
     {
+        public Guid? GetAccountIdByCode(string code);
+        bool CheckAccountCodeExist(string code);
     }
 }

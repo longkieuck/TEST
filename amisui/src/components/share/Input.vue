@@ -107,11 +107,15 @@ export default {
 .input-box .pop-up{
   position: absolute;
   top: 54px;
-  font-size: 12px;
-  background-color: #241717;
-  color: white;
-  padding: 0 5px;
+  font-size: 13px;
+  background-color: white;
+  color: #111111;
+  padding: 3px 5px;
+  z-index: 1;
+  border: 0.2px solid #111111;
+  font-weight: 100;
   display: none;
+  min-width: max-content
 }
 .input-box:hover .pop-up{
   display: block;

@@ -13,6 +13,28 @@ namespace MISA.Infrastructure.Repository
 {
     public class PaymentRepository:BaseRepository<payment>,IPaymentRepository
     {
+        public bool CheckPaymentCodeExist(string code)
+        {
+            using (dbConnection = new NpgsqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@_payment_code", code);
+                var res = dbConnection.QueryFirstOrDefault<int>("proc_check_payment_code_exist", param: parameters, commandType: CommandType.StoredProcedure);
+                return (res > 0);
+            }
+        }
+        public Guid? GetPaymentIdByCode(string code)
+        {
+            using (dbConnection = new NpgsqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@_payment_code", code);
+                var res = dbConnection.QueryFirstOrDefault<Guid?>("proc_get_payment_id_by_code", param: parameters, commandType: CommandType.StoredProcedure);
+                return res;
+            }
+        }
+
+
         /// <summary>
         /// Lấy mã phiếu chi mới nhất trong hệ thống
         /// </summary>
@@ -26,6 +48,8 @@ namespace MISA.Infrastructure.Repository
                 return res;
             }
         }
+
+        
 
         public Pagging<payment> GetPayments(Filter filter)
         {

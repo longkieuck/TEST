@@ -62,7 +62,7 @@ namespace MISA.Core.Service
         /// <returns>Số bản ghi thay đổi trong database</returns>
         public int Insert(MISAEntity entity)
         {
-            //Validate(entity, true);
+            Validate(entity, true);
             return _baseRepository.Insert(entity);
         }
         /// <summary>
@@ -72,7 +72,7 @@ namespace MISA.Core.Service
         /// <returns>Số bản ghi thay đổi trong database</returns>
         public int Update(MISAEntity entity)
         {
-            //Validate(entity, false);
+            Validate(entity, false);
             return _baseRepository.Update(entity);
         }
 

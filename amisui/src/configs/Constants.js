@@ -9,7 +9,8 @@ export const PaymentConstant = {
     IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
     IS_EDIT: 2, //Sửa
-    IS_READ_ONLY: 3 //Chỉ xem
+    IS_READ_ONLY: 3, //Chỉ xem
+    IS_CLONE: 4
 };
 export const AccountConstant = {
     IS_CLOSE: 0,
@@ -20,7 +21,8 @@ export const AccountConstant = {
 export const AlertDialogConstant = {
     IS_CLOSE: 0,
     IS_CONFIRM_DELETE: 1,
-    DELETE_FAILURE: 2
+    DELETE_FAILURE: 2,
+    IS_CODE_EXIST: 3
 };
 //Server
 export const BASE_URL = 'https://localhost:44378/api/v1/';
@@ -306,7 +308,7 @@ export const InitPayment = {
     "attach": null,
     "accounting_date": null,
     "payment_date": null,
-    "accounting": "[{\"explain\":\"Chi tiền cho \",\"debt_account_id\":\"\",\"over_account_id\":\"\",\"supplier_id\":\"\",\"supplier_name\":\"\",\"amount\":0,\"exchange\":0,\"bank_account\":\"\"}]",
+    "accounting": "[{\"explain\":\"Chi tiền cho \",\"debt_account_id\":\"\",\"over_account_id\":\"27430cf3-6ab8-4677-910c-cd311b7f33c9\",\"supplier_id\":\"\",\"supplier_name\":\"\",\"amount\":0,\"exchange\":0,\"bank_account\":\"\"}]",
     "money": 0,
     "supplier_code": null,
     "supplier_name": null,
@@ -348,4 +350,9 @@ export const InitAccounting = {
     amount: 0,
     exchange: 0,
     bank_account: ""
+}
+export const PaymentButtonConstant = {
+    SAVE_AND_ADD: 0,
+    SAVE_AND_CLOSE: 1,
+    SAVE: 2
 }

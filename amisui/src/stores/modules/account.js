@@ -57,7 +57,7 @@ const actions = {
                 payload.callbackSuccess()
             })
             .catch(() => {
-                context.commit("closeForm")
+                // context.commit("closeForm")
                 payload.callbackFail()
             })
     },
@@ -70,7 +70,7 @@ const actions = {
             })
             .catch(() => {
 
-                context.commit("closeForm")
+                // context.commit("closeForm")
                 payload.callbackFail()
             })
     },

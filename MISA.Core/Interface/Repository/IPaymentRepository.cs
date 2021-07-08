@@ -36,5 +36,7 @@ namespace MISA.Core.Interface.Repository
         /// </param>
         /// <returns>Tổng tiền của trang hiện tại</returns>
         public float GetTotalMoney(Filter filter);
+        public Guid? GetPaymentIdByCode(string code);
+        bool CheckPaymentCodeExist(string code);
     }
 }

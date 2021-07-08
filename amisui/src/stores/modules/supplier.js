@@ -32,12 +32,10 @@ const actions = {
         axios.post(BASE_URL + 'Suppliers', context.state.supplier)
             .then(() => {
                 context.dispatch('getSuppliers')
-                context.commit("closeForm")
+                context.dispatch("closeForm")
                 payload.callbackSuccess()
             })
             .catch(() => {
-
-                context.commit("closeForm")
                 payload.callbackFail()
             })
     },
@@ -45,12 +43,10 @@ const actions = {
         axios.put(BASE_URL + 'Suppliers', context.state.supplier)
             .then(() => {
                 context.dispatch('getSuppliers')
-                context.commit("closeForm")
+                context.dispatch("closeForm")
                 payload.callbackSuccess()
             })
             .catch(() => {
-
-                context.commit("closeForm")
                 payload.callbackFail()
             })
     },
@@ -66,6 +62,7 @@ const actions = {
             })
     },
     showFormAdd(context) {
+        context.state.supplier = {...InitSupplier }
         context.dispatch('getNewSupplierCode')
         context.commit("showFormAdd")
     },
@@ -92,8 +89,9 @@ const actions = {
         context.state.pageIndex = 1
         context.dispatch('getSuppliers')
     },
-    changeFormMode(context) {
+    changeFormMode(context, callback) {
         context.state.supplierFormMode = SupplierConstant.IS_EDIT
+        callback()
     }
 }
 const mutations = {
@@ -125,6 +123,7 @@ const mutations = {
     },
     closeForm: (state) => {
         state.supplierFormMode = SupplierConstant.IS_CLOSE
+        state.supplier = {...InitSupplier }
     }
 }
 export default {

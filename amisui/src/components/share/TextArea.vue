@@ -7,7 +7,6 @@
         v-bind="$attrs"
         v-on="inputSearchListeners"
         class="input text-area"
-
         :style="{width:lWidth +'px',height:lHeight+'px'}"        
     >
     </textarea>

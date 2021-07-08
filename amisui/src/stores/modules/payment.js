@@ -26,16 +26,18 @@ const actions = {
             .catch(() => alert("Connection failure!"))
     },
     getNewPaymentCode({ commit }) {
+
         axios.get(BASE_URL + 'Payments/NewPaymentCode')
             .then(res => {
                 commit("getNewPaymentCode", res.data)
             })
             .catch(() => alert("Connection failure!"))
     },
-    getPaymentById({ commit }, payment_id) {
-        axios.get(BASE_URL + 'Payments/' + payment_id)
+    getPaymentById({ commit }, payload) {
+        axios.get(BASE_URL + 'Payments/' + payload.payment_id)
             .then(res => {
                 commit("getPaymentById", res.data)
+                payload.callbackSuccess()
             })
             .catch(() => alert("Connection failure!"))
     },
@@ -87,6 +89,16 @@ const actions = {
     showFormReadOnly(context) {
         context.commit("showFormReadOnly")
     },
+    showFormClone(context) {
+        context.state.paymentFormMode = PaymentConstant.IS_CLONE
+    },
+    getNewPaymentCodeForClone(context) {
+        axios.get(BASE_URL + 'Payments/NewPaymentCode')
+            .then(res => {
+                context.state.payment.payment_code = res.data
+            })
+            .catch(() => alert("Connection failure!"))
+    },
     postPayment(context, payload) {
         axios.post(BASE_URL + 'Payments', context.state.payment)
             .then(() => {
@@ -125,7 +137,16 @@ const actions = {
             })
     },
     changeFormMode(context) {
+
         context.commit("changeFormMode")
+    },
+    getNewPaymentCodeForCodeExist(context, callback) {
+        axios.get(BASE_URL + 'Payments/NewPaymentCode')
+            .then(res => {
+                context.state.payment.payment_code = res.data
+                callback()
+            })
+            .catch(() => alert("Connection failure!"))
     }
 }
 const mutations = {
@@ -143,12 +164,15 @@ const mutations = {
     getNewPaymentCode: (state, data) => {
         state.payment = {...InitPayment }
         state.payment.payment_code = data
+        console.log("newcode")
     },
     getSuppliers: (state, data) => {
         state.suppliers = []
         data.forEach(e => {
             state.suppliers.push({
                 supplier_id: e.supplier_id,
+                supplier_type: e.supplier_type,
+                legal_representative: e.legal_representative,
                 supplier_code: e.supplier_code,
                 supplier_name: e.supplier_name,
                 tax_code: e.tax_code,

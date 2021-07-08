@@ -1,10 +1,15 @@
 <template>
   <div class="home-container">
     <div class="home-header">
-      <div class="home-item-active">
+      <div 
+        class="home-item-active"
+        >
         Quy trình
       </div>
-      <div class="home-item">
+      <div 
+        class="home-item"
+        @click="paymentActive"
+        >
         Thu, chi tiền
       </div>
     </div>
@@ -24,26 +29,8 @@
                                     </div>
                 </div>
                 <div class="home-cover-line-cash">
-                    <a-dropdown>
-                    <a
-                      class="home-ant-dropdown-link"
-                      @click="(e) => e.preventDefault()"
-                    >
-                      <div class="home-cash3 cover-item-cash">
+                    <div class="home-cash3 cover-item-cash" @click="payment">
                                     </div>
-                    </a>
-                    <a-menu slot="overlay" class="home-cover-option-dropdown">
-                      <a-menu-item >
-                        <router-link to="/payment/paymentinfo" class="home-option-dropdown">Phiếu chi</router-link>
-                      </a-menu-item>
-                      <a-menu-item >
-                        <a href="#" class="home-option-dropdown">Trả tiền theo hoá đơn</a>
-                      </a-menu-item>
-                      <a-menu-item >
-                        <a href="#" class="home-option-dropdown">Nộp thuế</a>
-                      </a-menu-item>
-                    </a-menu>
-                  </a-dropdown>
                   <!-- <div class="home-cash3 cover-item-cash"></div> -->
                 </div>
               </div>
@@ -61,12 +48,6 @@
                 <div class="home-icon-account"></div>
               </div>
               <div style="font-size:13px;color:#111111">Hệ thống tài khoản</div>
-            </router-link>
-            <router-link class="home-item-bottom-cash" to="/payment">
-              <div class="home-cover-icon-home">
-                <div class="home-icon-payment"></div>
-              </div>
-              <div style="font-size:13px;color:#111111">Thu chi tiền mặt</div>
             </router-link>
           </div>
         </div>
@@ -101,7 +82,27 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+export default {
+  methods:{
+    ...mapActions("payment",
+     [
+       "showFormAdd"
+       ]),
+    payment(){
+      this.$router.push('/payment/paymentinfo/')
+      this.showFormAdd()
+    },
+    homeActive(){
+      this.tabActive = 1
+    },
+    paymentActive(){
+      this.$router.push('/payment/')
+
+    }
+
+  }
+};
 </script>
 
 <style scoped>

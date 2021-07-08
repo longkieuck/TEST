@@ -60,9 +60,6 @@
                       <a-menu-item key="1">
                         <a href="#" class="option" @click="btnDelete(record)">Xóa</a>
                       </a-menu-item>
-                      <a-menu-item key="2">
-                        <a href="#" class="option">Ngưng sử dụng</a>
-                      </a-menu-item>
                     </a-menu>
                   </a-dropdown>
             </div>

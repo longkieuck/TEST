@@ -13,6 +13,26 @@ namespace MISA.Infrastructure.Repository
 {
     public class SupplierRepository:BaseRepository<supplier>,ISupplierRepository
     {
+        public bool CheckSupplierCodeExist(string code)
+        {
+            using (dbConnection = new NpgsqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@_supplier_code", code);
+                var res = dbConnection.QueryFirstOrDefault<int>("proc_check_supplier_code_exist", param: parameters, commandType: CommandType.StoredProcedure);
+                return (res > 0);
+            }
+        }
+        public Guid? GetSupplierIdByCode(string code)
+        {
+            using (dbConnection = new NpgsqlConnection(connectionString))
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@_supplier_code", code);
+                var res = dbConnection.QueryFirstOrDefault<Guid?>("proc_get_supplier_id_by_code", param: parameters, commandType: CommandType.StoredProcedure);
+                return res;
+            }
+        }
         /// <summary>
         /// Lấy mã nhân viên mới nhất trong hệ thống
         /// </summary>
@@ -26,6 +46,7 @@ namespace MISA.Infrastructure.Repository
                 return res;
             }
         }
+
 
         public Pagging<supplier> GetSuppliers(Filter filter)
         {

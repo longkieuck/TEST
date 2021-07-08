@@ -10,13 +10,16 @@
 import TheHeader from "./components/layout/TheHeader";
 import TheNavbar from "./components/layout/TheNavbar";
 import TheContent from "./components/layout/TheContent";
-
+import {PaymentButtonConstant} from "./configs/constants"
 export default {
   name: "App",
   components: {
     TheHeader,
     TheNavbar,
     TheContent,
+  },
+  created(){
+    localStorage.PaymentButton = PaymentButtonConstant.SAVE_AND_ADD
   },
 };
 </script>
@@ -114,6 +117,9 @@ input:disabled, textarea:disabled {
     background-color: #f5f5f5;
     cursor: not-allowed;
     opacity: 1;
+}
+.ant-dropdown-menu-item > a, .ant-dropdown-menu-submenu-title > a{
+  min-width: 90px !important;
 }
 @font-face {
   font-family: "notosans-regular";

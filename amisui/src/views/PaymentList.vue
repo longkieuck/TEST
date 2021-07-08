@@ -168,8 +168,8 @@
                     <a-menu-item key="1">
                       <a @click="showDialogConfirmDelete(payment)" class="option">Xóa</a>
                     </a-menu-item>
-                    <a-menu-item key="2">
-                      <a href="#" class="option">Ngưng sử dụng</a>
+                    <a-menu-item key="2" @click="btnClone(payment)">
+                      <a class="option">Nhân bản</a>
                     </a-menu-item>
                   </a-menu>
                 </a-dropdown>
@@ -289,6 +289,7 @@ export default {
         'changeFilter',
         'showFormAdd',
         'showFormEdit',
+        'showFormClone',
         'showFormReadOnly',
         'deletePayment'
       ]
@@ -363,6 +364,10 @@ export default {
           activeElement.classList.remove("active");
         });
       }
+    },
+    btnClone(payment){
+      this.$router.push(`/payment/paymentinfo/${payment.payment_id}`)
+      this.showFormClone()
     },
     showNotification(message){
       this.$notification['success']({

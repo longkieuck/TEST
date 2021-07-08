@@ -22,6 +22,12 @@
     border-bottom: 4px solid green;
 }
 
+.home-item-active:hover,
+.home-item:hover {
+    color: green;
+    cursor: pointer;
+}
+
 .home-item {
     height: 58px;
     display: flex;

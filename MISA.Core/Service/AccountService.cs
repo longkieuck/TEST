@@ -1,4 +1,5 @@
 ﻿using MISA.Core.Entities;
+using MISA.Core.Exceptions;
 using MISA.Core.Interface.Repository;
 using MISA.Core.Interface.Service;
 using System;
@@ -118,6 +119,26 @@ namespace MISA.Core.Service
         public int GetTotalRecord()
         {
             return base.GetAll().Count();
+        }
+
+        protected override void CustomValidate(account entity, bool isInsert)
+        {
+            if (isInsert)
+            {
+                //Kiểm tra xem mã đã trùng chưa
+                var isAccountCodeExist = _accountRepository.CheckAccountCodeExist(entity.account_code);
+                if (isAccountCodeExist) throw new BaseException("Số tài khoản đã tồn tại!");
+            }
+            else
+            {
+                //Kiểm tra xem mã định sửa đã có trong hệ thống hay chưa mà không phải của chính bản thân đối tượng đó
+                var guidDefault = new Guid();
+                var account_id = _accountRepository.GetAccountIdByCode(entity.account_code);
+                // !guidDefault là có mã trong hệ thống=> kiểm tra xem có phải chính mình không
+                //Nếu k phải chính mình => đã có trong hệ thống
+                if (account_id != guidDefault && account_id != entity.account_id && account_id!=null)
+                    throw new BaseException("Số tài khoản đã tồn tại!");
+            }
         }
     }
 }
