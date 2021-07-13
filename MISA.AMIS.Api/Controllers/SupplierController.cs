@@ -26,9 +26,9 @@ namespace MISA.AMIS.Api.Controllers
         /// </summary>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
-        /// Mã nhân viên mới
+        /// Mã  NCC mới
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("NewSupplierCode")]
         public IActionResult GetNewSupplierCode()
         {
@@ -40,7 +40,7 @@ namespace MISA.AMIS.Api.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Filter
+        /// Lấy dữ liệu nhà cung cấp theo điều kiện lọc
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>

@@ -23,9 +23,9 @@ namespace MISA.AMIS.Api.Controllers
         /// </summary>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
-        /// Mã nhân viên mới
+        /// Mã phiếu chi mới
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("NewPaymentCode")]
         public IActionResult GetNewPaymentCode()
         {
@@ -37,14 +37,14 @@ namespace MISA.AMIS.Api.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Filter
+        /// Lấy các phiếu chi theo điều kiện lọc
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("Filter")]
         public IActionResult GetPayments([FromQuery] Filter filter)
         {
@@ -59,18 +59,35 @@ namespace MISA.AMIS.Api.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Filter
+        /// Lấy tổng tiền của các phiếu chi theo điều kiện lọc
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("TotalMoney")]
         public IActionResult GetTotalMoney([FromQuery] Filter filter)
         {
             var result = _paymentService.GetTotalMoney(filter);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy id theo mã phiếu chi
+        /// </summary>
+        /// <param name="payment_code"></param>
+        /// <returns>
+        /// HttpStatus code 200 - Lấy dữ liệu thành công
+        /// HttpStatus code 204 - Không có dữ liệu
+        /// </returns>
+        /// CreatedBy: KDLong 07/07/2021
+        [HttpGet("PaymentIdByCode")]
+        public IActionResult GetTotalMoney([FromQuery] string payment_code)
+        {
+            var result = _paymentService.GetPaymentIdByCode(payment_code);
 
             return Ok(result);
         }

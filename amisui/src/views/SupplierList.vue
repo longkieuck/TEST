@@ -136,7 +136,7 @@
             <td style="min-width:350px">{{s.supplier_name}}</td>
             <td style="min-width:350px">{{s.address}}</td>
             <td style="min-width:150px">{{s.tax_code}}</td>
-            <td style="min-width:150px">{{s.tax_code}}</td>
+            <td style="min-width:150px">{{s.phone_number}}</td>
             <td style="min-width:150px;border-right:none">{{s.identify_number}}</td>
             <td class="th-td-last">
               <div class="cover-first-last">
@@ -223,12 +223,13 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import ClickOutside from 'vue-click-outside'
 import InputSearch from "../components/share/InputSearch";
 import SupplierInfo from "../components/dialogs/SupplierInfo"
 import AlertDialog from "../components/dialogs/AlertDialog"
 import {mapActions, mapState} from "vuex"
-import {SupplierConstant,AlertDialogConstant,PageSizes} from "../configs/constants"
+import {SupplierConstant,AlertDialogConstant,PageSizes,NotifiactionConstant} from "../configs/constants"
 export default {
   components: {
     InputSearch,
@@ -248,19 +249,16 @@ export default {
   created(){
     this.getSuppliers()
   },
-  // mounted(){
-  //   alert(this.suppliers)
-  // },
   data() {
     return {
-      supplierIdForDelete:"",
-      isShowTopGridData: true,
-      SupplierConstant,
-      AlertDialogConstant,
-      PageSizes,
-      isShowDropdown:false,
-      isShowDialogConfirmDelete:false,
-      messageOfDialog:""
+      supplierIdForDelete:"",//Id được chọn để xoá
+      isShowTopGridData: true,//Show top grid data
+      SupplierConstant,//Hằng số của module
+      AlertDialogConstant,//Hằng số dialog
+      PageSizes,//Hằng số pagesize
+      isShowDropdown:false,//Dropdown của pagging
+      isShowDialogConfirmDelete:false,//Show dialog xác nhận xoá
+      messageOfDialog:""//Thông báo của diaglog
     };
   },
   methods: {
@@ -277,34 +275,62 @@ export default {
         'changeFilter'
       ]
     ),
+    /**
+     * show top grid data
+     * CreatedBy KDLong 01/07/2021
+     */
     handleShowTopGridData() {
       this.isShowTopGridData = !this.isShowTopGridData;
     },
+    /**
+     * show form chi tiết
+     * CreatedBy KDLong 01/07/2021
+     */
     showSupplierInfo(){
       this.isShowSupplierInfo = true
     },
+    /**
+     * đóng form chi tiết
+     * CreatedBy KDLong 01/07/2021
+     */
     closeSupplierInfo(){
       this.isShowSupplierInfo = false
     },
+    /**
+     * show diglog confirm xoá
+     * CreatedBy KDLong 01/07/2021
+     */
     showDialogConfirmDelete(s){
       this.supplierIdForDelete = s.supplier_id
-      this.messageOfDialog = "Bạn có chắc chắn muốn xoá nhà cung cấp<"+s.supplier_code+"> không?"
+      this.messageOfDialog = SupplierConstant.MESS_FRONT2 +s.supplier_code+ SupplierConstant.MESS_BACK2
       this.isShowDialogConfirmDelete = true
     },
+    /**
+     * xác nhận xoá
+     * CreatedBy KDLong 01/07/2021
+     */
     confirmDelete(){
       this.deleteSupplier({
         supplier_id:this.supplierIdForDelete,
         callbackSuccess:()=>{
-          this.showNotification("Xoá thành công!")
+          this.showNotification(NotifiactionConstant.DELETE_SUCCESS,NotifiactionConstant.SUCCESS)
         },
         callbackFail:()=>{
-          this.showNotification("Xoá thất bại!")
+          this.showNotification(NotifiactionConstant.DELETE_FAILURE,NotifiactionConstant.ERROR)
         }
       })
     },
+    /**
+     * đóng form xoá
+     * CreatedBy KDLong 01/07/2021
+     */
     closeAlertDialog(){
       this.isShowDialogConfirmDelete = false
     },
+    /**
+     * customize paging
+     * CreatedBy KDLong 01/07/2021
+     */
     itemRender(current, type, originalElement) {
       if (type === 'prev') {
         return <a class="btn-prev">Trước</a>;
@@ -313,15 +339,27 @@ export default {
       }
       return originalElement;
     },
+    /**
+     * thay đổi số bản ghi/trang
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangePageSize(value){
       this.changePageSize(value)
     },
+    /**
+     * thay đổi trang hiện tại
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangePageIndex(value){
       this.changePageIndex(value)
     },
-    handleChangeFilter(e){
+    /**
+     * thay đổi filter
+     * CreatedBy KDLong 01/07/2021
+     */
+    handleChangeFilter:_.debounce(function(e){
       this.changeFilter(e.target.value)
-    },
+    },500),
     /**
      * Hàm thực hiện thêm class vào mũi tên được click
      * CreatedBy KDLong 02/06/2021
@@ -358,8 +396,12 @@ export default {
       }
       
     },
-    showNotification(message){
-      this.$notification['success']({
+    /**
+     * show thông báo
+     * CreatedBy KDLong 01/07/2021
+     */
+    showNotification(message,type){
+      this.$notification[type]({
         message,
         duration:2
       });

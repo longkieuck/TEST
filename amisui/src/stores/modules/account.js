@@ -1,14 +1,19 @@
 import axios from 'axios'
 import { BASE_URL, InitAccount, AccountConstant } from '../../configs/constants'
 const state = {
-    accounts: [],
-    account: {...InitAccount },
-    accountFormMode: AccountConstant.IS_CLOSE,
-    parentIdList: [],
-    totalRecords: 0,
-    parentAccount: []
+    accounts: [], //Danh sách tài khoản hiển thị
+    account: {...InitAccount }, //Tài khoản được chọn
+    accountFormMode: AccountConstant.IS_CLOSE, //FormMode
+    parentIdList: [], //Danh sách id của các tài khoản cha
+    totalRecords: 0, //Tổng số bản ghi
+    parentAccount: [], //Tài khoản tổng hợp
+    parentIdSelected: null //Id của tài khoản tổng hợp
 }
 const actions = {
+    /**
+     * Lấy data để hiển thị
+     * CreatedBy KDLong 01/07/2021
+     */
     getAccounts(context) {
         context.dispatch("getParentIdList")
         context.dispatch("getTotalRecord")
@@ -16,39 +21,67 @@ const actions = {
             .then(res => {
                 context.commit("getAccounts", res.data)
             })
-            .catch(() => alert("Connection failure!"))
+            .catch(() => console.log("error"))
     },
+    /**
+     * Lấy danh sách tài khoản có con
+     * CreatedBy KDLong 01/07/2021
+     */
     getParentIdList(context) {
         axios.get(BASE_URL + "Accounts/ParentIdList")
             .then(res => {
                 context.commit("getParentIdList", res.data)
             })
-            .catch(() => alert("Connection failure!"))
+            .catch(() => console.log("error"))
     },
+    /**
+     * Lấy tổng số bản ghi
+     * CreatedBy KDLong 01/07/2021
+     */
     getTotalRecord(context) {
         axios.get(BASE_URL + "Accounts/TotalRecord")
             .then(res => {
                 context.commit("getTotalRecord", res.data)
             })
-            .catch(() => alert("Connection failure!"))
+            .catch(() => console.log("error"))
     },
+    /**
+     * Lấy danh sách tài khoản tổng hợp
+     * CreatedBy KDLong 01/07/2021
+     */
     getParentAccount(context) {
         axios.get(BASE_URL + "Accounts")
             .then(res => {
                 context.commit("getParentAccount", res.data)
             })
-            .catch(() => alert("Connection failure!"))
+            .catch(() => console.log("error"))
     },
+    /**
+     * show form thêm tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     showFormAdd(context) {
         context.dispatch("getParentAccount")
         context.commit("showFormAdd")
     },
+    /**
+     * show form sửa tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     showFormEdit(context, account) {
         context.commit("showFormEdit", account)
     },
+    /**
+     * đóng form chi tiết
+     * CreatedBy KDLong 01/07/2021
+     */
     closeForm({ commit }) {
         commit("closeForm")
     },
+    /**
+     * thêm tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     postAccount(context, payload) {
         axios.post(BASE_URL + 'Accounts', context.state.account)
             .then(() => {
@@ -61,6 +94,10 @@ const actions = {
                 payload.callbackFail()
             })
     },
+    /**
+     * sửa tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     putAccount(context, payload) {
         axios.put(BASE_URL + 'Accounts', context.state.account)
             .then(() => {
@@ -74,6 +111,10 @@ const actions = {
                 payload.callbackFail()
             })
     },
+    /**
+     * Xoá tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     deleteAccount(context, payload) {
         axios.delete(BASE_URL + 'Accounts/' + payload.account_id)
             .then(() => {
@@ -85,6 +126,14 @@ const actions = {
                 payload.callbackFail()
             })
     },
+    /**
+     * Click lựa chọn tài khoản tổng hợp bên form list
+     * CreatedBy KDLong 01/07/2021
+     */
+    selectParentId(context, parentId) {
+        // alert(parentId)
+        context.state.parentIdSelected = parentId
+    }
 
 }
 const mutations = {
@@ -109,6 +158,7 @@ const mutations = {
     },
     showFormAdd: (state) => {
         state.account = {...InitAccount }
+        state.account.parent_account_id = state.parentIdSelected
         state.accountFormMode = AccountConstant.IS_ADD
     },
     showFormEdit: (state, account) => {
@@ -117,6 +167,7 @@ const mutations = {
     },
     closeForm: (state) => {
         state.accountFormMode = AccountConstant.IS_CLOSE
+        state.parentIdSelected = null
     }
 }
 export default {

@@ -57,14 +57,15 @@ namespace MISA.Core.Service
                 
                 listAccounts.ElementAt(i).level = GetLevelAccount(listAccounts.ElementAt(i).account_id);
             }
-
+            // Thêm con cho tất cả tài khoản có con
             for (int i = 0; i < listAccounts.Count(); i++)
             {
-
+                //Nếu tài khoản i có cha
                 if (listAccounts.ElementAt(i).parent_account_id != null)
                 {
                     //Tim cha
                     var parent = GetAccountInList(listAccounts.ElementAt(i).parent_account_id);
+                    //Nếu tài khoản cha chưa khởi tạo children thì thực hiện khở tạo
                     if(parent.children == null)
                     {
                         parent.children = new List<account>();
@@ -76,7 +77,7 @@ namespace MISA.Core.Service
 
 
             var result = new List<account>();
-
+            // Duyệt 1 lần nữa để tìm các tài khoản root
             for (int i = 0; i < listAccounts.Count(); i++)
             {
                 if (listAccounts.ElementAt(i).parent_account_id == null)
@@ -92,23 +93,19 @@ namespace MISA.Core.Service
         {
             listAccounts = base.GetAll();
 
-            //get account level
-            for (int i = 0; i < listAccounts.Count(); i++)
-            {
-
-                listAccounts.ElementAt(i).level = GetLevelAccount(listAccounts.ElementAt(i).account_id);
-            }
             var result = new List<Guid>();
             for (int i = 0; i < listAccounts.Count(); i++)
             {
-
+                //Tài khoản có cha
                 if (listAccounts.ElementAt(i).parent_account_id != null)
                 {
-                    //Tim cha
+                    //Tim cha đấy
                     var parent = GetAccountInList(listAccounts.ElementAt(i).parent_account_id);
+                    //Nếu chưa duyệt cha đấy
                     if (parent.children == null)
                     {
                         parent.children = new List<account>();
+                        //add id vào result
                         result.Add(parent.account_id);
                     }
                     //Them con

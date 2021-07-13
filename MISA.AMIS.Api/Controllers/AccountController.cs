@@ -19,13 +19,13 @@ namespace MISA.AMIS.Api.Controllers
             _accountService = accountService;
         }
         /// <summary>
-        /// Lấy danh sách tài khoản đã convert
+        /// Lấy danh sách tài khoản đã convert dạng cây
         /// </summary>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("All")]
         public IActionResult GetAccounts()
         {
@@ -37,13 +37,13 @@ namespace MISA.AMIS.Api.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Lấy danh sách các tài khoản có con
+        /// Lấy danh sách các tài khoản có con phục vụ cho việc mở rộng
         /// </summary>
         /// <returns>
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("ParentIdList")]
         public IActionResult GetParentList()
         {
@@ -61,7 +61,7 @@ namespace MISA.AMIS.Api.Controllers
         /// HttpStatus code 200 - Lấy dữ liệu thành công
         /// HttpStatus code 204 - Không có dữ liệu
         /// </returns>
-        /// CreatedBy: KDLong 07/05/2021
+        /// CreatedBy: KDLong 01/07/2021
         [HttpGet("TotalRecord")]
         public IActionResult GetTotalRecord()
         {

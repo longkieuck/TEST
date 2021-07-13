@@ -38,29 +38,32 @@ import { AlertDialogConstant } from "../../configs/constants";
 export default {
   props:{
 
-    alertFormMode:{
+    alertFormMode:{//Loại của dialog
       type:Number,
       default:AlertDialogConstant.IS_CLOSE
     },
-    messageOfDialog:{
+    messageOfDialog:{//Câu thông báo của dialog
       type:String,
       default:""
     }
   },
   data() {
     return {
-      AlertDialogConstant
+      AlertDialogConstant//Hằng số
     };
   },
   methods: {
+    //Đồng ý tăng mã
     confirmIncrement(){
       this.$emit("closeAlertDialog")
       this.$emit("confirmIncrement")
     },
+    //Đồng ý xoá
     confirmDelete(){
       this.$emit("confirmDelete")
       this.$emit("closeAlertDialog")
     },
+    //Đóng form
     closeAlertDialog(){
       this.$emit("closeAlertDialog")
     }

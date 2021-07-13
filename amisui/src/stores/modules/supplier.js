@@ -1,16 +1,20 @@
 import axios from 'axios'
 import { BASE_URL, InitSupplier, SupplierConstant } from '../../configs/constants'
 const state = {
-    suppliers: [],
-    supplier: {...InitSupplier },
-    supplierFormMode: SupplierConstant.IS_CLOSE,
-    pageIndex: 1,
-    pageSize: 20,
-    filter: "",
-    totalPages: 0,
-    totalRecords: 0
+    suppliers: [], //Danh sách nhà cung cấp
+    supplier: {...InitSupplier }, //Nhà cung cấp đang lựa chọn
+    supplierFormMode: SupplierConstant.IS_CLOSE, //FormMode
+    pageIndex: 1, //Trang hiện tại
+    pageSize: 20, //Số bản ghi/trang
+    filter: "", //Điều kiện lọc
+    totalPages: 0, //Tổng số trang
+    totalRecords: 0 //Tổng số bản ghi
 }
 const actions = {
+    /**
+     * Lấy dữ liệu hiển thị
+     * CreatedBy KDLong 01/07/2021
+     */
     getSuppliers(context) {
         axios.get(BASE_URL +
                 'Suppliers/Filter?page_index=' + context.state.pageIndex +
@@ -19,15 +23,23 @@ const actions = {
             .then(res => {
                 context.commit("getSuppliers", res.data)
             })
-            .catch(() => alert("Connection failure!"))
+            .catch(() => console.log("error"))
     },
+    /**
+     * Lấy mã ncc mới
+     * CreatedBy KDLong 01/07/2021
+     */
     getNewSupplierCode({ commit }) {
         axios.get(BASE_URL + 'Suppliers/NewSupplierCode')
             .then(res => {
                 commit("getNewSupplierCode", res.data)
             })
-            .catch(() => alert("Connection failure!"))
+            .catch(() => console.log("error"))
     },
+    /**
+     * Thêm ncc
+     * CreatedBy KDLong 01/07/2021
+     */
     postSupplier(context, payload) {
         axios.post(BASE_URL + 'Suppliers', context.state.supplier)
             .then(() => {
@@ -39,6 +51,10 @@ const actions = {
                 payload.callbackFail()
             })
     },
+    /**
+     * Sửa ncc
+     * CreatedBy KDLong 01/07/2021
+     */
     putSupplier(context, payload) {
         axios.put(BASE_URL + 'Suppliers', context.state.supplier)
             .then(() => {
@@ -50,45 +66,89 @@ const actions = {
                 payload.callbackFail()
             })
     },
+    /**
+     * Xoá ncc
+     * CreatedBy KDLong 01/07/2021
+     */
     deleteSupplier(context, payload) {
         axios.delete(BASE_URL + 'Suppliers/' + payload.supplier_id)
             .then(() => {
-                context.dispatch('getSuppliers')
-                payload.callbackSuccess()
+                if (context.state.suppliers.length == 1) {
+                    context.state.pageIndex = context.state.pageIndex - 1
+                    context.dispatch('getSuppliers')
+                    payload.callbackSuccess()
+                } else {
+                    context.dispatch('getSuppliers')
+                    payload.callbackSuccess()
+                }
+
             })
             .catch(() => {
                 this.getSuppliers()
                 payload.callbackFail()
             })
     },
+    /**
+     * show form thêm
+     * CreatedBy KDLong 01/07/2021
+     */
     showFormAdd(context) {
         context.state.supplier = {...InitSupplier }
         context.dispatch('getNewSupplierCode')
         context.commit("showFormAdd")
     },
+    /**
+     * show form sửa
+     * CreatedBy KDLong 01/07/2021
+     */
     showFormEdit({ commit }, supplier) {
         commit("showFormEdit", supplier)
     },
+    /**
+     * show form xem
+     * CreatedBy KDLong 01/07/2021
+     */
     showFormReadOnly({ commit }, supplier) {
         commit("showFormReadOnly", supplier)
     },
+    /**
+     * đóng form detail
+     * CreatedBy KDLong 01/07/2021
+     */
     closeForm({ commit }) {
         commit("closeForm")
     },
+    /**
+     * thay đổi trang hiện tại
+     * CreatedBy KDLong 01/07/2021
+     */
     changePageIndex(context, value) {
         context.state.pageIndex = value
         context.dispatch('getSuppliers')
     },
+    /**
+     * thay đổi số bản ghi/trang
+     * CreatedBy KDLong 01/07/2021
+     */
     changePageSize(context, value) {
         context.state.pageSize = value
+        context.state.pageIndex = 1
         context.dispatch('getSuppliers')
     },
+    /**
+     * thay đổi điều kiện lọc
+     * CreatedBy KDLong 01/07/2021
+     */
     changeFilter(context, value) {
         context.state.filter = value
         context.state.pageSize = 20
         context.state.pageIndex = 1
         context.dispatch('getSuppliers')
     },
+    /**
+     * thay đổi chế độ từ xem => sửa
+     * CreatedBy KDLong 01/07/2021
+     */
     changeFormMode(context, callback) {
         context.state.supplierFormMode = SupplierConstant.IS_EDIT
         callback()

@@ -41,6 +41,18 @@ namespace MISA.Core.Service
             return res;
         }
         /// <summary>
+        /// Lấy Id theo mã phục vụ chuyển form mode xem=>sửa
+        /// </summary>
+        /// <param name="code">payment_code</param>
+        /// <returns>Id</returns>
+        /// CreatedBy KDLong 07/07/2021
+        public Guid? GetPaymentIdByCode(string code)
+        {
+            var res = _paymentRepository.GetPaymentIdByCode(code);
+            return res;
+        }
+
+        /// <summary>
         /// Lấy danh sách phiếu chi theo các tiêu chí
         /// </summary>
         /// <param name="filter">

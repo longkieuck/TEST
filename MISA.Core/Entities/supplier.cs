@@ -149,9 +149,17 @@ namespace MISA.Core.Entities
         /// </summary>
         [JsonPropertyName("delivery_address")]
         public string delivery_address { get; set; }
-
+        /// <summary>
+        /// Tên người nhận hoá đơn điện tử
+        /// </summary>
         public string invoice_recipient_name { get; set; }
+        /// <summary>
+        /// Email người nhận hoá đơn điện tử
+        /// </summary>
         public string invoice_recipient_email { get; set; }
+        /// <summary>
+        /// Email người nhận hoá đơn điện tử
+        /// </summary>
         public string invoice_recipient_phone { get; set; }
 
     }

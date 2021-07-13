@@ -322,6 +322,9 @@ import {
   Other,
   Nature,
   AccountConstant,
+  TitleParentAccount,
+  NotifiactionConstant,
+  DefaultValueAccount
 } from "../../configs/constants";
 export default {
   components: {
@@ -353,14 +356,27 @@ export default {
       parentAccount: (state) => state.account.parentAccount,
       accountFormMode: (state) => state.account.accountFormMode,
     }),
+    /**
+     * Kiểm tra loại đối tượng
+     * CreatedBy KDLong 01/07/2021
+     */
     isCheckedObjectType: {
+      /**
+       * nếu val == false thì set loại đối tượng = null
+       * ngược lại thì gán giá trị mặc định
+       * CreatedBy KDLong 01/07/2021
+       */
       set(val) {
         if (val == false) {
           this.account.object_type = null;
         } else {
-          this.account.object_type = "Nhà cung cấp";
+          this.account.object_type = DefaultValueAccount.OBJECT_TYPE;
         }
       },
+      /**
+       * Nếu tồn tại loại đối tượng thì show check = true
+       * CreatedBy KDLong 01/07/2021
+       */
       get() {
         if (this.account.object_type != null) {
           return true;
@@ -372,7 +388,7 @@ export default {
         if (val == false) {
           this.account.object_type_thcp = null;
         } else {
-          this.account.object_type_thcp = "Chỉ cảnh báo";
+          this.account.object_type_thcp = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -386,7 +402,7 @@ export default {
         if (val == false) {
           this.account.construction = null;
         } else {
-          this.account.construction = "Chỉ cảnh báo";
+          this.account.construction = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -400,7 +416,7 @@ export default {
         if (val == false) {
           this.account.order = null;
         } else {
-          this.account.order = "Chỉ cảnh báo";
+          this.account.order = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -414,7 +430,7 @@ export default {
         if (val == false) {
           this.account.sale_contract = null;
         } else {
-          this.account.sale_contract = "Chỉ cảnh báo";
+          this.account.sale_contract = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -428,7 +444,7 @@ export default {
         if (val == false) {
           this.account.purchase_contract = null;
         } else {
-          this.account.purchase_contract = "Chỉ cảnh báo";
+          this.account.purchase_contract = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -442,7 +458,7 @@ export default {
         if (val == false) {
           this.account.expense_item = null;
         } else {
-          this.account.expense_item = "Chỉ cảnh báo";
+          this.account.expense_item = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -456,7 +472,7 @@ export default {
         if (val == false) {
           this.account.department = null;
         } else {
-          this.account.department = "Chỉ cảnh báo";
+          this.account.department = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -470,7 +486,7 @@ export default {
         if (val == false) {
           this.account.stats_code = null;
         } else {
-          this.account.stats_code = "Chỉ cảnh báo";
+          this.account.stats_code = DefaultValueAccount.OTHER;
         }
       },
       get() {
@@ -482,25 +498,12 @@ export default {
   },
   data() {
     return {
-      isFullScreen: false,
-      isShowDetail: true,
-      objectType: [...ObjectType],
-      other: [...Other],
-      nature: [...Nature],
-      titleParentAccount: [
-        {
-          Title: "",
-          Width: 0,
-        },
-        {
-          Title: "Số tài khoản",
-          Width: 150,
-        },
-        {
-          Title: "Tên tài khoản",
-          Width: 200,
-        },
-      ],
+      isFullScreen: false,//Mode full screeen
+      isShowDetail: true,//Show chi tiết bên dưới
+      objectType: [...ObjectType],//Loại đối tượng
+      other: [...Other],//Các loại khác
+      nature: [...Nature],//Tính chất
+      titleParentAccount: [...TitleParentAccount]//Title của tài khoản tổng hợp
     };
   },
   methods: {
@@ -512,6 +515,10 @@ export default {
       "deleteAccount",
       "showFormAdd",
     ]),
+    /**
+     * Sự kiện thay đổi giá trị cho loại đối tượng
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeObjectType(value) {
       this.account.object_type = value;
     },
@@ -545,16 +552,26 @@ export default {
     handleChangeParentAccount(value) {
       this.account.parent_account_id = value;
     },
+    /**
+     * Sự kiện thay đổi mode màn hình
+     * CreatedBy KDLong 01/07/2021
+     */
     handleResizeScreen() {
       this.isFullScreen = !this.isFullScreen;
     },
+    /**
+     * Sự kiện show chi tiết
+     * CreatedBy KDLong 01/07/2021
+     */
     handleShowDetail() {
       this.isShowDetail = !this.isShowDetail;
     },
-    closeAccountInfo() {
-      this.$emit("closeAccountInfo");
-    },
+    /**
+     * Sự kiện cất tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSave() {
+      //Validate trống
       if (
         this.account.account_code == null ||
         this.account.account_name == null ||
@@ -563,6 +580,7 @@ export default {
       ) {
         this.validateNotEmpty();
       } else {
+        //Validate tài khoản con phải bắt đầu bằng tài khoản cha
         let parent = this.parentAccount.find(
           (e) => e.account_id == this.account.parent_account_id
         );
@@ -570,34 +588,40 @@ export default {
           if (this.accountFormMode == AccountConstant.IS_ADD) {
             this.postAccount({
               callbackSuccess: () => {
-                this.showNotification("Thêm thành công!", "success");
+                this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
               },
               callbackFail: () => {
                 this.showNotification(
-                  "Số tài khoản đã tồn tại, vui lòng nhập lại!",
-                  "error"
+                  NotifiactionConstant.ACCOUNT_EXIST,
+                  NotifiactionConstant.ERROR
                 );
+                this.$refs.accountCode.focus()
               },
             });
           } else {
             this.putAccount({
               callbackSuccess: () => {
-                this.showNotification("Sửa thành công!", "success");
+                this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
               },
               callbackFail: () => {
                 this.showNotification(
-                  "Số tài khoản đã tồn tại, vui lòng nhập lại!",
-                  "error"
+                  NotifiactionConstant.ACCOUNT_EXIST,
+                  NotifiactionConstant.ERROR
                 );
               },
             });
           }
         }else{
-          this.showNotification("Số tài khoản không hợp lệ. Số tài khoản chi tiết phải bắt đầu bằng số của Tài khoản tổng hợp!","error")
+          this.showNotification(NotifiactionConstant.INVALID_ACCOUNT,NotifiactionConstant.ERROR)
         }
       }
     },
+    /**
+     * Sự kiện cất và thêm
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSaveAndAdd() {
+      //validate trống
       if (
         this.account.account_code == null ||
         this.account.account_name == null ||
@@ -606,6 +630,7 @@ export default {
       ) {
         this.validateNotEmpty();
       } else {
+        //Validate tài khoản con
         let parent = this.parentAccount.find(
           (e) => e.account_id == this.account.parent_account_id
         );
@@ -613,35 +638,36 @@ export default {
           if (this.accountFormMode == AccountConstant.IS_ADD) {
           this.postAccount({
             callbackSuccess: () => {
-              this.showNotification("Thêm thành công!", "success");
+              this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
               this.showFormAdd();
               this.$refs.accountCode.focus();
             },
             callbackFail: () => {
               this.showNotification(
-                "Số tài khoản đã tồn tại, vui lòng nhập lại!",
-                "error"
+                NotifiactionConstant.ACCOUNT_EXIST,
+                NotifiactionConstant.ERROR
               );
+              this.$refs.accountCode.focus()
             },
           });
         } else {
           this.putAccount({
             callbackSuccess: () => {
-              this.showNotification("Sửa thành công!", "success");
+              this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
               this.showFormAdd();
               this.$refs.accountCode.focus();
             },
             callbackFail: () => {
               this.showNotification(
-                "Số tài khoản đã tồn tại, vui lòng nhập lại!",
-                "error"
+                NotifiactionConstant.ACCOUNT_EXIST,
+                NotifiactionConstant.ERROR
               );
             },
           });
         }
 
         }else{
-          this.showNotification("Số tài khoản không hợp lệ. Số tài khoản chi tiết phải bắt đầu bằng số của Tài khoản tổng hợp!","error")
+          this.showNotification(NotifiactionConstant.INVALID_ACCOUNT,NotifiactionConstant.ERROR)
         }
         
       }
@@ -663,14 +689,14 @@ export default {
         this.account.account_code == null ||
         this.account.account_code == ""
       ) {
-        this.showNotification("Số tài khoản không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.ACCOUNT_CODE_NOT_EMPTY, NotifiactionConstant.ERROR);
         return;
       }
       if (
         this.account.account_name == null ||
         this.account.account_name == ""
       ) {
-        this.showNotification("Tên tài khoản không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.ACCOUNT_NAME_NOT_EMPTY, NotifiactionConstant.ERROR);
       }
     },
     showNotification(message, type) {

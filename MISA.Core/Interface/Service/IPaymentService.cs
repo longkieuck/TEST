@@ -26,7 +26,7 @@ namespace MISA.Core.Interface.Service
         /// <returns>
         /// PageSize nhân viên trong trang Page theo tiêu chí Search 
         /// </returns>
-        /// CreatedBy KDLong 07/05/2021
+        /// CreatedBy KDLong 07/07/2021
         public Pagging<payment> GetPayments(Filter filter);
         /// <summary>
         /// Tính tổng tiền
@@ -37,6 +37,14 @@ namespace MISA.Core.Interface.Service
         /// Search 
         /// </param>
         /// <returns>Tổng tiền của trang hiện tại</returns>
+        /// CreatedBy KDLong 07/07/2021
         public float GetTotalMoney(Filter filter);
+        /// <summary>
+        /// Lấy Id theo mã phục vụ chuyển form mode xem=>sửa
+        /// </summary>
+        /// <param name="code">payment_code</param>
+        /// <returns>Id</returns>
+        /// CreatedBy KDLong 07/07/2021
+        public Guid? GetPaymentIdByCode(string code);
     }
 }

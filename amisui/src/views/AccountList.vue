@@ -108,64 +108,12 @@
 
 <script>
 
-import {AccountConstant,AlertDialogConstant} from "../configs/constants"
+import {AccountConstant,AlertDialogConstant,NotifiactionConstant,columns} from "../configs/constants"
 import {mapActions,mapState} from 'vuex'
 import AccountInfo from '../components/dialogs/AccountInfo.vue'
 import AlertDialog from '../components/dialogs/AlertDialog.vue'
 import ClickOutside from 'vue-click-outside'
 import InputSearch from "../components/share/InputSearch.vue";
-const columns = [
-  {
-    title: "Số tài khoản",
-    dataIndex: "account_code",
-    key: "account_code",
-    width: 240,
-    scopedSlots: { customRender: "account_code" },
-  },
-  {
-    title: "Tên tài khoản",
-    dataIndex: "account_name",
-    key: "account_name",
-    width: 230,
-    scopedSlots: { customRender: "account_name" },
-  },
-  {
-    title: "Tính chất",
-    dataIndex: "nature",
-    width: 135,
-    key: "nature",
-    scopedSlots: { customRender: "nature" },
-  },
-  {
-    title: "Tên tiếng Anh",
-    dataIndex: "english_name",
-    width: 230,
-    key: "english_name",
-    scopedSlots: { customRender: "english_name" },
-  },
-  {
-    title: "Diễn giải",
-    dataIndex: "explain",
-    key: "explain",
-    width: 240,
-    scopedSlots: { customRender: "explain" },
-  },
-  {
-    title: "Trạng thái",
-    dataIndex: "status",
-    width: 135,
-    key: "status",
-    scopedSlots: { customRender: "status" },
-  },
-  {
-    title: "Chức năng",
-    dataIndex: "action",
-    width: 120,
-    key: "action",
-    scopedSlots: { customRender: "action" },
-  },
-];
-
 export default {
   components: {
     InputSearch,
@@ -185,16 +133,16 @@ export default {
   },
   data() {
     return {
-      AccountConstant,
-      isExpand:false,
-      accountIdSelected:"",
-      columns,
-      expandedRowKeys: [],
-      isShowAccountInfo:false,
-      AlertDialogConstant,
-      isShowDialogConfirmDelete:false,
-      messageOfDialog:"",
-      acceptDelete:false
+      AccountConstant,//Hằng số
+      isExpand:false,//Mở rộng
+      accountIdSelected:"",//Id được chọn để xoá
+      columns,//columns của table
+      expandedRowKeys: [],//Danh sách các tài khoản đã được mở rộng
+      isShowAccountInfo:false,//Show form info
+      AlertDialogConstant,//Hằng số của dialog
+      isShowDialogConfirmDelete:false,//Show form confirm delete
+      messageOfDialog:"",//Thông báo trên dialog
+      acceptDelete:false// cho phép xoá hay không
     };
   },
   methods: {
@@ -204,15 +152,28 @@ export default {
         'getAccounts',
         'showFormAdd',
         'showFormEdit',
-        'deleteAccount'
+        'deleteAccount',
+        'selectParentId'
       ]
     ),
+    /**
+     * Show form chi tiết tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     showAccountInfo(){
       this.isShowAccountInfo = true      
     },
+    /**
+     * Đóng form chi tiết tài khoản
+     * CreatedBy KDLong 01/07/2021
+     */
     closeAccountInfo(){
       this.isShowAccountInfo = false
     },
+    /**
+     * Sử lí sự kiện thu gọn và mở rộng
+     * CreatedBy KDLong 01/07/2021
+     */
     handleExpandAllRows(){
       this.isExpand = !this.isExpand
       if(this.isExpand == false){
@@ -221,40 +182,57 @@ export default {
         this.expandedRowKeys=this.parentIdList
       }
     },
+    /**
+     * Sự kiện dblclick vào table
+     * CreatedBy KDLong 01/07/2021
+     */
     customRow(record) {
       return {
         on: {
           click: () => {
+            this.selectParentId(record.account_id)
             // alert(this.expandedRowKeys)
           },
           dblclick: () => {
-            this.showFormEdit(record)
+            // this.showFormEdit(record)
           },
         },
       };
     },
+    /**
+     * Sự kiện click vào btn xoá
+     * CreatedBy KDLong 01/07/2021
+     */
     btnDelete(record){
       this.isShowDialogConfirmDelete = true
       if(record.children != null){
         this.acceptDelete = false
-        this.messageOfDialog = "Không thể xoá danh mục cha nếu chưa xoá tất cả các danh mục con."
+        this.messageOfDialog = AccountConstant.CAN_NOT_DELETE
       }else{
         this.accountIdSelected = record.account_id
         this.acceptDelete = true
-        this.messageOfDialog = "Bạn có thực sự muốn xoá Tài khoản <"+record.account_code+"> không?"
+        this.messageOfDialog = AccountConstant.MESS_FRONT + record.account_code + AccountConstant.MESS_BACK
       }
     },
+    /**
+     * Đóng form cf delete
+     * CreatedBy KDLong 01/07/2021
+     */
     closeAlertDialog(){
       this.isShowDialogConfirmDelete = false
     },
+    /**
+     * Sự kiện xoá
+     * CreatedBy KDLong 01/07/2021
+     */
     confirmDelete(){
       this.deleteAccount({
         account_id:this.accountIdSelected,
         callbackSuccess:()=>{
-          this.showNotification("Xoá thành công!")
+          this.showNotification(NotifiactionConstant.DELETE_SUCCESS,NotifiactionConstant.SUCCESS)
         },
         callbackFail:()=>{
-          this.showNotification("Xoá thất bại!")
+          this.showNotification(NotifiactionConstant.DELETE_FAILURE,NotifiactionConstant.ERROR)
         }
       })
     },
@@ -288,8 +266,12 @@ export default {
       }
       
     },
-    showNotification(message){
-      this.$notification['success']({
+    /**
+     * show thông báo
+     * CreatedBy KDLong 01/07/2021
+     */
+    showNotification(message,type){
+      this.$notification[type]({
         message,
         duration:2
       });

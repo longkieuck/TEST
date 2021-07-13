@@ -736,6 +736,17 @@ import {
   Commune,
   InitSupplier,
   AlertDialogConstant,
+  titleSupplierGroup,
+  titlePuchasingEmployee,
+  titleVocative,
+  titleCountry,
+  titleCity,
+  titleDistrict,
+  titleCommune,
+  titleAccountReceive,
+  titleAccountPay,
+  tabs,
+  NotifiactionConstant
 } from "../../configs/constants";
 export default {
   components: {
@@ -762,15 +773,19 @@ export default {
     });
   },
   mounted() {
+    //focus ô đầu
     if (this.supplier.supplier_type == 1) {
       setTimeout(() => this.$refs.supplierCode2.focus(), 100);
     } else {
       setTimeout(() => this.$refs.taxCode.focus(), 100);
     }
+    //Khởi tạo giá trị cho mảng tài khoản ngân hàng
     this.bankAccountHandle = [...JSON.parse(this.supplier.bank_account)];
+    //Khởi tạo giá trị cho địa chỉ nhận hàng
     this.deliveryAddressHandle = [
       ...JSON.parse(this.supplier.delivery_address),
     ];
+    //Khởi tạo giá trị cho các nhóm nhà cung cấp đc trọn
     if (this.supplier.supplier_group != null) {
       JSON.parse(this.supplier.supplier_group).forEach((e) => {
         this.supplierGroupSelected.push(e.code);
@@ -782,8 +797,12 @@ export default {
       supplier: (state) => state.supplier.supplier,
       supplierFormMode: (state) => state.supplier.supplierFormMode,
     }),
+    //Format số ngày nợ cước
     numberDayOwedHandle: {
       set(val) {
+        if(isNaN(val)) {
+          this.supplier.number_day_owed = 0
+        }else
         this.supplier.number_day_owed = val.replaceAll(".", "");
       },
       get() {
@@ -792,8 +811,12 @@ export default {
           .replaceAll(",", ".");
       },
     },
+    //format số nợ tối đa
     maxAmountDebtHandle: {
       set(val) {
+        if(isNaN(val)){
+          this.supplier.max_amount_debt = 0
+        }
         this.supplier.max_amount_debt = val.replaceAll(".", "");
       },
       get() {
@@ -805,118 +828,38 @@ export default {
   },
   data() {
     return {
-      SupplierConstant,
-      //Sử lý tài khoản ngân hàng
-      bankAccountHandle: [],
-      //Sử lý địa chỉ giao hàng
-      deliveryAddressHandle: [],
-      //Giống địa chỉ nhà cung cấp không
-      isSameSupplierAddress: false,
-      dateFormat: "DD/MM/YYYY",
-      tabSelected: 0,
-      isShowDialogCodeExist: false,
-      messageOfDialog: "",
-      supplierGroupSelected: [],
-      AlertDialogConstant,
-      supplierGroup: [...SupplierGroup],
-      titleSupplierGroup: [
-        {
-          Title: "Mã nhóm KH, NCC",
-          Width: 200,
-        },
-        {
-          Title: "Tên nhóm KH, NCC",
-          Width: 200,
-        },
-      ],
-      puchasingEmployee: [...PuchasingEmployee],
-      titlePuchasingEmployee: [
-        {
-          Title: "Mã nhân viên",
-          Width: 180,
-        },
-        {
-          Title: "Tên nhân viên",
-          Width: 180,
-        },
-      ],
-      vocative: [...Vocative],
-      titleVocative: [
-        {
-          Title: "Xưng hô",
-          Width: 100,
-        },
-      ],
-      country: [...Country],
-      titleCountry: [
-        {
-          Title: "Quốc gia",
-          Width: 100,
-        },
-      ],
-      city: [...City],
-      titleCity: [
-        {
-          Title: "Tỉnh/Thành phố",
-          Width: 100,
-        },
-      ],
-      district: [...District],
-      titleDistrict: [
-        {
-          Title: "Quận/Huyện",
-          Width: 100,
-        },
-      ],
-      commune: [...Commune],
-      titleCommune: [
-        {
-          Title: "Xã/Phường",
-          Width: 100,
-        },
-      ],
-      termOfPayment: [...TermOfPayment],
-      accountReceive: [...AccountReceive],
-      titleAccountReceive: [
-        {
-          Title: "Số tài khoản",
-          Width: 180,
-        },
-        {
-          Title: "Tên tài khoản",
-          Width: 180,
-        },
-      ],
-      accountPay: [...AccountPay],
-      titleAccountPay: [
-        {
-          Title: "Số tài khoản",
-          Width: 180,
-        },
-        {
-          Title: "Tên tài khoản",
-          Width: 180,
-        },
-      ],
-      tabs: [
-        "Liên hệ",
-        "Điều khoản thanh toán",
-        "Tài khoản ngân hàng",
-        "Địa chỉ khác",
-        "Ghi chú",
-      ],
+      SupplierConstant,//Hằng số của form
+      bankAccountHandle: [],//Sử lý tài khoản ngân hàng
+      deliveryAddressHandle: [],//Sử lý địa chỉ giao hàng
+      isSameSupplierAddress: false,//Giống địa chỉ nhà cung cấp không
+      dateFormat: "DD/MM/YYYY",//Format ngày
+      tabSelected: 0,//Tab đang lựa chọn
+      isShowDialogCodeExist: false,//Show dialog code exist
+      messageOfDialog: "",//Thông báo khi dialog show ra
+      supplierGroupSelected: [],//Sử lý nhóm nhà cung cấp được chọn
+      AlertDialogConstant,//Hằng số của dialog
+      supplierGroup: [...SupplierGroup],//Dữ liệu của nhóm NCC
+      titleSupplierGroup,//Title Nhóm NCC
+      puchasingEmployee: [...PuchasingEmployee],//Dữ liệu nhân viên mua hàng
+      titlePuchasingEmployee,// Title nv mua hàng
+      vocative: [...Vocative],//Xưng hô
+      titleVocative,//Title xưng hô
+      country: [...Country],//Quốc gia
+      titleCountry,
+      city: [...City],//Thành phố
+      titleCity,
+      district: [...District],//Huyện
+      titleDistrict,
+      commune: [...Commune],//Xã
+      titleCommune,
+      termOfPayment: [...TermOfPayment],//Điều khoản than toán
+      accountReceive: [...AccountReceive],//Tài khoản công nợ
+      titleAccountReceive,
+      accountPay: [...AccountPay],//Tài khoản thanh toán
+      titleAccountPay,
+      tabs,//Các tab trong form Info
     };
   },
-  // watch:{
-  //   supplierFormMode:function(newValue){
-  //     if(newValue == SupplierConstant.IS_ADD){
-  //       this.bankAccountHandle = [...JSON.parse(InitSupplier.bank_account)];
-  //       this.deliveryAddressHandle = [
-  //         ...JSON.parse(InitSupplier.delivery_address),
-  //       ];
-  //     }
-  //   }
-  // },
   methods: {
     ...mapActions("supplier", [
       "closeForm",
@@ -926,58 +869,128 @@ export default {
       "changeFormMode",
     ]),
     moment,
+    /**
+     * Sự kiện Thay đổi nhân viên mua hàng
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangePuchasingEmployee(value) {
       this.supplier.puchasing_employee = value;
     },
+    /**
+     * Sự thay đổi xưng hô
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeVocative(value) {
       this.supplier.vocative = value;
     },
+    /**
+     * Sự thay đổi điều khoản thanh toán
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeTermOfPayment(value) {
       this.supplier.term_of_payment = value;
     },
+    /**
+     * Sự thay đổi tài khoản công nợ phải thu
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeAccountReceive(value) {
       this.supplier.account_receive = value;
     },
+    /**
+     * Sự thay đổi tài khoản công nợ phải trả
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeAccountPay(value) {
       this.supplier.account_pay = value;
     },
+    /**
+     * Sự kiện thay đổi Quốc gia
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeCountry(value) {
       this.supplier.country = value;
     },
+    /**
+     * Sự kiện thay đổi Thành phố
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeCity(value) {
       this.supplier.city = value;
     },
+    /**
+     * Sự kiện thay đổi Huyện
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeDistrict(value) {
       this.supplier.district = value;
     },
+    /**
+     * Sự kiện thay đổi Xã
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeCommune(value) {
       this.supplier.commune = value;
     },
+    /**
+     * Sự kiện thay đổi tab
+     * CreatedBy KDLong 01/07/2021
+     */
     handleTabs(index) {
       this.tabSelected = index;
     },
+    /**
+     * Sự kiện thêm 1 dòng địa chỉ
+     * CreatedBy KDLong 01/07/2021
+     */
     addLineAddress() {
       this.deliveryAddressHandle.push({ ...InitDeliveryAddress });
     },
+    /**
+     * Sự kiện xoá tất cả dòng
+     * CreatedBy KDLong 01/07/2021
+     */
     removeAllLineAddress() {
       this.deliveryAddressHandle = [{ ...InitDeliveryAddress }];
     },
+    /**
+     * Sự kiện xoá dòng hiện tại
+     * CreatedBy KDLong 01/07/2021
+     */
     deleteCurrentLineAddress(index) {
+      if(this.deliveryAddressHandle !=1)
       this.deliveryAddressHandle = this.deliveryAddressHandle.filter(
         (item, i) => i != index
       );
     },
+    /**
+     * Sự kiện thêm dòng tàik khoản ngân hàng
+     * CreatedBy KDLong 01/07/2021
+     */
     addLineBankAccount() {
       this.bankAccountHandle.push({ ...InitBankAccount });
     },
+    /**
+     * Sự kiện xoá tất cả dòng
+     * CreatedBy KDLong 01/07/2021
+     */
     removeAllLineBankAccount() {
       this.bankAccountHandle = [{ ...InitBankAccount }];
     },
+    /**
+     * Sự kiện xoá dòng hiện tại
+     * CreatedBy KDLong 01/07/2021
+     */
     deleteCurrentLineBankAccount(index) {
+      if(this.bankAccountHandle.length != 1)
       this.bankAccountHandle = this.bankAccountHandle.filter(
         (item, i) => i != index
       );
     },
+    /**
+     * Sự kiện thay đổi form mode readonly => edit
+     * CreatedBy KDLong 01/07/2021
+     */
     btnEdit() {
       this.changeFormMode(() => {
         if (this.supplier.supplier_type == 1) {
@@ -991,6 +1004,10 @@ export default {
         }
       });
     },
+    /**
+     * Sự kiện cất
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSave() {
       if (
         this.supplier.supplier_code == null ||
@@ -1004,12 +1021,12 @@ export default {
         if (this.supplierFormMode == SupplierConstant.IS_ADD) {
           this.postSupplier({
             callbackSuccess: () => {
-              this.showNotification("Thêm thành công!", "success");
+              this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
             },
             callbackFail: () => {
               // this.showNotification(
-              //   "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
-              //   "error"
+              //   NotifiactionConstant.SUPPLIER_CODE_EXIST,
+              //   NotifiactionConstant.ERROR
               // );
               this.showDialogCodeExist();
             },
@@ -1017,12 +1034,12 @@ export default {
         } else {
           this.putSupplier({
             callbackSuccess: () => {
-              this.showNotification("Sửa thành công!", "success");
+              this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
             },
             callbackFail: () => {
               // this.showNotification(
-              //   "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
-              //   "error"
+              //   NotifiactionConstant.SUPPLIER_CODE_EXIST,
+              //   NotifiactionConstant.ERROR
               // );
               this.showDialogCodeExist();
             },
@@ -1030,6 +1047,10 @@ export default {
         }
       }
     },
+    /**
+     * Sự kiện cất và thêm
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSaveAndAdd() {
       if (
         this.supplier.supplier_code == null ||
@@ -1043,33 +1064,37 @@ export default {
         if (this.supplierFormMode == SupplierConstant.IS_ADD) {
           this.postSupplier({
             callbackSuccess: () => {
-              this.showNotification("Thêm thành công!", "success");
+              this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
               this.initData();
             },
             callbackFail: () => {
               this.showNotification(
-                "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
-                "error"
+                NotifiactionConstant.SUPPLIER_CODE_EXIST,
+                NotifiactionConstant.ERROR
               );
             },
           });
         } else {
           this.putSupplier({
             callbackSuccess: () => {
-              this.showNotification("Sửa thành công!", "success");
+              this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
               //Khởi tạo lại dữ liệu ban đầu cho các trường json
               this.initData();
             },
             callbackFail: () => {
               this.showNotification(
-                "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
-                "error"
+                NotifiactionConstant.SUPPLIER_CODE_EXIST,
+                NotifiactionConstant.ERROR
               );
             },
           });
         }
       }
     },
+    /**
+     * validate k để trống
+     * CreatedBy KDLong 01/07/2021
+     */
     validateNotEmpty() {
       if (
         this.supplier.supplier_code == null ||
@@ -1089,22 +1114,24 @@ export default {
         this.supplier.supplier_code == null ||
         this.supplier.supplier_code == ""
       ) {
-        this.showNotification("Mã nhà cung cấp không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.SUPPLIER_CODE_NOT_EMPTY, NotifiactionConstant.ERROR);
         return;
       }
       if (
         this.supplier.supplier_name == null ||
         this.supplier.supplier_name == ""
       ) {
-        this.showNotification("Tên nhà cung cấp không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.SUPPLIER_NAME_NOT_EMPTY, NotifiactionConstant.ERROR);
         return;
       }
     },
+    //Click vào giống địa chỉ nhà cung cấp
     handleDeliveryAddress() {
       if (this.isSameSupplierAddress == false) {
         this.deliveryAddressHandle = [{ address: this.supplier.address }];
       }
     },
+    //Thay đổi địa chỉ và cập nhật địa chỉ giao hàng
     handleChangeAddress(e) {
       if (
         this.isSameSupplierAddress == true &&
@@ -1113,6 +1140,10 @@ export default {
         this.deliveryAddressHandle = [{ address: e.target.value }];
       }
     },
+    /**
+     * Sự kiện thay đổi nhóm nhà cung cấp
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeSupplierGroup(value) {
       this.supplierGroupSelected = [...value];
       let arrSupplierGroupSelected = this.supplierGroup.filter((e) =>
@@ -1120,6 +1151,10 @@ export default {
       );
       this.supplier.supplier_group = JSON.stringify(arrSupplierGroupSelected);
     },
+    /**
+     * Lọc bỏ dữ liệu rỗng
+     * CreatedBy KDLong 01/07/2021
+     */
     removeEmptyData() {
       //Lọc bỏ các tài khoản ngân hàng rỗng trước khi cất
       this.bankAccountHandle = this.bankAccountHandle.filter(
@@ -1142,6 +1177,10 @@ export default {
         this.deliveryAddressHandle
       );
     },
+    /**
+     * Khởi tạo data cho sự kiện cất và thêm
+     * CreatedBy KDLong 01/07/2021
+     */
     initData() {
       this.showFormAdd();
       this.$nextTick(function() {
@@ -1153,16 +1192,28 @@ export default {
       ];
       this.supplierGroupSelected = [];
     },
+    /**
+     * Sự kiện show form trùng mã
+     * CreatedBy KDLong 01/07/2021
+     */
     showDialogCodeExist() {
       this.isShowDialogCodeExist = true;
       this.messageOfDialog =
-        "Mã nhà cung cấp <" +
+        SupplierConstant.MESS_FRONT +
         this.supplier.supplier_code +
-        "> đã tồn tại, Vui lòng nhập lại!";
+        SupplierConstant.MESS_BACK;
     },
+    /**
+     * Sự kiện đóng form trùng mã
+     * CreatedBy KDLong 01/07/2021
+     */
     closeAlertDialog() {
       this.isShowDialogCodeExist = false;
     },
+    /**
+     * Show thông báo
+     * CreatedBy KDLong 01/07/2021
+     */
     showNotification(message, type) {
       this.$notification[type]({
         message,

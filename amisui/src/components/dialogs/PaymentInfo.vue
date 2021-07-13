@@ -1,6 +1,6 @@
 <template>
   <div
-   class="payment-info-container"
+    class="payment-info-container"
     @keydown.esc.prevent.stop="btnCloseForm" 
     @keydown.ctrl.83.prevent.stop.exact="btnSave" 
     @keydown.ctrl.shift.83.prevent.stop="btnSaveAndAdd"
@@ -181,7 +181,7 @@
       <div class="payment-table">
         <table>
           <thead>
-            <th></th>
+            <th style="border-left:none !important"></th>
             <th class="th-td-first th-first"><div class="center">#</div></th>
             <th style="min-width:410px;border-left:0 !important">
               Diễn giải
@@ -207,9 +207,6 @@
             >
               Quy đổi
             </th>
-            <!-- <th style="min-width:220px">
-              TK ngân hàng
-            </th> -->
             <th class="th-td-last" style="min-width:40px"></th>
             <th style="border-left: 0 !important"></th>
           </thead>
@@ -439,17 +436,25 @@
                 key="0"
                 v-if="paymentButton == PaymentButtonConstant.SAVE_AND_CLOSE"
               >
-                <a @click="btnSaveAndAdd" class="option-dropdown"
-                  >Cất và thêm</a
-                >
+                <a 
+                  @click="btnSaveAndAdd" 
+                  class="option-dropdown"
+                  title="Cất và thêm(Ctrl + Shift + S)"
+                  >
+                  Cất và thêm
+                </a>
               </a-menu-item>
               <a-menu-item
                 v-if="paymentButton == PaymentButtonConstant.SAVE_AND_ADD"
                 key="1"
               >
-                <a @click="btnSaveAndClose" class="option-dropdown"
-                  >Cất và đóng</a
-                >
+                <a 
+                  @click="btnSaveAndClose" 
+                  class="option-dropdown"
+                  title="Cất và đóng(Ctrl + Shift + A)"
+                  >
+                  Cất và đóng
+                </a>
               </a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -498,28 +503,14 @@ import {
   PaymentConstant,
   AlertDialogConstant,
   PaymentButtonConstant,
+  titleSuppliers,
+  titleEmployees,
+  titleAccount,
+  currencies,
+  titleCurrencies,
+  NotifiactionConstant
 } from "../../configs/constants";
 
-const currencies = [
-  {
-    Symbol: "VND",
-    Name: "Việt Nam đồng",
-  },
-  {
-    Symbol: "USD",
-    Name: "Đô la Mỹ",
-  },
-];
-const titleCurrencies = [
-  {
-    Title: "Mã loại tiền",
-    Width: 120,
-  },
-  {
-    Title: "Tên loại tiền",
-    Width: 120,
-  },
-];
 export default {
   components: {
     Combobox,
@@ -531,14 +522,17 @@ export default {
     this.getSuppliers();
     this.getAccount();
     if (this.$route.params.id == null) {
+      //Nếu là form add thì lấy mã mới
       if (this.paymentFormMode == PaymentConstant.IS_ADD)
         this.getNewPaymentCode();
     } else {
+      // Lấy data theo id đối tượng
       this.getPaymentById({
         payment_id: this.$route.params.id,
         callbackSuccess: () => {
           this.$refs.paymentCode.setValidateState(true);
           this.accountingHandle = [...JSON.parse(this.payment.accounting)];
+          //Nếu là clone thì đi tới form thêm
           if(this.paymentFormMode == PaymentConstant.IS_CLONE){
             this.$router.replace('/payment/paymentinfo')
             this.getNewPaymentCodeForClone()
@@ -560,27 +554,29 @@ export default {
     });
   },
   mounted() {
+    //Lưu vết lại chức năng vừa sử dụng
     this.paymentButton = localStorage.PaymentButton;
     if (this.paymentFormMode == PaymentConstant.IS_ADD) {
       this.accountingHandle = [...JSON.parse(InitPayment.accounting)];
     }
-    console.log(this.payment,"mounted")
-    // if(this.paymentFormMode == PaymentConstant.IS_CLONE){
-    //   console.log("mounted")
-    //   this.accountingHandle = [...JSON.parse(this.payment.accounting)];
-    // }
   },
   watch: {
+    //Khi thay đổi lý do chi
     "payment.payment_reason": function(newValue, oldValue) {
+      //Lý do chi bên dưới nếu trước đó trùng với lý do chi cũ thì cập nhật theo
       this.accountingHandle.forEach((e) => {
         if (e.explain == oldValue || e.explain == "") {
           e.explain = newValue;
         }
       });
     },
+    //Khi thay đổi đối tượng
     "payment.supplier_id": function(newValue, oldValue) {
+      //Tìm đối tượng mới
       let supplier = this.suppliers.find((e) => e.supplier_id == newValue);
       if (supplier != null) {
+        //Nếu đối tượng bên dưới trùng vs đối tượng cũ 
+        //hoặc rỗng thì cập nhật đối tượng bên dưới theo master
         this.accountingHandle.forEach((e) => {
           if (e.supplier_id == oldValue || e.supplier_id == "") {
             e.supplier_id = newValue;
@@ -589,90 +585,28 @@ export default {
         });
       }
     },
+    //Thay đổi giá trị paymentbutton cập nhật cho localstorage
     paymentButton(newValue) {
       localStorage.PaymentButton = newValue;
     },
   },
   data() {
     return {
-      dateFormat: "DD/MM/YYYY",
-      currencies,
-      titleCurrencies,
-      Employees,
-      PaymentConstant,
-      accountingHandle: [],
-      accountingIndex: 0,
-      AlertDialogConstant,
-      PaymentButtonConstant,
-      paymentButton: 0,
-      justClickButton: 0,
-      isShowDialogCodeExist: false,
-      titleSuppliers: [
-        {
-          Title: "",
-          Width: 0,
-        },
-        {
-          Title: "",
-          Width: 0,
-        },
-        {
-          Title: "",
-          Width: 0,
-        },
-        {
-          Title: "Đối  tượng",
-          Width: 100,
-        },
-        {
-          Title: "Tên đối tượng",
-          Width: 200,
-        },
-        {
-          Title: "Mã số thuế",
-          Width: 100,
-        },
-        {
-          Title: "Địa chỉ",
-          Width: 200,
-        },
-        {
-          Title: "Điện thoại",
-          Width: 100,
-        },
-      ],
-      titleEmployees: [
-        {
-          Title: "Mã nhân viên",
-          Width: 150,
-        },
-        {
-          Title: "Tên nhân viên",
-          Width: 200,
-        },
-        {
-          Title: "Đơn vị",
-          Width: 150,
-        },
-        {
-          Title: "ĐT di động",
-          Width: 100,
-        },
-      ],
-      titleAccount: [
-        {
-          Title: "",
-          Width: 0,
-        },
-        {
-          Title: "Số tài khoản",
-          Width: 150,
-        },
-        {
-          Title: "Tên tài khoản",
-          Width: 200,
-        },
-      ],
+      dateFormat: "DD/MM/YYYY",//Định dạng ngày
+      currencies,//Loại tiền tệ
+      titleCurrencies,//Title của tiền tệ
+      Employees,//Danh sách nhân viên
+      titleEmployees,//Title nhân viên
+      PaymentConstant,//Hằng số của form
+      accountingHandle: [],//Mảng hoạch toán convert về array
+      accountingIndex: 0,//vị trí đang tương tác
+      AlertDialogConstant,//Hằng số dialog 
+      PaymentButtonConstant,//Hằng số button footer
+      paymentButton: 0,//mode của button footer
+      justClickButton: 0,//Lưu vết lại click trước đấy cho sự kiện callback mã trùng
+      isShowDialogCodeExist: false,//Show form mã trùng
+      titleSuppliers,//Title của đối tượng
+      titleAccount//Title của tài khoản nợ tài khoản có
     };
   },
   computed: {
@@ -682,15 +616,17 @@ export default {
       account: (state) => state.payment.account,
       paymentFormMode: (state) => state.payment.paymentFormMode,
     }),
+    //Câu thông báo show ra trong dialog
     messageOfDialog: {
       get() {
         return (
-          "Số chứng từ <" +
+          PaymentConstant.MESS_FRONT +
           this.payment.payment_code +
-          "> đã tồn tại. Bạn có muốn chương trình tự động tăng số chứng từ không?"
+          PaymentConstant.MESS_BACK
         );
       },
     },
+    // Sử lý số trong form kèm theo
     attachHandle: {
       set(val) {
         this.payment.attach = val.replaceAll(".", "");
@@ -704,6 +640,7 @@ export default {
             .replaceAll(",", ".");
       },
     },
+    //Sử lý số trong form tỉ lệ
     rateHandle: {
       set(val) {
         this.payment.rate = val.replaceAll(".", "");
@@ -716,9 +653,10 @@ export default {
         );
       },
     },
+    //Format ngày phiếu chi
     paymentDateHandle: {
       get() {
-        if (this.payment.payment_date == null)
+        if (this.payment.payment_date == null || this.payment.payment_date == "Invalid date")
           return moment(Date.now()).format("YYYY-MM-DD");
         return moment(this.payment.payment_date).format("YYYY-MM-DD");
       },
@@ -728,9 +666,10 @@ export default {
         //   this.payment.accounting_date = moment(val).format("YYYY-MM-DDT00:00:00");
       },
     },
+    //Format ngày hạch toán
     accountingDateHandle: {
       get() {
-        if (this.payment.accounting_date == null)
+        if (this.payment.accounting_date == null || this.payment.accounting_date == "Invalid date")
           return moment(Date.now()).format("YYYY-MM-DD");
         return moment(this.payment.accounting_date).format("YYYY-MM-DD");
       },
@@ -750,12 +689,13 @@ export default {
         }
       },
     },
+    //Tổng số tiền
     amountTotal: {
       get() {
         // this.al()
         let total = 0;
         this.accountingHandle.forEach((e) => {
-          if (e.amount == null || e.amount == "") {
+          if (e.amount == null || e.amount == "" || isNaN(e.amount)) {
             total += 0;
           } else {
             total += parseInt(e.amount);
@@ -769,11 +709,12 @@ export default {
         );
       },
     },
+    //Tổng quy đổi
     exchangeTotal: {
       get() {
         let total = 0;
         this.accountingHandle.forEach((e) => {
-          if (e.exchange == null || e.exchange == "") {
+          if (e.exchange == null || e.exchange == "" || isNaN(e.exchange)) {
             total += 0;
           } else {
             total += parseInt(e.exchange);
@@ -801,18 +742,35 @@ export default {
       "showFormAdd",
       "getNewPaymentCodeForCodeExist",
       "showFormReadOnly",
-      "getNewPaymentCodeForClone"
+      "getNewPaymentCodeForClone",
+      "getPaymentIdByCode"
     ]),
+    /**
+     * Sự kiện thay đổi loại tiền tệ
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeCurrency(value) {
       this.payment.currency = value;
     },
+    /**
+     * Sự kiện đóng dialog trùng mã
+     * CreatedBy KDLong 01/07/2021
+     */
     closeAlertDialog() {
       this.isShowDialogCodeExist = false;
       //Sau khi đóng dialog trùng mã
     },
+    /**
+     * Sự kiện mở dialog trùng mã
+     * CreatedBy KDLong 01/07/2021
+     */
     showAlertDialog() {
       this.isShowDialogCodeExist = true;
     },
+    /**
+     * Sự kiện đồng ý tăng mã rồi thực hiện chức năng luôn
+     * CreatedBy KDLong 01/07/2021
+     */
     confirmIncrement() {
       this.getNewPaymentCodeForCodeExist(() => {
         if (this.justClickButton == PaymentButtonConstant.SAVE_AND_ADD) {
@@ -826,10 +784,14 @@ export default {
         }
       });
     },
+    /**
+     * Sự kiện thay đổi đối tượng cập nhật người nhận và địa chỉ
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeSuppliers(value) {
       this.payment.supplier_id = value;
       let supplier = this.suppliers.find((e) => e.supplier_id == value);
-      this.payment.payment_reason = "Chi tiền cho " + supplier.supplier_name;
+      this.payment.payment_reason = PaymentConstant.PAYMENT_FOR + supplier.supplier_name;
       this.payment.address = supplier.address;
       if (supplier.supplier_type == 0) {
         //Tổ chức
@@ -838,68 +800,113 @@ export default {
         this.payment.receiver = supplier.supplier_name;
       }
     },
-    // al(){
-    //   alert("al")
-    // },
+    /**
+     * Sự kiện thay đổi nhân viên
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeEmployees(value) {
       this.payment.employee_name = value;
     },
+    /**
+     * Sự kiện thay đổi tài khoản nợ
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeDebtAccountId(value) {
       this.accountingHandle[this.accountingIndex].debt_account_id = value;
     },
+    /**
+     * Sự kiện thay đổi tài khoản có
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeOverAccountId(value) {
       this.accountingHandle[this.accountingIndex].over_account_id = value;
     },
+    /**
+     * Sự kiện thay đổi đối tượng grid thì thay đổi tên đối tượng luôn
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeSupplierId(value) {
       this.accountingHandle[this.accountingIndex].supplier_id = value;
       let supplier = this.suppliers.find((e) => e.supplier_id == value);
       this.accountingHandle[this.accountingIndex].supplier_name =
         supplier.supplier_name;
     },
+    /**
+     * Sự kiện thay đổi số tiền thì thay đổi quy đổi
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeAmount(value) {
-      // data.money = value1;
-      // data.exchange_money = data.money * paymentVoucher.exchange_rate
-
       this.accountingHandle[this.accountingIndex].amount = value;
 
       this.accountingHandle[this.accountingIndex].exchange =
         value * this.payment.rate;
     },
+    /**
+     * Sự kiện thay đổi quy đổi trong grid
+     * CreatedBy KDLong 01/07/2021
+     */
     handleChangeExchange(value) {
       this.accountingHandle[this.accountingIndex].exchange = value;
     },
+    /**
+     * Sự kiện thêm dòng
+     * CreatedBy KDLong 01/07/2021
+     */
     addLineAccounting() {
       this.accountingHandle.push({
         ...this.accountingHandle[this.accountingHandle.length - 1],
       });
     },
+    /**
+     * Sự kiện xoá hết dòng
+     * CreatedBy KDLong 01/07/2021
+     */
     removeAllLineAccounting() {
       this.accountingHandle = [{ ...InitAccounting }];
     },
+    /**
+     * Sự kiện xoá dòng hiện tại
+     * CreatedBy KDLong 01/07/2021
+     */
     deleteCurrentLineAccounting(index) {
-      if (index != 0)
+      if (this.accountingHandle.length != 1)
         this.accountingHandle = this.accountingHandle.filter(
           (item, i) => i != index
         );
     },
+    /**
+     * Sự kiện thay đổi index thành dòng đang focus
+     * CreatedBy KDLong 01/07/2021
+     */
     handleAccountingIndex(index) {
       this.accountingIndex = index;
     },
+    /**
+     * Sự kiện set tổng tiền khi cập nhật vào grid
+     * CreatedBy KDLong 01/07/2021
+     */
     setMoney(value) {
       this.payment.money = value;
     },
+    /**
+     * Sự kiện thay đổi form mode từ xem thành sửa
+     * CreatedBy KDLong 01/07/2021
+     */
     btnEdit() {
-      // let vm = this
       this.changeFormMode()
     },
-
+    /**
+     * Sự kiện cất
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSave() {
       this.justClickButton = PaymentButtonConstant.SAVE;
+      //validate ngày
       this.checkDate();
-      //validate
-      if (this.payment.payment_code == "") {
+      //validate trống
+      if (this.payment.payment_code == "" || this.payment.payment_code == null) {
         this.$refs.paymentCode.setValidateState(false);
-        this.showNotification("Số phiếu chi không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.PAYMENT_CODE_NOT_EMPTY, NotifiactionConstant.ERROR);
       } else {
         //Lọc các hạch toán rỗng trước khi cất
         if (this.checkAccounting()) {
@@ -907,8 +914,7 @@ export default {
           if (this.paymentFormMode == PaymentConstant.IS_EDIT) {
             this.putPayment({
               callbackSuccess: () => {
-                this.showNotification("Sửa thành công!", "success");
-                // this.$router.go(-1);
+                this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
                 this.showFormReadOnly();
               },
               callbackFail: () => {
@@ -918,8 +924,10 @@ export default {
           } else {
             this.postPayment({
               callbackSuccess: () => {
-                this.showNotification("Thêm thành công!", "success");
-                // this.$router.go(-1);
+                this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
+                this.getPaymentIdByCode((id)=>{
+                   this.$router.replace(`/payment/paymentinfo/${id}`)
+                })
                 this.showFormReadOnly();
               },
               callbackFail: () => {
@@ -930,6 +938,10 @@ export default {
         }
       }
     },
+    /**
+     * Sự kiện cất và thêm
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSaveAndAdd() {
       this.justClickButton = PaymentButtonConstant.SAVE_AND_ADD;
       this.paymentButton = PaymentButtonConstant.SAVE_AND_ADD;
@@ -938,7 +950,7 @@ export default {
       //validate
       if (this.payment.payment_code == "") {
         this.$refs.paymentCode.setValidateState(false);
-        this.showNotification("Số phiếu chi không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.PAYMENT_CODE_NOT_EMPTY, NotifiactionConstant.ERROR);
       } else {
         //Lọc các hạch toán rỗng trước khi cất
 
@@ -948,7 +960,7 @@ export default {
           if (this.paymentFormMode == PaymentConstant.IS_EDIT) {
             this.putPayment({
               callbackSuccess: () => {
-                this.showNotification("Sửa thành công!", "success");
+                this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
                 this.getNewPaymentCode();
                 this.showFormAdd();
                 this.$router.replace("/payment/paymentinfo/");
@@ -962,7 +974,7 @@ export default {
           } else {
             this.postPayment({
               callbackSuccess: () => {
-                this.showNotification("Thêm thành công!", "success");
+                this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
                 this.getNewPaymentCode();
                 this.accountingHandle = [...JSON.parse(InitPayment.accounting)];
                 // this.$refs.paymentCode.focus()
@@ -975,6 +987,10 @@ export default {
         }
       }
     },
+    /**
+     * Sự kiện cất và đóng
+     * CreatedBy KDLong 01/07/2021
+     */
     btnSaveAndClose() {
       this.justClickButton = PaymentButtonConstant.SAVE_AND_CLOSE;
       this.paymentButton = PaymentButtonConstant.SAVE_AND_CLOSE;
@@ -983,7 +999,7 @@ export default {
       //validate
       if (this.payment.payment_code == "") {
         this.$refs.paymentCode.setValidateState(false);
-        this.showNotification("Số phiếu chi không được để trống!", "error");
+        this.showNotification(NotifiactionConstant.PAYMENT_CODE_NOT_EMPTY, NotifiactionConstant.ERROR);
       } else {
         //Lọc các hạch toán rỗng trước khi cất
         if (this.checkAccounting()) {
@@ -991,7 +1007,7 @@ export default {
           if (this.paymentFormMode == PaymentConstant.IS_EDIT) {
             this.putPayment({
               callbackSuccess: () => {
-                this.showNotification("Sửa thành công!", "success");
+                this.showNotification(NotifiactionConstant.EDIT_SUCCESS, NotifiactionConstant.SUCCESS);
                 this.$router.go(-1);
               },
               callbackFail: () => {
@@ -1001,7 +1017,7 @@ export default {
           } else {
             this.postPayment({
               callbackSuccess: () => {
-                this.showNotification("Thêm thành công!", "success");
+                this.showNotification(NotifiactionConstant.ADD_SUCCESS, NotifiactionConstant.SUCCESS);
                 this.$router.go(-1);
               },
               callbackFail: () => {
@@ -1016,12 +1032,12 @@ export default {
      * Kiểm tra ngày đã thoả mãn hay chưa và cập nhật lại nếu chưa thoả mãn
      */
     checkDate() {
-      if (this.payment.payment_date == null) {
+      if (this.payment.payment_date == null || this.payment.payment_date == "Invalid date") {
         this.payment.payment_date = moment(Date.now()).format(
           "YYYY-MM-DDT00:00:00"
         );
       }
-      if (this.payment.accounting_date == null) {
+      if (this.payment.accounting_date == null || this.payment.accounting_date == "Invalid date") {
         this.payment.accounting_date = moment(Date.now()).format(
           "YYYY-MM-DDT00:00:00"
         );
@@ -1034,21 +1050,29 @@ export default {
       let res = true;
       this.accountingHandle.forEach((e) => {
         if (e.debt_account_id == "") {
-          this.showNotification("Tài khoản nợ không được để trống!", "error");
+          this.showNotification(NotifiactionConstant.ACCOUNT1_NOT_EMPTY, NotifiactionConstant.ERROR);
           res = false;
           return;
         }
         if (e.over_account_id == "") {
-          this.showNotification("Tài khoản có không được để trống!", "error");
+          this.showNotification(NotifiactionConstant.ACCOUNT2_NOT_EMPTY, NotifiactionConstant.ERROR);
           res = false;
           return;
         }
       });
       return res;
     },
+    /**
+     * Sự kiện đóng form
+     * CreatedBy KDLong 01/07/2021
+     */
     btnCloseForm() {
       this.$router.go(-1);
     },
+    /**
+     * Sự thông báo
+     * CreatedBy KDLong 01/07/2021
+     */
     showNotification(message, type) {
       this.$notification[type]({
         message,

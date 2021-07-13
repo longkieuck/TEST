@@ -23,10 +23,31 @@ namespace MISA.Core.Interface.Repository
         /// PageSize
         /// Search
         /// </param>
-        /// <returns>Danh sách nv</returns>
+        /// <returns>Danh sách nhà cung cấp</returns>
         /// CreatedBy KDLong 07/05/2021
         public Pagging<supplier> GetSuppliers(Filter filter);
+        /// <summary>
+        /// Lấy Id theo code phục vụ cho việc check xem code đã tồn tại hay chưa(Sửa)
+        /// </summary>
+        /// <param name="code">
+        /// Mã nhà cung cấp
+        /// </param>
+        /// <returns>
+        /// ID của tài khoản có Code
+        /// </returns>
+        /// CreatedBy KDLong 01/07/2021
         public Guid? GetSupplierIdByCode(string code);
+        /// <summary>
+        /// Kiểm tra xem số phiếu chi đã tồn tại hay chưa
+        /// </summary>
+        /// <param name="code">
+        /// Mã nhà cung cấp
+        /// </param>
+        /// <returns>
+        /// true - mã đã tồn tại
+        /// false - mã chưa tồn tại
+        /// </returns>
+        /// CreatedBy KDLong 01/07/2021
         bool CheckSupplierCodeExist(string code);
     }
 }

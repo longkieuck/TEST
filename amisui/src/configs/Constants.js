@@ -3,19 +3,31 @@ export const SupplierConstant = {
     IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
     IS_EDIT: 2, //Sửa
-    IS_READ_ONLY: 3 //Chỉ xem
+    IS_READ_ONLY: 3, //Chỉ xem
+    MESS_FRONT: "Mã nhà cung cấp <",
+    MESS_BACK: "> đã tồn tại, Vui lòng nhập lại!",
+    MESS_FRONT2: "Bạn có chắc chắn muốn xoá Nhà cung cấp <",
+    MESS_BACK2: "> không?"
 };
 export const PaymentConstant = {
     IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
     IS_EDIT: 2, //Sửa
     IS_READ_ONLY: 3, //Chỉ xem
-    IS_CLONE: 4
+    IS_CLONE: 4,
+    MESS_FRONT: "Số chứng từ <",
+    MESS_BACK: "> đã tồn tại. Bạn có muốn chương trình tự động tăng số chứng từ không?",
+    PAYMENT_FOR: "Chi tiền cho ",
+    MESS_FRONT2: "Bạn có chắc chắn muốn xoá Phiếu chi <",
+    MESS_BACK2: "> không?"
 };
 export const AccountConstant = {
     IS_CLOSE: 0,
     IS_ADD: 1, //Dialog Thêm
     IS_EDIT: 2, //Sửa
+    CAN_NOT_DELETE: "Không thể xoá danh mục cha nếu chưa xoá tất cả các danh mục con.",
+    MESS_FRONT: "Bạn có thực sự muốn xoá Tài khoản <",
+    MESS_BACK: "> không?"
 };
 //Hằng số trong Alert
 export const AlertDialogConstant = {
@@ -308,7 +320,7 @@ export const InitPayment = {
     "attach": null,
     "accounting_date": null,
     "payment_date": null,
-    "accounting": "[{\"explain\":\"Chi tiền cho \",\"debt_account_id\":\"\",\"over_account_id\":\"27430cf3-6ab8-4677-910c-cd311b7f33c9\",\"supplier_id\":\"\",\"supplier_name\":\"\",\"amount\":0,\"exchange\":0,\"bank_account\":\"\"}]",
+    "accounting": "[{\"description\":\"Chi tiền cho \",\"debt_account_id\":\"\",\"over_account_id\":\"27430cf3-6ab8-4677-910c-cd311b7f33c9\",\"supplier_id\":\"\",\"supplier_name\":\"\",\"amount\":0,\"exchange\":0,\"bank_account\":\"\"}]",
     "money": 0,
     "supplier_code": null,
     "supplier_name": null,
@@ -342,7 +354,7 @@ export const Employees = [{
 ]
 
 export const InitAccounting = {
-    explain: "Chi tiền cho ",
+    description: "Chi tiền cho ",
     debt_account_id: "",
     over_account_id: "",
     supplier_id: "",
@@ -355,4 +367,243 @@ export const PaymentButtonConstant = {
     SAVE_AND_ADD: 0,
     SAVE_AND_CLOSE: 1,
     SAVE: 2
+}
+
+export const TitleParentAccount = [{
+        Title: "",
+        Width: 0,
+    },
+    {
+        Title: "Số tài khoản",
+        Width: 150,
+    },
+    {
+        Title: "Tên tài khoản",
+        Width: 200,
+    },
+]
+
+export const titleSuppliers = [{
+        Title: "",
+        Width: 0,
+    },
+    {
+        Title: "",
+        Width: 0,
+    },
+    {
+        Title: "",
+        Width: 0,
+    },
+    {
+        Title: "Đối  tượng",
+        Width: 100,
+    },
+    {
+        Title: "Tên đối tượng",
+        Width: 200,
+    },
+    {
+        Title: "Mã số thuế",
+        Width: 100,
+    },
+    {
+        Title: "Địa chỉ",
+        Width: 200,
+    },
+    {
+        Title: "Điện thoại",
+        Width: 100,
+    },
+]
+
+export const titleEmployees = [{
+        Title: "Mã nhân viên",
+        Width: 150,
+    },
+    {
+        Title: "Tên nhân viên",
+        Width: 200,
+    },
+    {
+        Title: "Đơn vị",
+        Width: 150,
+    },
+    {
+        Title: "ĐT di động",
+        Width: 100,
+    },
+]
+export const titleAccount = [{
+        Title: "",
+        Width: 0,
+    },
+    {
+        Title: "Số tài khoản",
+        Width: 150,
+    },
+    {
+        Title: "Tên tài khoản",
+        Width: 200,
+    },
+]
+export const DefaultValueAccount = {
+    OBJECT_TYPE: "Nhà cung cấp",
+    OTHER: "Chỉ cảnh báo"
+}
+
+export const currencies = [{
+        Symbol: "VND",
+        Name: "Việt Nam đồng",
+    },
+    {
+        Symbol: "USD",
+        Name: "Đô la Mỹ",
+    },
+]
+export const titleCurrencies = [{
+        Title: "Mã loại tiền",
+        Width: 120,
+    },
+    {
+        Title: "Tên loại tiền",
+        Width: 120,
+    },
+];
+export const titleCommune = [{
+    Title: "Xã/Phường",
+    Width: 100,
+}, ]
+export const titleDistrict = [{
+    Title: "Quận/Huyện",
+    Width: 100,
+}, ]
+export const titleCity = [{
+    Title: "Tỉnh/Thành phố",
+    Width: 100,
+}, ]
+export const titleCountry = [{
+    Title: "Quốc gia",
+    Width: 100,
+}, ]
+export const titleVocative = [{
+    Title: "Xưng hô",
+    Width: 100,
+}, ]
+export const titlePuchasingEmployee = [{
+        Title: "Mã nhân viên",
+        Width: 180,
+    },
+    {
+        Title: "Tên nhân viên",
+        Width: 180,
+    },
+]
+export const titleSupplierGroup = [{
+        Title: "Mã nhóm KH, NCC",
+        Width: 200,
+    },
+    {
+        Title: "Tên nhóm KH, NCC",
+        Width: 200,
+    },
+]
+export const titleAccountReceive = [{
+        Title: "Số tài khoản",
+        Width: 180,
+    },
+    {
+        Title: "Tên tài khoản",
+        Width: 180,
+    },
+]
+export const titleAccountPay = [{
+        Title: "Số tài khoản",
+        Width: 180,
+    },
+    {
+        Title: "Tên tài khoản",
+        Width: 180,
+    },
+]
+export const tabs = [
+    "Liên hệ",
+    "Điều khoản thanh toán",
+    "Tài khoản ngân hàng",
+    "Địa chỉ khác",
+    "Ghi chú",
+]
+
+export const columns = [{
+        title: "Số tài khoản",
+        dataIndex: "account_code",
+        key: "account_code",
+        width: 240,
+        scopedSlots: { customRender: "account_code" },
+    },
+    {
+        title: "Tên tài khoản",
+        dataIndex: "account_name",
+        key: "account_name",
+        width: 230,
+        scopedSlots: { customRender: "account_name" },
+    },
+    {
+        title: "Tính chất",
+        dataIndex: "nature",
+        width: 135,
+        key: "nature",
+        scopedSlots: { customRender: "nature" },
+    },
+    {
+        title: "Tên tiếng Anh",
+        dataIndex: "english_name",
+        width: 230,
+        key: "english_name",
+        scopedSlots: { customRender: "english_name" },
+    },
+    {
+        title: "Diễn giải",
+        dataIndex: "description",
+        key: "description",
+        width: 240,
+        scopedSlots: { customRender: "description" },
+    },
+    {
+        title: "Trạng thái",
+        dataIndex: "status",
+        width: 135,
+        key: "status",
+        scopedSlots: { customRender: "status" },
+    },
+    {
+        title: "Chức năng",
+        dataIndex: "action",
+        width: 120,
+        key: "action",
+        scopedSlots: { customRender: "action" },
+    },
+];
+
+
+export const NotifiactionConstant = {
+    ADD_SUCCESS: "Thêm thành công!",
+    EDIT_SUCCESS: "Sửa thành công!",
+    DELETE_SUCCESS: "Xoá thành công!",
+    DELETE_FAILURE: "Xoá thất bại!",
+    SUCCESS: "success",
+    ERROR: "error",
+    //Của màn tài khoản
+    ACCOUNT_EXIST: "Số tài khoản đã tồn tại, vui lòng nhập lại!",
+    INVALID_ACCOUNT: "Số tài khoản không hợp lệ. Số tài khoản chi tiết phải bắt đầu bằng số của Tài khoản tổng hợp!",
+    ACCOUNT_CODE_NOT_EMPTY: "Số tài khoản không được để trống!",
+    ACCOUNT_NAME_NOT_EMPTY: "Tên tài khoản không được để trống!",
+    //Của màn phiếu chi
+    PAYMENT_CODE_NOT_EMPTY: "Số phiếu chi không được để trống!",
+    ACCOUNT1_NOT_EMPTY: "Tài khoản nợ không được để trống!",
+    ACCOUNT2_NOT_EMPTY: "Tài khoản có không được để trống!",
+    //Của màn nhà cung cấp
+    SUPPLIER_CODE_EXIST: "Mã nhà cung cấp đã tồn tại, vui lòng nhập lại!",
+    SUPPLIER_CODE_NOT_EMPTY: "Mã nhà cung cấp không được để trống!",
+    SUPPLIER_NAME_NOT_EMPTY: "Tên nhà cung cấp không được để trống!"
 }

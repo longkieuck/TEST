@@ -36,7 +36,29 @@ namespace MISA.Core.Interface.Repository
         /// </param>
         /// <returns>Tổng tiền của trang hiện tại</returns>
         public float GetTotalMoney(Filter filter);
+        /// <summary>
+        /// Lấy Id theo code phục vụ cho việc check xem code đã tồn tại hay chưa(Sửa) và phục vụ cho chuyển form mode từ cất thành sửa
+        /// </summary>
+        /// <param name="code">
+        /// Số phiếu chi
+        /// </param>
+        /// <returns>
+        /// ID của tài khoản có Code
+        /// </returns>
+        /// CreatedBy KDLong 01/07/2021
         public Guid? GetPaymentIdByCode(string code);
+
+        /// <summary>
+        /// Kiểm tra xem số phiếu chi đã tồn tại hay chưa
+        /// </summary>
+        /// <param name="code">
+        /// Số phiếu chi
+        /// </param>
+        /// <returns>
+        /// true - mã đã tồn tại
+        /// false - mã chưa tồn tại
+        /// </returns>
+        /// CreatedBy KDLong 01/07/2021
         bool CheckPaymentCodeExist(string code);
     }
 }

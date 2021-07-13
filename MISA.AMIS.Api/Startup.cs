@@ -62,12 +62,6 @@ namespace MISA.CukCuk.Api
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
-            services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAccountRepository, AccountRepository>();
 
